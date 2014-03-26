@@ -34,7 +34,6 @@
         shoot(data.player);
     });
     socket.on('live',function(data){
-	console.log("live: "+data.player);
         live(data.player);
     })
   });
@@ -52,7 +51,6 @@
     }
   }
   function live(player){
-	console.log(playcollection[player]);
     players[player].live=true;
     players[player].score=0;
     playcollection[player].opacity = 0.5;
@@ -412,7 +410,6 @@ function onFrame(event) {
                     path.segments[quake+1].point.y-=low;
                     path.segments[quake+2].point.y-=low/2;
                     booming=1;
-                    console.log("*****");
                 }else{
                     booming++;
                 }
@@ -494,8 +491,6 @@ function onFrame(event) {
                                     var e=evildoers[k];
                                     if(typeof e.note=="undefined"){
                                         var b=bulletpoints[i+(j*5)];
-                                        if (!b.position) console.log("'t is b");
-                                        if (!e.position) console.log("'t is e");
                                         if(b.position.x>e.position.x-20 && b.position.x<e.position.x+20 && b.position.y>e.position.y-10 && b.position.y<e.position.y+10){
                                             e.remove();
                                             evildoers.splice(k,1);
