@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <title>Sound defender client</title>
-  <meta name="viewport" content="width=530, user-scalable=no">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <style media="screen and (orientation: portrait)">
     html, body {
@@ -175,12 +175,12 @@
     .pew2{
         text-align: right;
     }
-    .controller .start {
-        width: 20%;
-        height: 70%;
+    .controller .hud{
+        width:33%;
+        height:100%;
         position: absolute;
-        right: 22%;
-        bottom: 0%
+        left:33.333%;
+        background-color: green;
     }
     .pressed {
         border-left-color: #888;
@@ -203,7 +203,7 @@
     .loser .share {
         position: absolute;
         width: 100%;
-        text-align: center;
+        text-align: right;
         bottom: .5em;
         font-size: 2em;
     }
@@ -235,6 +235,9 @@
     }
     .loser .replay {
         font-size: 2em;
+        position: absolute;
+        bottom: .5em;
+        left: .5em;
     }
     .loser .replay button {
         border: 1px solid #222022;
@@ -265,21 +268,24 @@
     
   });
   socket.on('dead', function(data) {
-    alert('dead');
     connected=false;
     readyToConnect=false;
-    document.getElem(".theScore").setText(data.score);
+    socket.disconnect();
+    document.getElem(".theScore").setText(""+data.score);
     document.getElem(".share .twitter").attrib("data-prefilltext", 
         "Just scored "+data.score+" points playing sound defender vs @CDDofficial at @ABconcerts");
      document.getElem("body").style.backgroundColor = 'transparent';
      document.getElem(".loser").style.display = 'block';
-     socket.disconnect();
   })
   function tryConnect(){
     if(readyToConnect && !connected && window.matchMedia("(orientation: landscape)").matches){
         document.body.style.backgroundColor="red";
         socket.emit("client");
     }
+  }
+  function replay(){
+    document.getElem(".loser").style.display = 'none';
+    socket.socket.reconnect();
   }
   var direction = '';
   document.ready(function() {
@@ -325,13 +331,13 @@
     });
     document.getElem(".shoot").on('touchstart', function(event) {
         document.getElem(".shoot").addClass("pressed");
+        event.preventDefault();
         if(connected){
+            socket.emit("shoot");
             var shoot=document.getElem("#shoot");
             shoot.currentTime=0;
             shoot.play();
         }
-        event.preventDefault();
-        socket.emit("shoot");
     }).on('touchend',function(){
         document.getElem(".shoot").removeClass("pressed");
     });
@@ -345,7 +351,8 @@
 
     document.getElem(".loser .twitter").on("click", tweet);
     document.getElem(".loser .twitter").on("touchstart", tweet);
-
+    document.getElem(".loser .replay").on("click", replay);
+    document.getElem(".loser .replay").on("touchstart", replay);
     doOnOrientationChange();
 
   });
@@ -356,7 +363,7 @@
         window.open(url);
     }
    setInterval(function(){
-        if (direction) socket.emit(direction);
+        if (direction && connected) socket.emit(direction);
    },100);
    window.addEventListener('orientationchange', doOnOrientationChange);
    function doOnOrientationChange(){
@@ -386,6 +393,14 @@
                 <div class="up"><i class="fa fa-arrow-up"></i></div>
                 <div class="down"><i class="fa fa-arrow-down"></i></div>
             </div>
+            <div class="hud">
+                <div class="connecting">
+                    <span>requesting permission ... please wait</span>
+                </div>
+                <div class="readyForFight">
+
+                </div>
+            </div>
             <div class="action">
                 <div class="shoot">
                     <div class="pews">
@@ -395,7 +410,6 @@
                     </div>
                 </div>
             </div>
-            <div class="start"></div>
         </div>
         <div class="loser">
             <div class="score">
