@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8"/>
     <script src="dist/paper.js"></script>
+    <!-- Sound defender socket io -->
     <script src="http://lacerta.be/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="jquery-min.js"></script>
+    <!-- midi backend -->
     <script src="http://192.168.0.103:3000/javascripts/api.js" type='text/javascript'></script>
-    <title>Paper.js - Paper.js</title>
+
+    <title>Sound Defender</title>
     <style>
         html, body {
             margin: 0;
@@ -19,6 +22,9 @@
 </head>
 <body style="overflow:hidden">
 <script>
+    // lightsocket backend
+    var lightsocket = io.connect('hacklights.mixapp.be');
+    // sound defender nodejs backend
   var socket = io.connect('http://lacerta.be');
   socket.on('news', function (data) {
     socket.emit('host');
@@ -46,6 +52,7 @@
                 players[player].score=(players[player].score||0)+50;
             }
         }
+        lightsocket.emit('hackevent', 'sd'+(player+1));
     }
   }
   function live(player){
