@@ -490,7 +490,8 @@ function onFrame(event) {
                                     var e=evildoers[k];
                                     if(typeof e.note=="undefined"){
                                         var b=bulletpoints[i+(j*5)];
-                                        if(b.position.x>e.position.x-20 && b.position.x<e.position.x+20 && b.position.y>e.position.y-10 && b.position.y<e.position.y+10){
+                                        var heightOffset = e.height/2;
+                                        if(b.position.x>e.position.x-20 && b.position.x<e.position.x+20 && b.position.y>e.position.y-heightOffset && b.position.y<e.position.y+heightOffset){
                                             e.remove();
                                             evildoers.splice(k,1);
                                             players[i].bullets[j].active=false;
