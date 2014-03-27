@@ -75,6 +75,7 @@
         overflow: hidden;
         padding: 0;
         margin: 0;
+        background-color: #222022;
     }
     article{
         width: 100%;
@@ -98,7 +99,7 @@
         margin-left: auto;
         margin-right: auto;
         position: relative;
-        background: black;
+        background: #222022;
         padding: 0px;
     }
     .controller .movement{
@@ -180,7 +181,16 @@
         height:100%;
         position: absolute;
         left:33.333%;
-        background-color: green;
+    }
+    .controller .hud .connecting {
+        color: #A0A0A0;
+        font-family: sans-serif;
+        font-size: 2em;
+        text-align: center;
+    }
+    #fighterimg{
+        margin-top: 2em;
+        width: 100%;
     }
     .pressed {
         border-left-color: #888;
@@ -263,6 +273,8 @@
   });
   socket.on('ok', function(data) {
     connected=true;
+    document.getElem("#fighterimg").src="img/"+data.color+".png";
+    document.getElem(".connecting").style.display="none";
     document.getElem("body").style.backgroundColor = data.color;
     navigator.vibrate([200,200,200,200]);
     
@@ -276,6 +288,7 @@
         "Just scored "+data.score+" points playing sound defender vs @CDDofficial at @ABconcerts");
      document.getElem("body").style.backgroundColor = 'transparent';
      document.getElem(".loser").style.display = 'block';
+     document.getElem(".connecting").style.display="block";
   })
   function tryConnect(){
     if(readyToConnect && !connected && window.matchMedia("(orientation: landscape)").matches){
@@ -395,10 +408,10 @@
             </div>
             <div class="hud">
                 <div class="connecting">
-                    <span>requesting permission ... please wait</span>
+                    <span>requesting permission for takeoff ... please wait</span>
                 </div>
                 <div class="readyForFight">
-
+                    <img id="fighterimg"/>
                 </div>
             </div>
             <div class="action">
