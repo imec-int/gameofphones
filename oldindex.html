@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>Sound defender client</title>
+  <meta name="viewport" content="width=530, user-scalable=no">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <style media="screen and (orientation: portrait)">
+    html, body {
+        height: 100%;
+    }
+    body {
+        width: 100%;
+        height: 100%;
+        font-size: 13px;
+        overflow: hidden;
+    }
+    article{
+        width: 100%;
+        height: 100%;
+    }
+    .portrait{
+        display: block;
+        width: 80%;
+        height: 80%;
+    }
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+      50% {
+        -webkit-transform: rotate(-90deg);
+      }
+      100% {
+        -webkit-transform: rotate(-90deg);
+      }
+    }
+    .portrait p{
+        font-size: 5vw;
+        top: 2em;
+        text-align: center;
+    }
+    .portrait span {
+        -webkit-animation-name: spin;
+        -webkit-animation-duration: 1000ms;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        -moz-animation-name: spin;
+        -moz-animation-duration: 1000ms;
+        -moz-animation-iteration-count: infinite;
+        -moz-animation-timing-function: linear;
+        -ms-animation-name: spin;
+        -ms-animation-duration: 1000ms;
+        -ms-animation-iteration-count: infinite;
+        -ms-animation-timing-function: linear;
+        width: 100%;
+        text-align: center;
+        margin-top: 5vw;
+        font-size: 30vw;
+    }
+    .landscape{
+        display: none;
+    }
+  </style>
+  <style media="screen and (orientation: landscape)">
+    html, body {
+        height: 100%;
+    }
+    body {
+        width: 100%;
+        height: 100%;
+        font-size: 13px;
+        overflow: hidden;
+    }
+    article{
+        width: 100%;
+        height: 100%;
+    }
+    .portrait{
+        display: none;
+    }
+    .landscape{
+        width: 100%;
+        height: 100%;
+    }
+    .controller {
+        background: url('img/controller.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+    }
+    .controller .up {
+        width: 50%;
+        height: 50%;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+    }
+    .controller .down {
+        width: 50%;
+        height: 50%;
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+    }
+    .controller .shoot {
+        width: 40%;
+        height: 70%;
+        position: absolute;
+        right: 2%;
+        bottom: 0%;
+    }
+    .controller .start {
+        width: 20%;
+        height: 70%;
+        position: absolute;
+        right: 22%;
+        bottom: 0%
+    }
+    .controller .kabeltje {
+        position: absolute;
+        left: 50%;
+        top: -1em;
+        background-color: #000;
+        z-index: -100;
+        width: 2em;
+        height: 15vh;
+    }
+    .loser {
+        display: none;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
+        z-index: 1000;
+        background: url('img/loser.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .loser .share {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        bottom: .5em;
+        font-size: 2em;
+    }
+    .loser .share label {
+        text-shadow:2px 2px #000000;
+        font-weight: bold;
+        color: #FAFAFA;
+    }
+    .loser .share button {
+        border: 1px solid #222022;
+        background-color: #FAFAFA;
+        font-size: 1em;
+        font-weight: normal;
+        border-radius: 5px;
+        color: #222022;
+    }
+    .loser .score {
+        width: 100%;
+        text-align: center;
+        text-shadow:2px 2px #000000;
+        font-weight: bold;
+        color: #FAFAFA;
+        font-size: 3em;
+        position: relative;
+        top: 1em;
+    }
+    .fa-twitter{
+        color:rgb(0, 172, 238);
+    }
+    .loser .replay {
+        font-size: 2em;
+    }
+    .loser .replay button {
+        border: 1px solid #222022;
+        background-color: #FAFAFA;
+        font-size: 1em;
+        font-weight: normal;
+        border-radius: 5px;
+        color: #222022;
+    }
+  </style>
+  <script src="http://lacerta.be/socket.io/socket.io.js"></script>
+  <script src="elem.js"></script>
+  <script>
+
+
+  var socket = io.connect('http://lacerta.be');
+  socket.on('connect', function () {
+     socket.emit("client");
+  })
+  socket.on('ok', function(data) {
+     document.getElem("body").style.backgroundColor = data.color;
+  })
+  socket.on('dead', function(data) {
+    document.getElem(".theScore").setText(data.score);
+    document.getElem(".share .twitter").attrib("data-prefilltext", 
+        "Just scored "+data.score+" points playing sound defender vs @CDDofficial at @ABconcerts");
+     document.getElem("body").style.backgroundColor = 'transparent';
+     document.getElem(".loser").style.display = 'block';
+     socket.disconnect();
+  })
+
+  var direction = '';
+  document.ready(function() {
+
+
+    var ratio = 889/366;
+    var up=document.getElem(".controller .up");
+    var down=document.getElem(".controller .down");
+
+    var startControlPad = function(event,direction) {
+        event.preventDefault();
+        window['direction'] = direction;
+    }
+    var stopControlPad = function(event,direction) {
+        event.preventDefault();
+        if (window['direction'] === direction) {
+            window['direction'] = '';
+        }
+    }
+    function prevent(event){
+        event.preventDefault();
+    }
+
+    up.on("touchstart", function(event) { startControlPad(event,"up"); })
+    up.on("touchenter", function(event) { startControlPad(event,"up"); })
+    up.on("touchleave", function(event) { stopControlPad(event,"up"); })
+    up.on("touchcancel", function(event) { stopControlPad(event,"up"); })
+    up.on("touchend", function(event) { stopControlPad(event,"up"); })
+
+    down.on("touchstart", function(event) { startControlPad(event,"down"); })
+    down.on("touchenter", function(event) { startControlPad(event,"down"); })
+    down.on("touchleave", function(event) { stopControlPad(event,"down"); })
+    down.on("touchcancel", function(event) { stopControlPad(event,"down"); })
+    down.on("touchend", function(event) { stopControlPad(event,"down"); })
+    var outside=document.getElemAll("section");
+    var touchevents=["touchstart","touchenter","touchleave","touchcancel","touchend"];
+    outside.forEach(function(elm){
+        for(var i=0;i<touchevents.length;i++){
+            elm.on(touchevents[i],prevent);
+        }
+    });
+    document.getElem(".shoot").on('touchstart', function(event) {
+        event.preventDefault();
+        socket.emit("shoot");
+    });
+
+    /*document.getElemAll(".controller, .loser").forEach(function(elem) {
+        elem.on("touchstart", function(event) { event.preventDefault(); })
+    });
+    document.getElemAll(".controller, .loser").forEach(function(elem) {
+        elem.on("touchend", function(event) { event.preventDefault(); })
+    });*/
+
+    document.getElem(".loser .twitter").on("click", tweet);
+    document.getElem(".loser .twitter").on("touchstart", tweet);
+
+    doOnOrientationChange();
+
+  });
+
+    function tweet() {
+        var url = "https://twitter.com/intent/tweet?text=";
+        url += encodeURIComponent(this.getAttribute("data-prefilltext"));
+        window.open(url);
+    }
+   setInterval(function(){
+        if (direction) socket.emit(direction);
+   },100);
+   window.addEventListener('orientationchange', doOnOrientationChange);
+   function doOnOrientationChange(){
+    var winwidth=window.innerWidth;
+    var winheight=window.innerHeight;
+    window.scrollTo(0,0);
+    document.getElem(".landscape").style.width = winwidth+"px";
+    document.getElem(".landscape").style.height = winheight+"px";
+    document.getElem(".portrait").style.width = winwidth+"px";
+    document.getElem(".portrait").style.height = winheight+"px";
+    winwidth=Math.floor(winwidth*90/100);
+    document.getElem(".controller").style.width = winwidth+"px";
+    document.getElem(".controller").style.height = parseInt(winwidth/ratio)+"px";
+        
+  }
+  </script>
+</head>
+  <body>
+<!--     <div class="connecting">
+        <div class="text">Connecting...</div>
+    </div> -->
+    <article>
+    <section class="landscape">
+        
+        <div class="controller">
+            <div class="kabeltje"></div>
+            <div class="up"></div>
+            <div class="down"></div>
+            <div class="shoot"></div>
+            <div class="start"></div>
+        </div>
+        <div class="loser">
+            <div class="score">
+                Your score: <span class="theScore"></span>
+            </div>
+            <div class="share">
+                <label>Share on: </label>
+                <button type="button" class="twitter" data-prefilltext="Just played sound defender vs @CDDofficial at @ABconcerts">
+                    <span class="fa fa-twitter"></span>
+                    Twitter
+                </button>
+            </div>
+            <div class="replay">
+                <button type="button"><span class="fa fa-gamepad"></span>Play again</button>
+            </div>
+        </div>
+    </section>
+    <section class="portrait">
+        <p>Please turn your phone sideways</p>
+        <span class="fa fa-mobile "></span>
+    </section>
+    </article>
+  </body>
+</html>
