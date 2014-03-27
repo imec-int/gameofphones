@@ -39,8 +39,25 @@
     });
     socket.on('live',function(data){
         live(data.player);
-    })
+    });
+    socket.on('admin',function(data){
+        if(data.scale){
+            scale=data.scale;
+        }
+        if(data.loudness){
+            loudscale=data.loudness;
+        }
+        if(data.channels){
+            midichannels=data.channels;
+        }
+    });
   });
+  var midichannels=[
+    [0,3,6,9,12,15],
+    [1,4,7,10,13],
+    [2,5,8,11,14]
+  ];
+  var loudscale=400;
   function kill(player){
     if(players[player].live){
         playcollection[player].opacity = 0;
@@ -69,10 +86,15 @@
     app.init(function(){
         app.onNoteOn(function(note, velocity, channel){
             if(velocity>10){
-                evildoers.push({
-                    note: note%12,
-                    channel: channel
-                });
+                for(var i=0;i<midichannels.length;i++){
+                    if(midichannels[i].indexOf(channel)>-1){
+                        evildoers.push({
+                            note: note%12,
+                            channel: i
+                        });
+                        break;
+                    }
+                }
             }
         });
     });
@@ -348,9 +370,6 @@ var booming=0;
 var averagevolume=0;
 var velocity=0;
 var gravity=.9;
-function onKeyDown(event) {
-	
-}
 playerheight=5;
 var height = view.size.height;
 step = height/20;
@@ -363,15 +382,6 @@ for(var i=0;i<5;i++){
     }
     player.bullets=bullets;
     players[i]=player;
-}
-function onKeyUp(event){
-    if(event.key=="a"){
-        changeHeight(0,-1);
-    }else if(event.key=="q"){
-        changeHeight(0,1);
-    }else if(event.key=="m"){
-        shoot(0);
-    }
 }
 
 var loudnessHistory = new Array(points);
@@ -441,7 +451,7 @@ function onFrame(event) {
             var value = center.y*2 - numba*4;
 
             if (graphType === 'level') value = center.y*2 - level/4;
-            else if (graphType === 'loudness') value = center.y*2 - loudness/400;
+            else if (graphType === 'loudness') value = center.y*2 - loudness/loudscale;
 
             // scroll points
             for ( var i = 1; i < (path.segments.length-2); i++ ){
@@ -478,7 +488,7 @@ function onFrame(event) {
                     players[i].currentHeight=5;
                     players[i].target=5;
                     p.position.y=5*step;
-                    kill(i);
+                    kill(i,p.position);
                 }
                 for(var j=0;j<bulletcount;j++){
                     if(players[i].bullets[j].active){
@@ -538,7 +548,7 @@ function onFrame(event) {
                         for(var j=0;j<5;j++){
                             var p=playcollection[j];
                             if(isHit(p,e)){
-                                kill(j);
+                                kill(j,e.position);
                                 players[j].currentpixel=5*step;
                                 players[j].currentHeight=5;
                                 players[j].target=5;
