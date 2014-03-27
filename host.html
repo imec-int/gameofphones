@@ -195,7 +195,7 @@ function changeHeight(playernr,height){
     }
 };
 function shoot(playernr){
-    if(playernr>players.length-1){
+    if(playernr>players.length-1 || !players[playernr].live){
         return;
     }
     for(var i=0;i<bulletcount;i++){

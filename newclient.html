@@ -265,6 +265,7 @@
     
   });
   socket.on('dead', function(data) {
+    alert('dead');
     connected=false;
     readyToConnect=false;
     document.getElem(".theScore").setText(data.score);
