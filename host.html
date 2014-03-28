@@ -41,6 +41,7 @@
         live(data.player);
     });
     socket.on('admin',function(data){
+        console.log(data);
         if(data.scale){
             scale=data.scale;
         }
