@@ -635,7 +635,7 @@ function onFrame(event) {
 
     function isHit(player, enemy) {
         var heightOffset = player.height/2;
-        var nmioffset = enemy.height/2;
+        var nmioffset = enemy.height/3;
         return (
             player.opacity === 1 &&
             player.position.x>enemy.position.x-20 && 
