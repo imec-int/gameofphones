@@ -41,7 +41,6 @@
         live(data.player);
     });
     socket.on('admin',function(data){
-        console.log(data);
         if(data.scale){
             scale=data.scale;
         }
@@ -508,7 +507,7 @@ function onFrame(event) {
                                     var e=evildoers[k];
                                     if(typeof e.note=="undefined"){
                                         var b=bulletpoints[i+(j*5)];
-                                        var heightOffset = e.height/2;
+                                        var heightOffset = e.height/3;
                                         if(b.position.x>e.position.x-20 && b.position.x<e.position.x+20 && b.position.y>e.position.y-heightOffset && b.position.y<e.position.y+heightOffset){
                                             e.remove();
                                             evildoers.splice(k,1);
@@ -636,12 +635,13 @@ function onFrame(event) {
 
     function isHit(player, enemy) {
         var heightOffset = player.height/2;
+        var nmioffset = enemy.height/2;
         return (
             player.opacity === 1 &&
             player.position.x>enemy.position.x-20 && 
             player.position.x<enemy.position.x+20 && 
-            player.position.y>enemy.position.y-heightOffset && 
-            player.position.y<enemy.position.y+heightOffset
+            player.position.y+heightOffset>enemy.position.y-nmioffset && 
+            player.position.y-heightOffset<enemy.position.y+nmioffset
         );
     }
 
