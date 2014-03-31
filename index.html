@@ -5,7 +5,7 @@
   <title>Sound defender client</title>
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-  <style media="screen and (orientation: portrait)">
+  <!--style media="screen and (orientation: portrait)">
     html, body {
         height: 100%;
     }
@@ -61,8 +61,8 @@
     .landscape{
         display: none;
     }
-  </style>
-  <style media="screen and (orientation: landscape)">
+  </style-->
+  <style>/* media="screen and (orientation: landscape)">*/
     html, body {
         height: 100%;
         margin:0;
@@ -269,7 +269,7 @@
         color: #222022;
     }
   </style>
-  <script src="/socket.io/socket.io.js"></script>
+  <script src="http://lacerta.be/socket.io/socket.io.js"></script>
   <script src="elem.js"></script>
   <script>
     navigator.vibrate = navigator.vibrate ||
@@ -278,7 +278,7 @@
        navigator.msVibrate;
   var readyToConnect=false;
   var connected=false;
-  var socket = io.connect(window.location.hostname);
+  var socket = io.connect('http://lacerta.be');
   socket.on('connect', function () {
     readyToConnect=true;
   });
@@ -302,7 +302,7 @@
      document.getElem(".connecting").style.display="block";
   })
   function tryConnect(){
-    if(readyToConnect && !connected && window.matchMedia("(orientation: landscape)").matches){
+    if(readyToConnect && !connected /*&& window.matchMedia("(orientation: landscape)").matches*/){
         socket.emit("client");
     }
   }
