@@ -269,7 +269,7 @@
         color: #222022;
     }
   </style>
-  <script src="http://lacerta.be/socket.io/socket.io.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="elem.js"></script>
   <script>
     navigator.vibrate = navigator.vibrate ||
@@ -278,7 +278,7 @@
        navigator.msVibrate;
   var readyToConnect=false;
   var connected=false;
-  var socket = io.connect('http://lacerta.be');
+  var socket = io.connect(window.location.hostname);
   socket.on('connect', function () {
     readyToConnect=true;
   });
