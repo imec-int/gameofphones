@@ -4,10 +4,10 @@
     <meta charset="UTF-8"/>
     <script src="dist/paper.js"></script>
     <!-- Sound defender socket io -->
-    <script src="http://lacerta.be/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="jquery-min.js"></script>
     <!-- midi backend -->
-    <script src="http://192.168.1.28:3000/javascripts/api.js" type='text/javascript'></script>
+    <script src="http://mixmini.mixlab.be:3000/javascripts/api.js" type='text/javascript'></script>
 
     <title>Sound Defender</title>
     <style>
@@ -15,17 +15,31 @@
             margin: 0;
             padding: 0;
         }
+        @-webkit-keyframes starry
+        {
+            0%   {background-position: 0px 0px;}
+            100% {background-position: -300px 0px;}
+        }
+
+        /* Standard syntax */
+        @keyframes starry
+        {
+            0%   {background-position: 0px 0px;}
+            100% {background-position: -300px 0px;}
+        }
         body {
             background: url('img/back2.gif');
+            -webkit-animation: starry 15s linear 0s infinite ; /* Chrome, Safari, Opera */
+            animation: starry 15s linear 0s infinite;
         }
     </style>
 </head>
 <body style="overflow:hidden">
 <script>
     // lightsocket backend
-    var lightsocket = io.connect('hacklights.mixapp.be');
+    var lightsocket = io.connect('hacklights.mixapp.be:9000');
     // sound defender nodejs backend
-  var socket = io.connect('http://lacerta.be');
+  var socket = io.connect(window.location.hostname);
   socket.on('news', function (data) {
     socket.emit('host');
     socket.on('down',function(data){
