@@ -93,23 +93,24 @@
         padding: 0px;
     }
     .controller {
-        height: 100%;
-        width: 100%;
+        height: 100vh;
+        width: 100vw;
         margin:0px;
-        margin-left: auto;
-        margin-right: auto;
+        /*margin-left: auto;
+        margin-right: auto;*/
         position: relative;
         background: #222022;
         padding: 0px;
     }
     .controller .movement{
-        width:33%;
-        height: 100%;
-        padding: 5% 5% 5% 5%;
+        width:33vw;
+        height: 100vh;
+        padding: 5vh 5vw 5vh 5vw;
         margin:0;
         border: 1em solid rgb(197, 33, 41);
         border-radius: 3em;
         position: absolute;
+        left:0px;
         box-sizing: border-box;
         background: -webkit-linear-gradient(top, rgba(89,106,114,1) 0%,rgba(206,220,231,1) 30%,rgba(112,133,142,1) 50%, rgba(89,106,114,1) 50%,rgba(206,220,231,1) 80%,rgba(112,133,142,1) 100%);
     }
@@ -148,15 +149,15 @@
         border-radius: 0 0 2em 2em;
     }
     .controller .action{
-        width:33%;
-        height: 100%;
-        padding: 5% 5% 5% 5%;
+        width:33vw;
+        height: 100vh;
+        padding: 5vh 5vw 5vw 5vh;
         margin:0;
         border: 1em solid rgb(197, 33, 41);
         border-radius: 3em;
         position: absolute;
         box-sizing: border-box;
-        right:0;
+        right:0px;
         background: -webkit-linear-gradient(top, rgba(89,106,114,1) 0%,rgba(206,220,231,1) 60%,rgba(112,133,142,1) 100%);
     }
     .controller .shoot {
@@ -177,17 +178,24 @@
         text-align: right;
     }
     .controller .hud{
-        width:33%;
-        height:100%;
+        width:33vw;
+        height:100vh;
         position: absolute;
         left:33.333%;
     }
-    .controller .hud .connecting {
+    .controller .connecting {
         color: #A0A0A0;
         font-family: sans-serif;
         font-size: 2em;
         text-align: center;
-        z-index: 2;
+        padding-top:20vh;
+        z-index: 20;
+        background-color: #222022;
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
     }
     #fighterimg{
         margin-top: 2em;
@@ -261,7 +269,7 @@
         color: #222022;
     }
   </style>
-  <script src="http://lacerta.be/socket.io/socket.io.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="elem.js"></script>
   <script>
     navigator.vibrate = navigator.vibrate ||
@@ -270,7 +278,7 @@
        navigator.msVibrate;
   var readyToConnect=false;
   var connected=false;
-  var socket = io.connect('http://lacerta.be');
+  var socket = io.connect(window.location.hostname);
   socket.on('connect', function () {
     readyToConnect=true;
   });
@@ -403,15 +411,13 @@
     <article>
     <section class="landscape">
         
+
         <div class="controller">
             <div class="movement">
                 <div class="up"><i class="fa fa-arrow-up"></i></div>
                 <div class="down"><i class="fa fa-arrow-down"></i></div>
             </div>
             <div class="hud">
-                <div class="connecting">
-                    <span>requesting permission for takeoff ... please wait</span>
-                </div>
                 <div class="readyForFight">
                     <img id="fighterimg"/>
                 </div>
@@ -425,6 +431,9 @@
                     </div>
                 </div>
             </div>
+        <div class="connecting">
+            <span>requesting permission for takeoff ... please wait</span>
+        </div>
         </div>
         <div class="loser">
             <div class="score">
