@@ -1,678 +1,305 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8"/>
-    <script src="dist/paper.js"></script>
-    <!-- Sound defender socket io -->
-    <script src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript" src="jquery-min.js"></script>
-    <!-- midi backend -->
-    <script src="http://mixmini.mixlab.be:3000/javascripts/api.js" type='text/javascript'></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sound Defender</title>
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-        }
-        @-webkit-keyframes starry
-        {
-            0%   {background-position: 0px 0px;}
-            100% {background-position: -300px 0px;}
-        }
-
-        /* Standard syntax */
-        @keyframes starry
-        {
-            0%   {background-position: 0px 0px;}
-            100% {background-position: -300px 0px;}
-        }
-        body {
-            background: url('img/back2.gif');
-            -webkit-animation: starry 15s linear 0s infinite ; /* Chrome, Safari, Opera */
-            animation: starry 15s linear 0s infinite;
-        }
-    </style>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!--script type="application/javascript" src="js/vector2D.js"></script>
+    <script type="application/javascript" src="js/ScarletEngine.js"></script-->
+    <script type="application/javascript" src="http://myster0n.github.io/ScarletEngine/javascripts/ScarletEngine.min.js"></script>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style type="text/css"></style>
 </head>
-<body style="overflow:hidden">
+<body style="background-color: #000000;">
+<canvas id="canvas" width="1200" height="675"></canvas>
 <script>
-    // lightsocket backend
-    var lightsocket = io.connect('hacklights.mixapp.be:9000');
-    // sound defender nodejs backend
-  var socket = io.connect(window.location.hostname);
-  socket.on('news', function (data) {
-    socket.emit('host');
-    socket.on('down',function(data){
-        changeHeight(data.player,1);
-    });
-    socket.on('up',function(data){
-        changeHeight(data.player,-1);
-    });
-    socket.on('shoot',function(data){
-        shoot(data.player);
-    });
-    socket.on('live',function(data){
-        live(data.player);
-    });
-    socket.on('admin',function(data){
-        if(data.scale){
-            scale=data.scale;
-        }
-        if(data.loudness){
-            loudscale=data.loudness;
-        }
-        if(data.channels){
-            midichannels=data.channels;
-        }
-    });
-  });
-  var midichannels=[
-    [0,3,6,9,12,15],
-    [1,4,7,10,13],
-    [2,5,8,11,14]
-  ];
-  var loudscale=400;
-  function kill(player){
-    if(players[player].live){
-        playcollection[player].opacity = 0;
-        socket.emit("kill",{player:player,score:players[player].score});
-        players[player].score=0;
-        players[player].live=false;
-        for(var i=0;i<5;i++){
-            if(players[player].live){
-                players[player].score=(players[player].score||0)+50;
-            }
-        }
-        lightsocket.emit('hackevent', 'sd'+(player+1));
+    "use strict";
+
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+    var url;//='test.mp3';
+    var mural = new Mural('#canvas', false, false);
+    var play = mural.addPlayArea();
+    var points = 128;
+    var loudScale = 400;
+    var path = new Poly();
+    var context, javascriptNode, analyser, soundArray;
+    var shots=[];
+    var maxHeight=play.ctx.canvas.height-50;
+    var alienSpeed=new Vector2D(-play.ctx.canvas.width/points,0);
+    var aliens=[];
+    var bullets=[];
+    for(var s=0;s<5;s++){
+        var shoot=new Sprite('img/shoot3.png',145,19,140,10);
+        shoot.addAnimation("bang",[0,1,2,3]);
+        shoot.setCollisionBox(-120,-5,5,5);
+        play.addChild(shoot,0);
+        shoot.startAnimation("bang");
+        shoot.autoAnim(true);
+        shoot.setSpeed(4);
+        shoot.setCoords([0,-20]);
+        shoot.setScale(.5);
+        shots.push(shoot);
     }
-  }
-  function live(player){
-    players[player].live=true;
-    players[player].score=0;
-    playcollection[player].opacity = 0.5;
-    playcollection[player].invulnerabletime=invulnerabletime;
-  }
-</script>
-<script type="text/javascript">
-    var invulnerabletime=200;
-    var evildoers=[];
-    var app = new MixApi();
-    app.init(function(){
-        app.onNoteOn(function(note, velocity, channel){
-            if(velocity>10){
-                for(var i=0;i<midichannels.length;i++){
-                    if(midichannels[i].indexOf(channel)>-1){
-                        evildoers.push({
-                            note: note%12,
-                            channel: i
-                        });
+    //var shoot=new Sprite('img/shoot.png',145,11,140,6);
+    //shoot.setCollisionBox(-120,-5,5,5);
+    var ship =new Sprite('img/00FFFF.png',155,75,87,50);
+    ship.setCollisionBox(-80,-30,60,10);
+    play.addChild(ship,1);
+    ship.setCoords([100,100]);
+    ship.setAngle(0);
+    ship.setScale(.5);
+    initializePath();
+    function initializePath() {
+        var width = play.ctx.canvas.width;
+        var height = play.ctx.canvas.height;
+        path.addPoint(0, height);
+        for (var i = 0; i < points; i++) {
+            path.addPoint(width / points * i, height / 2);
+        }
+        path.addPoint(width / points * i, height);
+        path.addPoint(width, height);
+        path.fillStyle="brown";
+        path.usePattern('img/craters.png');
+    }
+    function loadSound() {
+        if (url) {
+            initFromMP3(url);
+        } else {
+            navigator.getUserMedia({audio: true}, initAudio, onError);
+        }
+    }
+    function initFromMP3(url) {
+        var audio = new Audio();
+        audio.src = url;
+        audio.addEventListener('canplaythrough', function () {
+            audio.play();
+        }, false);
+        audio.isUrl=true;
+        initAudio(audio);
+    }
+    function initAudio(audio) {
+        context = new AudioContext();
+        javascriptNode = context.createScriptProcessor(256, 2, 1);
+        javascriptNode.connect(context.destination);
+        analyser = context.createAnalyser();
+        var mediaStreamSource = audio.isUrl?context.createMediaElementSource(audio):context.createMediaStreamSource(audio);
+        mediaStreamSource.connect(analyser);
+        analyser.connect(context.destination);
+        javascriptNode.onaudioprocess = function () {
+            soundArray = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(soundArray);
+        }
+    }
+    // log if an error occurs
+    function onError(e) {
+        console.error(e);
+    }
+    loadSound();
+    path.strokeStyle("#df4b26");
+    path.lineWidth(3);
+    play.addChild(path);
+    path.setCoords([0, 0]);
+    ship.simpleAngle=0;
+
+    function endBullet(shoot){
+        shoot.move = null;
+        shoot.setCoords([0, -200]);
+    }
+
+    var loop = function (game) {
+        if(ship) {
+            // ***controls
+            if (game.isKey(16, true)) { // shoot
+                for (var s = 0; s < shots.length; s++) {
+                    if (!shots[s].move) {
+                        var shoot = shots[s];
+                        shoot.setCoords(ship.getCoordObj());
+                        shoot.setAngle(ship.getAngle());
+                        shoot.move = shoot.rotation.cloneVector();
+                        shoot.move.setLength(20);
+                        shoot.addCoords(shoot.move);
+                        shoot.addCoords(shoot.move);
                         break;
                     }
                 }
             }
-        });
-    });
+            if (game.isKey(40)) { // down
+                ship.simpleAngle++;
+                if (ship.simpleAngle > 15)ship.simpleAngle = 15;
+                ship.setAngleDegrees(ship.simpleAngle);
 
-</script>
-<script type="text/javascript">
-	var path;
-	var eq;
-	var player;
-    var oomph=1000; // the beat threshold
-    var energythreshold=100; // how much the previous point can differ from the next point
-    var booms=false;
-    var viewding=0;
-    var url;// = 'test.mp3';
-    var graphType = 'loudness' // numba, loudness, level
-    var colors=["#FF00FF","#FFFF00","#00FF00","#00FFFF","#0000FF"];
-    var playerImages=["img/0000FF.png","img/00FF00.png","img/00FFFF.png","img/FF00FF.png","img/FFFF00.png"];
-    var playcollection;
-    var pbjtImages=[
-        'img/pbjt0.png',
-        'img/pbjt1.png',
-        'img/pbjt2.png',
-        'img/pbjt3.png',
-        'img/pbjt4.png',
-        'img/pbjt5.png',
-        'img/pbjt6.png',
-        'img/pbjt7.png',
-    ]
-    var pbjtIndex = 0;
-    var scale=0.5;
+            } else if (game.isKey(38)) { // up
+                ship.simpleAngle--;
+                if (ship.simpleAngle < -15)ship.simpleAngle = -15;
+                ship.setAngleDegrees(ship.simpleAngle);
 
-function newcol(){
-	var h=rnd(360),l=rnd(30);
-	document.body.style.backgroundColor="hsl("+h+",50%,"+(100-l)+"%)";
-	path.fillColor="hsl("+(h+180)+",50%,"+l+"%)";
-}
-/*var interval=setInterval(difficult,1000);
-function difficult(){
-	energythreshold++;
-	if(energythreshold>100){
-		clearInterval(interval);
-	}
-}*/
-var keyup=false;
-function rnd(num){
-    return Math.floor(Math.random()*num);
-}
-function getPrimes(max) {
-    var sieve = [], i, j, primes = [];
-    for (i = 2; i <= max; ++i) {
-        if (!sieve[i]) {
-            // i has not been marked -- it is prime
-            primes.push(i);
-            for (j = i << 1; j <= max; j += i) {
-                sieve[j] = true;
-            }
-        }
-    }
-    return primes;
-}
-var primes=getPrimes(1024);
-var lookup=[1,1];
-for(var i=2;i<=1024;i++){
-    var num=i;
-    var tel=0;
-    var search=true;
-    while(search){
-        if(num%primes[tel]==0){
-            num=num/primes[tel];
-        }else if(primes[tel]<num){
-            tel++;
-        }else{
-            lookup[i]=tel==0?1:primes[tel];
-            search=false;
-        }
-    }
-}
-var players=[];
-var step=0;
+            } else { // straight
+                if (ship.simpleAngle !== 0) {
+                    if (ship.simpleAngle < 0) {
+                        ship.simpleAngle++;
+                        ship.setAngleDegrees(ship.simpleAngle);
+                    } else {
+                        ship.simpleAngle--;
+                        ship.setAngleDegrees(ship.simpleAngle);
+                    }
 
-setInterval(movePlayers,10);
-var bulletspeed=20;
-var bulletcount=5;
-var bulletpoints=[];
-function movePlayers(){
-    for(var i=0;i<players.length;i++){
-        pl=players[i];
-        if(pl.currentpixel<pl.target*step){
-            pl.currentpixel+=step/10;
-            if(pl.currentpixel>pl.target*step){
-                pl.currentpixel=pl.target*step;
-                pl.direction=0;
-            }
-        }else if(pl.currentpixel>pl.target*step){
-            pl.currentpixel-=step/10;
-            if(pl.currentpixel<pl.target*step){
-                pl.currentpixel=pl.target*step;
-                pl.direction=0;
-            }
-        }
-        pl.currentHeight=Math.floor(pl.currentpixel/step);
-        for(var j=0;j<pl.bullets.length;j++){
-            var bullet = pl.bullets[j];
-            if(bullet.active){
-                bullet.currentpixel+=bulletspeed;
-            }
-        }   
-    }
-}
-function changeHeight(playernr,height){
-    if(playernr>players.length-1){
-        return;
-    }
-    if(players[playernr].direction==height){
-        players[playernr].target=players[playernr].target+height;
-
-    }else{
-        players[playernr].target=players[playernr].currentHeight+height;    
-    }
-    players[playernr].direction=height;
-    if(players[playernr].target>40){
-        players[playernr].target=40;
-    }else if(players[playernr].target<0){
-        players[playernr].target=0;
-    }
-};
-function shoot(playernr){
-    if(playernr>players.length-1 || !players[playernr].live){
-        return;
-    }
-    for(var i=0;i<bulletcount;i++){
-        var bullet = players[playernr].bullets[i];
-        if(!players[playernr].bullets[i].active){
-            players[playernr].bullets[i].active=true;
-            players[playernr].bullets[i].y=players[playernr].currentpixel;
-            players[playernr].bullets[i].currentpixel= playcollection[playernr].position.x;
-            break;
-        }
-    }    
-}
-</script>
-<script type="text/paperscript" canvas="canvas-1">
-var width, height, center;
-var points = 128;
-var smooth = false;
-var pathHeight = 0;
-var soundArray;
-var context;
-var source;
-var analyser;
-var buffer;
-var audioBuffer;
-var javascriptNode;
-for(var i=0;i<5*bulletcount;i++){
-    bulletpoints[i] = new Raster({
-        image: document.getElementById('shoot'),
-        center:{x:-100,y:-100}
-    }); 
-    if (scale) bulletpoints[i].scale(scale);
-}
-eq = new Path();
-eq.fillColor = 'rgba(255,255,255,0.5)';
-path = new Path();
-path.fillColor = 'black';
-playcollection=[];
-for(var i=0;i<5;i++){
-    var p = new Raster({
-        source: playerImages[i],
-        position: {x:(7+(i*7))*view.size.width/128,y:view.center.y-10},
-        opacity:0
-    });
-    if (scale) p.scale(scale);
-    playcollection[i]=p;
-}
-viewding=view.size.width;
-
-initializePath();
-initializeEQ();
-function initializePath() {
-    center = view.center;
-    width = view.size.width;
-    height = view.size.height / 2;
-    path.segments = [];
-    path.add(view.bounds.bottomLeft);
-    for (var i = 0; i < points; i++) {
-        var point = new Point(width / points * i, center.y*2);
-        path.add(point);
-    }
-    path.add(new Point(width / points * i,view.size.height));
-    path.add(view.bounds.bottomRight);
-    path.fullySelected = false;
-}
-function initializeEQ() {
-    center = view.center;
-    width = view.size.width;
-    height = view.size.height / 2;
-    eq.segments = [];
-    eq.add(new Point(0,height*2));
-    //path.add(view.bounds.bottomLeft);
-    for (var i = 0; i < points; i++) {
-        var point = new Point(width / points * i, height);
-        eq.add(point);
-    }
-    eq.add(new Point(width / points * i,height));
-    eq.add(new Point(width / points * i,height*2));
-    eq.fullySelected = false;
-}
-function loadSound() {
-    if (url) {
-        initFromMP3(url);
-    } else {
-        navigator.webkitGetUserMedia({audio:true}, initAudio, onError);
-    }
-}
-
-function initFromMP3(url) {
-    context = new AudioContext();
-    javascriptNode = context.createScriptProcessor(256, 2, 1);
-    javascriptNode.connect(context.destination);
-    
-    analyser = context.createAnalyser();
-
-    var audio = new Audio();
-    audio.src = url;
-
-    audio.addEventListener('canplaythrough', function() {
-          audio.play();
-    }, false);
-    var sourceNode = context.createMediaElementSource(audio);
-    sourceNode.connect(analyser);
-    sourceNode.connect(context.destination);
-
-    javascriptNode.onaudioprocess = function() {
-        soundArray =  new Uint8Array(analyser.frequencyBinCount);
-        analyser.getByteFrequencyData(soundArray);
-    }
-}
-
-function initAudio(stream) {
-    context = new webkitAudioContext();
-    javascriptNode = context.createScriptProcessor(256, 2, 1);
-    javascriptNode.connect(context.destination);
-    
-    analyser = context.createAnalyser();
-
-    // Connect audio processing graph:
-    // live-input -> analyser -> destination
-
-    // Create an AudioNode from the stream.
-    var mediaStreamSource = context.createMediaStreamSource(stream);    
-    mediaStreamSource.connect(analyser);
-    analyser.connect(context.destination);
-    javascriptNode.onaudioprocess = function() {
-        soundArray =  new Uint8Array(analyser.frequencyBinCount);
-        analyser.getByteFrequencyData(soundArray);
-    }
-}
-
-// log if an error occurs
-function onError(e) {
-    console.log(e);
-}
-if (! window.AudioContext) {
-    if (! window.webkitAudioContext) {
-        alert('no audiocontext found');
-    }
-    window.AudioContext = window.webkitAudioContext;
-}
-loadSound();
-var prev=false;
-var restEnergy=0;
-var booming=0;
-var averagevolume=0;
-var velocity=0;
-var gravity=.9;
-playerheight=5;
-var height = view.size.height;
-step = height/20;
-    players=[];
-for(var i=0;i<5;i++){
-    var player={xpos:10+(i*3),currentHeight:5,currentpixel:5*step,target:5,direction:0,live:false,score:0};
-    var bullets=[];
-    for(var j=0;j<bulletcount;j++){
-        bullets[j]={active:false,currentpixel:-100,y:-100};
-    }
-    player.bullets=bullets;
-    players[i]=player;
-}
-
-var loudnessHistory = new Array(points);
-var beatHistory = new Array(points);
-var numbaHistory = new Array(points);
-var printed=0;
-function onFrame(event) {
-          if (soundArray) {
-            var varue=-1;
-            var numba=0;
-            //console.log(bandsize);
-            bins=[];
-            var highestbin=0;
-            var highestvalue=-1;
-            // pas vanaf waarde 3 gebruiken om de ruis te filteren
-            for ( var i = 0; i < eq.segments.length-2/*(soundArray.length)*/; i++ ){
-                eq.segments[i+1].point.y=view.size.height-soundArray[i];
-                var vallie=soundArray[i];//*((i+1)/soundArray.length);
-                if(vallie>varue){
-                    varue=vallie;
-                    numba=i;
                 }
-
             }
-            var level=0;
-            for(var i=0;i<5;i++){
-                level+=soundArray[5+i];
-            }
-            level=soundArray[3]*5;
-            averagevolume=(averagevolume+level)/2;
+            // ***move ship
+            var pos = ship.getCoordObj();
+            pos.y += ship.simpleAngle / 2;
+            if (pos.y < 30)pos.y = 30;
+            if (pos.y > maxHeight)pos.y = maxHeight;
+            ship.setCoords(pos);
+        }
 
-            if(level>oomph){
-                if(!prev){
-                    newcol();
-                    prev=true;
-                }else if(booms && booming<=0){
-                    var quake=rnd(path.segments.length-60)+40;
-                    var low=(view.size.height-path.segments[quake].point.y)/4;
-                    path.segments[quake].point.y=view.size.height-low*3;
-                    path.segments[quake-1].point.y-=low;
-                    path.segments[quake-2].point.y-=low/2;
-                    path.segments[quake+1].point.y-=low;
-                    path.segments[quake+2].point.y-=low/2;
-                    booming=1;
-                }else{
-                    booming++;
-                }
-                oomph=level-(level-oomph)/4;
-            }else{
-                booming--;
-                var tmp=oomph-averagevolume;
-                oomph=oomph-(tmp/100);
-                prev=false;
-            }
-
-            loudnessHistory.shift();
-            beatHistory.shift();
-            numbaHistory.shift();
-
-            var loudness = 0
-            for (var i=0; i<soundArray.length; i++) { loudness += soundArray[i]; }
-
-            loudnessHistory.push(loudness);
-            beatHistory.push(level);
-            numbaHistory.push(numba);
-
-            var value = center.y*2 - numba*4;
-
-            if (graphType === 'level') value = center.y*2 - level/4;
-            else if (graphType === 'loudness') value = center.y*2 - loudness/loudscale;
-
-            // scroll points
-            for ( var i = 1; i < (path.segments.length-2); i++ ){
-                path.segments[i].point.y = path.segments[i+1].point.y;
-            }
-            //path.segments[i].point.y=(path.segments[i-2].point.y+path.segments[i-1].point.y+value)/3;
-            var last=path.segments.length-2;
-            var energy=path.segments[last-1].point.y-(value+(restEnergy/2));
-            if(energy>energythreshold){
-            	//console.log(energy);
-            	restEnergy=(energy-energythreshold)/3;
-            	energy=energythreshold;
-            }else if(energy<(0-energythreshold)){
-            	//console.log(energy);
-            	restEnergy=(energy+energythreshold)/3;
-            	energy=-energythreshold;
-            }else{
-            	restEnergy=restEnergy/3;
-            }
-            path.segments[last].point.y=path.segments[last-1].point.y-energy;
-
-            for(var i=0;i<5;i++){
-                var p=playcollection[i];
-                if(p.invulnerabletime>0){
-                    p.invulnerabletime--;
-                    if(p.invulnerabletime==0){
-                        p.opacity=1;
+        // ***move shots
+        for(s=0;s<shots.length;s++) {
+            shoot=shots[s];
+            if (shoot.move) {
+                shoot.addCoords(shoot.move);
+                var sx = shoot.position.getX();
+                if (sx > mural.canvas.width + 50) {
+                    endBullet(shoot);
+                } else {
+                    var p = mural.canvas.width / (points - 2);
+                    var index = Math.floor(sx / p);
+                    var ppoint = path.getPoint(index);
+                    try {
+                        if (ppoint[1] < shoot.position.getY()) {
+                            endBullet(shoot);
+                        }
+                    } catch (e) {
+                        //console.log(sx, index);
                     }
                 }
-                p.position.y=players[i].currentpixel;
-                if(p.opacity===1 && p.position.y+10>path.segments[7+(i*7)].point.y){
-                    createExplosion(p.position);
-                    players[i].currentpixel=5*step;
-                    players[i].currentHeight=5;
-                    players[i].target=5;
-                    p.position.y=5*step;
-                    kill(i,p.position);
+            }
+        }
+        // ***landscape
+        if (soundArray) {
+            var loudness = 0;
+            //var numba = 0;
+            //var varue = 0;
+            /*for (var i = 0; i < soundArray.length; i++) {
+                var vallie = soundArray[i];//*((i+1)/soundArray.length);
+                if (vallie > varue) {
+                    varue = vallie;
+                    numba = i;
                 }
-                for(var j=0;j<bulletcount;j++){
-                    if(players[i].bullets[j].active){
-                        bulletpoints[i+(j*5)].position.x=players[i].bullets[j].currentpixel;
-                        bulletpoints[i+(j*5)].position.y=players[i].bullets[j].y;
-                        var bulletPathPosition=path.segments[Math.floor(bulletpoints[i+(j*5)].position.x*128/viewding)];
-                        if(bulletPathPosition){
-                           var  reference=bulletPathPosition.point.y;
-                            if(bulletpoints[i+(j*5)].position.y>=reference || bulletpoints[i+(j*5)].position.x>viewding){
-                                players[i].bullets[j].active=false;
-                                players[i].bullets[j].currentpixel=-100;
-                                bulletpoints[i+(j*5)].position.y=-100;
-                                bulletpoints[i+(j*5)].position.x=-100;
-                            }else{
-                                for(var k=0;k<evildoers.length;k++){
-                                    var e=evildoers[k];
-                                    if(typeof e.note=="undefined"){
-                                        var b=bulletpoints[i+(j*5)];
-                                        var heightOffset = e.height/3;
-                                        if(b.position.x>e.position.x-20 && b.position.x<e.position.x+20 && b.position.y>e.position.y-heightOffset && b.position.y<e.position.y+heightOffset){
-                                            e.remove();
-                                            evildoers.splice(k,1);
-                                            players[i].bullets[j].active=false;
-                                            players[i].bullets[j].currentpixel=-100;
-                                            players[i].score=(players[i].score||0)+10;
-                                            bulletpoints[i+(j*5)].position.y=-100;
-                                            bulletpoints[i+(j*5)].position.x=-100;
-                                            break;
-                                        }
-                                    }
-                                }
+
+            }*/
+            for (var j = 0; j < soundArray.length; j++) {
+                loudness += soundArray[j];
+            }
+
+            var value ;//= play.ctx.canvas.height - numba * 4;
+            value = play.ctx.canvas.height - loudness / loudScale;
+
+            for (var i = 1; i < (path.points.length - 2); i++) {
+                var point = path.getPoint(i);
+                path.changePoint(i, point[0], path.getPoint(i + 1)[1]);
+            }
+            path.changePoint(i, path.getPoint(i)[0], value);
+            path.relativePatternTranslate(alienSpeed.getX());
+
+        }
+
+        // ***create aliens
+        var newAlien=Math.rnd(-48,12);
+        if(newAlien>0){
+            //var alien =new Sprite('img/cdd1.png',79,75,36,38);//22/36
+            var alien =new Sprite('img/joeri.png',65,75,22,36);
+            alien.setRotationOffsetDegrees(-180);
+            //alien.setCollisionBox(-24,-27,28,25);
+            alien.setCollisionBox(-13,-29,32,33);
+            play.addChild(alien,2);
+            var y=value/13*(newAlien-1);
+            var x=play.ctx.canvas.width+40;
+            alien.setAngleDegrees(180);
+            alien.setCoords([x,y]);
+            alien.setScale(.5);
+            alien.rotspeed=Math.rnd(-20,20)/10;
+            aliens.push(alien);
+        }
+        // ***move aliens
+        for(var a=0;a<aliens.length;a++) {
+            var al = aliens[a];
+            al.addCoords(alienSpeed);
+            al.setAngleDegrees(al.getAngleDegrees() +al.rotspeed);
+            if(ship && al.position.getX()>300 && al.isPointingAt(ship,0.1)){
+                var bullet=new Sprite('img/bullet.png',16,16,8,8);
+                bullet.setCollisionBox(-4,-4,4,4);
+                play.addChild(bullet,3);
+                bullet.position=al.position.cloneVector();
+                bullet.move=al.rotation.cloneVector();
+                bullet.move.setAngle(al.getAbsoluteAngle());
+                bullet.move.setLength(10);
+                bullet.addAnimation("pulse",[0,1,0,2]);
+                bullet.startAnimation("pulse");
+                bullet.autoAnim(true);
+                bullet.setSpeed(4);
+                shoot.setScale(.5);
+                bullets.push(bullet);
+            }
+            if (al.position._x < -10) {
+                al.kill();
+                aliens.splice(a, 1);
+                a--;
+            } else {
+                collision:{
+                    for (var sa = 0; sa < shots.length; sa++) {
+                        shoot = shots[sa];
+                        if (shoot.move) {
+                            if (shoot.collidesWith(al)) {
+                                endBullet(shoot);
+                                al.kill();
+                                aliens.splice(a, 1);
+                                a--;
+                                break collision;
                             }
+
                         }
                     }
+                    if (ship && ship.collidesWith(al)) {
+                        al.kill();
+                        aliens.splice(a, 1);
+                        a--;
+                        //ship.kill();
+                        //ship=null;
+                    }
                 }
-    
+
             }
-
-			velocity-=gravity;
-			eq.smooth();
-            if (smooth)
-                    path.smooth();
-          }
-          for(var i=0;i<evildoers.length;i++){
-                var e=evildoers[i];
-                if(typeof e.note !=='undefined'){
-                    var n=createEnemy(e.note, e.channel);
-                    evildoers.splice(i,1,n);
-           
-                }else{
-                    e.position.x-=view.size.width / points;
-                    if(e.position.x<0){
-                        e.remove();
-                        evildoers.splice(i,1);
-                        i--;
-                    }else{
-                        for(var j=0;j<5;j++){
-                            var p=playcollection[j];
-                            if(isHit(p,e)){
-                                kill(j,e.position);
-                                players[j].currentpixel=5*step;
-                                players[j].currentHeight=5;
-                                players[j].target=5;
-                                p.position.y=5*step;
-                                createExplosion(e.position);
-                                e.remove();
-                                evildoers.splice(i,1);
-                                i--;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (event.count%6==0 && e.pbjt) {
-                        e.image = document.getElementById('pbjt_'+pbjtIndex);
-                    }
-                }
-          }
-
-          if (event.count%6==0) {
-              pbjtIndex++;
-              if (pbjtIndex >= 8) pbjtIndex = 0;
-          }
-
-
-          for (var i=0; i<explosions.length; i++) {
-                explosions[i].position.x += explosions[i].xadd;
-                explosions[i].position.y += explosions[i].yadd;
-                explosions[i].ttl--;
-                if (explosions[i].ttl <= 0) {
-                    explosions[i].remove();
-                    explosions.splice(i,1);
-                    i--;
-                }
-          }
-    }
-
-
-    var explosions = [];
-
-    function createExplosion(position) {
-        for (var i=0; i<30; i++) {
-             var explosionPath=new Path.Circle({
-                 radius:2,
-                 strokeColor:'white',
-                 fillColor:'yellow',
-                 center:position
-             });
-             explosionPath.ttl = 50;
-             explosionPath.xadd = Math.round(Math.random()*10-5);
-             explosionPath.yadd = Math.round(Math.random()*10-5);
-             explosions.push(explosionPath);
         }
-    }
-
-
-    function createEnemy(note, channel) {
-        var enemyImages = [
-            'img/cdd1.png',
-            'img/cdd3.png',
-            'img/cdd2.png'
-        ]
-        var enemy;
-
-        var bottom= path.segments[127].point.y - 20;
-        var yPos=20 + bottom/11*(11-note);
-
-        if (note === 0) {
-            enemy = new Raster({
-                image: document.getElementById('pbjt_'+pbjtIndex),
-                position: {x:path.segments[127].point.x,y:yPos}
-            }); 
-            enemy.pbjt = true;
-            if (scale) enemy.scale(scale);
-        } else {
-            enemy = new Raster({
-                source: enemyImages[ channel%3 ],
-                position: {x:path.segments[127].point.x,y:yPos}
-            }); 
-            if (scale) enemy.scale(scale);
+        // ***move alien bullets
+        for(var b=0;b<bullets.length;b++){
+            var bull=bullets[b];
+            bull.addCoords(bull.move);
+            if(bull.position.getX()<0 || bull.position.getX()>play.ctx.canvas.width ||
+               bull.position.getY()<0 || bull.position.getY()>play.ctx.canvas.height){
+                bullets.splice(b,1);
+                b--;
+                bull.kill();
+            }else if(ship && ship.collidesWith(bull)){
+                bullets.splice(b,1);
+                b--;
+                bull.kill();
+                //ship.kill();
+                //ship=null;
+            }
         }
-        return enemy;
-    }
+    };
 
-    function isHit(player, enemy) {
-        var heightOffset = player.height/2;
-        var nmioffset = enemy.height/3;
-        return (
-            player.opacity === 1 &&
-            player.position.x>enemy.position.x-20 && 
-            player.position.x<enemy.position.x+20 && 
-            player.position.y+heightOffset>enemy.position.y-nmioffset && 
-            player.position.y-heightOffset<enemy.position.y+nmioffset
-        );
-    }
+    var game = new ScarletEngine(mural, loop);
+
+    game.start();
 
 </script>
-<div class="canvas">
-    <canvas resize="true" id="canvas-1"></canvas>
-</div>
-<div>
-    <img src="img/pbjt0.png" id="pbjt_0"/>
-    <img src="img/pbjt1.png" id="pbjt_1"/>
-    <img src="img/pbjt2.png" id="pbjt_2"/>
-    <img src="img/pbjt3.png" id="pbjt_3"/>
-    <img src="img/pbjt4.png" id="pbjt_4"/>
-    <img src="img/pbjt5.png" id="pbjt_5"/>
-    <img src="img/pbjt6.png" id="pbjt_6"/>
-    <img src="img/pbjt7.png" id="pbjt_7"/>
-    <img src="img/shoot.png" id="shoot"/>
-</div>
 </body>
 </html>
