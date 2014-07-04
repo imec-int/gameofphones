@@ -10,7 +10,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!--script type="application/javascript" src="js/vector2D.js"></script>
     <script type="application/javascript" src="js/ScarletEngine.js"></script-->
-    <script type="application/javascript" src="http://myster0n.github.io/ScarletEngine/javascripts/ScarletEngine.min.js"></script>
+    <script type="application/javascript" src="ScarletEngine.min.js"></script>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
     <style type="text/css"></style>
@@ -35,6 +35,7 @@
     var alienSpeed=new Vector2D(-play.ctx.canvas.width/points,0);
     var aliens=[];
     var bullets=[];
+    var audio;
     for(var s=0;s<5;s++){
         var shoot=new Sprite('img/shoot3.png',145,19,140,10);
         shoot.addAnimation("bang",[0,1,2,3]);
@@ -47,7 +48,7 @@
         shoot.setScale(.5);
         shots.push(shoot);
     }
-    for(s=0;s<10;s++){
+    for(s=0;s<50;s++){
         var alien =new Sprite('img/joeri.png',65,75,22,36);
         alien.setRotationOffsetDegrees(-180);
         //alien.setCollisionBox(-24,-27,28,25);
@@ -58,7 +59,7 @@
         alien.active=false;
         aliens.push(alien);
     }
-    for(s=0;s<5;s++){
+    for(s=0;s<50;s++){
         var bullet = new Sprite('img/bullet.png', 16, 16, 8, 8);
         bullet.setCollisionBox(-4, -4, 4, 4);
         play.addChild(bullet, 3);
@@ -99,22 +100,14 @@
             navigator.getUserMedia({audio: true}, initAudio, onError);
         }
     }
-    var audio;
     function initFromMP3(url) {
         audio = new Audio();
         audio.src = url;
-        audio.addEventListener('canplaythrough', canplaythrough, false);
+        audio.addEventListener('canplay', canplay, false);
         audio.addEventListener('error',onError,false);
         audio.addEventListener('abort',onError,false);
-        audio.addEventListener('loadstart',onError,false);
-        audio.addEventListener('stalled',onError,false);
-        audio.addEventListener('waiting',onError,false);
-        audio.addEventListener('canplay',onError,false);
-
-        //audio.isUrl=true;
-        //initAudio(audio);
     }
-    function canplaythrough(e){
+    function canplay(e){
         audio.isUrl=true;
         initAudio(audio);
         audio.play();
@@ -326,7 +319,7 @@
                     al.addCoords(alienSpeed);
                     al.setAngleDegrees(al.getAngleDegrees() + al.rotspeed);
                 }
-                if (ship && al.position.getX() > 300 && al.isPointingAt(ship, 1)) {
+                if (ship && al.position.getX() > 300 && al.isPointingAt(ship, 10)) {
                     fireBullet(al);
                 }
                 if (al.position._x < -10) {
@@ -357,7 +350,7 @@
         }
         return false;
     }
-    
+
     var loop = function (game) {
         if(ship) {
             shipControls(game);
@@ -373,7 +366,7 @@
     };
 
     var game = new ScarletEngine(mural, loop);
-
+    game.registerKeys([16,40,38]);
     game.start();
 
 </script>
