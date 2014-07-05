@@ -269,8 +269,8 @@
         color: #222022;
     }
   </style>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="elem.js"></script>
+  <script src="http://lacerta.be/socket.io/socket.io.js"></script>
+  <script src="js/elem.js"></script>
   <script>
     navigator.vibrate = navigator.vibrate ||
        navigator.webkitVibrate ||
@@ -278,7 +278,7 @@
        navigator.msVibrate;
   var readyToConnect=false;
   var connected=false;
-  var socket = io.connect(window.location.hostname);
+  var socket = io.connect("lacerta.be");
   socket.on('connect', function () {
     readyToConnect=true;
   });
@@ -288,14 +288,14 @@
     document.getElem(".connecting").style.display="none";
     document.getElem("body").style.backgroundColor = data.color;
     navigator.vibrate([200,200,200,200]);
-    
+
   });
   socket.on('dead', function(data) {
     connected=false;
     readyToConnect=false;
     socket.disconnect();
     document.getElem(".theScore").setText(""+data.score);
-    document.getElem(".share .twitter").attrib("data-prefilltext", 
+    document.getElem(".share .twitter").attrib("data-prefilltext",
         "Just scored "+data.score+" points playing sound defender vs @CDDofficial at @ABconcerts");
      document.getElem("body").style.backgroundColor = 'transparent';
      document.getElem(".loser").style.display = 'block';
@@ -399,7 +399,7 @@
     document.getElem(".portrait").style.height = winheight+"px";
     /*document.getElem(".controller").style.width = winwidth+"px";
     document.getElem(".controller").style.height = parseInt(winwidth/ratio)+"px";*/
-        
+
   }
   </script>
 </head>
@@ -407,10 +407,10 @@
 <!--     <div class="connecting">
         <div class="text">Connecting...</div>
     </div> -->
-    
+
     <article>
     <section class="landscape">
-        
+
 
         <div class="controller">
             <div class="movement">

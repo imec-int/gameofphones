@@ -1,5 +1,5 @@
 function SoundDefender(target) {
-    var url='test.mp3';
+    var url;
     var mural = new Mural(target, false, false);
     var play = mural.addPlayArea();
     var points = 128;
@@ -12,20 +12,91 @@ function SoundDefender(target) {
     var alienSpeed=new Vector2D(-play.ctx.canvas.width/points,0);
     var aliens=[];
     var bullets=[];
+    var players=new Array(5);
     var audio;
-    for(var s=0;s<5;s++){
-        var shoot=new Sprite('img/shoot3.png',145,19,140,10);
-        shoot.addAnimation("bang",[0,1,2,3]);
-        shoot.setCollisionBox(-120,-5,5,5);
-        play.addChild(shoot,0);
-        shoot.startAnimation("bang");
-        shoot.autoAnim(true);
-        shoot.setSpeed(4);
-        shoot.setCoords([0,-20]);
-        shoot.setScale(.5);
-        shots.push(shoot);
+    var shipImages = ["img/0000FF.png","img/00FF00.png","img/00FFFF.png","img/FF00FF.png","img/FFFF00.png"];
+
+    function Player(playArea, id) {
+        this.shots=[];
+        this.hits=0;
+        this.id=id;
+
+        this.ship = new Sprite(shipImages[id],155,75,87,50);
+        this.ship.setCollisionBox(-80,-30,60,10);
+        playArea.addChild(this.ship,1);
+        this.ship.setCoords([100,100]);
+        this.ship.setAngle(0);
+        this.ship.setScale(.5);
+        this.ship.simpleAngle=0;
+
+        for(var s=0;s<5;s++){
+            var shoot=new Sprite('img/shoot3.png',145,19,140,10);
+            shoot.addAnimation("bang",[0,1,2,3]);
+            shoot.setCollisionBox(-120,-5,5,5);
+            playArea.addChild(shoot,0);
+            shoot.startAnimation("bang");
+            shoot.autoAnim(true);
+            shoot.setSpeed(4);
+            shoot.setCoords([0,-20]);
+            shoot.setScale(.5);
+            this.shots.push(shoot);
+        }
+
+        this.fireShot = function(){
+            if (!this.ship) return;
+            for (var s = 0; s < this.shots.length; s++) {
+                if (!this.shots[s].move) {
+                    var shoot = this.shots[s];
+                    shoot.setCoords(this.ship.getCoordObj());
+                    shoot.setAngle(this.ship.getAngle());
+                    shoot.move = shoot.rotation.cloneVector();
+                    shoot.move.setLength(20);
+                    shoot.addCoords(shoot.move);
+                    shoot.addCoords(shoot.move);
+                    break;
+                }
+            }
+        }
+
+        this.moveDown = function() {
+            if (!this.ship) return;
+            console.log(game.ticks);
+            this.ship.simpleAngle+=5;
+            if (this.ship.simpleAngle > 10) {
+                this.ship.simpleAngle = 10;
+            }
+            this.ship.setAngleDegrees(this.ship.simpleAngle);
+        }
+
+        this.moveUp = function() {
+            if (!this.ship) return;
+            this.ship.simpleAngle-=5
+            if (this.ship.simpleAngle < -10) {
+                this.ship.simpleAngle = -5;
+            }
+            this.ship.setAngleDegrees(this.ship.simpleAngle);
+        }
+
+        this.straight = function() {
+            if (!this.ship) return;
+            if (this.ship.simpleAngle !== 0) {
+                if (this.ship.simpleAngle < 0) {
+                    this.ship.simpleAngle+=game.ticks;
+                    this.ship.setAngleDegrees(this.ship.simpleAngle);
+                } else {
+                    this.ship.simpleAngle-=game.ticks;
+                    this.ship.setAngleDegrees(this.ship.simpleAngle);
+                }
+            }
+        }
+
     }
-    for(s=0;s<50;s++){
+
+    // for (var i=0; i<4; i++) {
+    //     players.push(new Player(play, shipImages[i]));
+    // }
+
+    for(s=0;s<1;s++){
         var alien =new Sprite('img/joeri.png',65,75,22,36);
         alien.setRotationOffsetDegrees(-180);
         //alien.setCollisionBox(-24,-27,28,25);
@@ -36,7 +107,7 @@ function SoundDefender(target) {
         alien.active=false;
         aliens.push(alien);
     }
-    for(s=0;s<50;s++){
+    for(s=0;s<0;s++){
         var bullet = new Sprite('img/bullet.png', 16, 16, 8, 8);
         bullet.setCollisionBox(-4, -4, 4, 4);
         play.addChild(bullet, 3);
@@ -51,12 +122,49 @@ function SoundDefender(target) {
     }
     //var shoot=new Sprite('img/shoot.png',145,11,140,6);
     //shoot.setCollisionBox(-120,-5,5,5);
-    var ship =new Sprite('img/00FFFF.png',155,75,87,50);
-    ship.setCollisionBox(-80,-30,60,10);
-    play.addChild(ship,1);
-    ship.setCoords([100,100]);
-    ship.setAngle(0);
-    ship.setScale(.5);
+
+    // sound defender nodejs backend
+    var socket = io.connect("lacerta.be");
+    socket.on('news', function (data) {
+        socket.emit('host');
+        socket.on('down',function(data){
+            console.log("down ");
+            console.log(data);
+            console.log(players[data.player]);
+            players[data.player].moveDown();
+        });
+        socket.on('up',function(data){
+            console.log("up: ");
+            console.log(data);
+            players[data.player].moveUp();
+        });
+        socket.on('shoot',function(data){
+            console.log("shoot: ");
+            console.log(data);
+            players[data.player].fireShot();
+        });
+        socket.on('live',function(data){
+            console.log("live!: ");
+            console.log(data);
+            createPlayer(data.player);
+        });
+        // socket.on('admin',function(data){
+        //     if(data.scale){
+        //         scale=data.scale;
+        //     }
+        //     if(data.loudness){
+        //         loudscale=data.loudness;
+        //     }
+        //     if(data.channels){
+        //         midichannels=data.channels;
+        //     }
+        // });
+    });
+
+    function createPlayer(index) {
+        players[index] = new Player(play, index);
+    }
+
     initializePath();
     function initializePath() {
         var width = play.ctx.canvas.width;
@@ -112,7 +220,7 @@ function SoundDefender(target) {
     path.lineWidth(3);
     play.addChild(path);
     path.setCoords([0, 0]);
-    ship.simpleAngle=0;
+
 
     function shipControls(game){
         if (game.isKey(16, true)) { // shoot
@@ -120,12 +228,16 @@ function SoundDefender(target) {
         }
         if (game.isKey(40)) { // down
             ship.simpleAngle+=game.ticks;
-            if (ship.simpleAngle > 15)ship.simpleAngle = 15;
+            if (ship.simpleAngle > 15) {
+                ship.simpleAngle = 15;
+            }
             ship.setAngleDegrees(ship.simpleAngle);
 
         } else if (game.isKey(38)) { // up
             ship.simpleAngle-=game.ticks;
-            if (ship.simpleAngle < -15)ship.simpleAngle = -15;
+            if (ship.simpleAngle < -15) {
+                ship.simpleAngle = -15;
+            }
             ship.setAngleDegrees(ship.simpleAngle);
 
         } else { // straight
@@ -149,29 +261,23 @@ function SoundDefender(target) {
         alien.active = false;
         alien.setCoords([0, -20]);
     }
-    function killShip(){
+    function killShip(ship){
+        console.log(ship);
         ship.kill();
         ship=null;
     }
+
+    function killPlayer(player){
+        socket.emit("kill",{player:player.id,score:player.hits});
+        player.ship.kill();
+        player.ship=null;
+    }
+
     function killBullet(bullet){
         bullet.active=false;
         bullet.setCoords([0,-20]);
     }
 
-    function fireShot(){
-        for (var s = 0; s < shots.length; s++) {
-            if (!shots[s].move) {
-                var shoot = shots[s];
-                shoot.setCoords(ship.getCoordObj());
-                shoot.setAngle(ship.getAngle());
-                shoot.move = shoot.rotation.cloneVector();
-                shoot.move.setLength(20);
-                shoot.addCoords(shoot.move);
-                shoot.addCoords(shoot.move);
-                break;
-            }
-        }
-    }
     function createAliens(value){
         var newAlien=Math.rnd(-48,12);
         if(newAlien>0){
@@ -204,52 +310,56 @@ function SoundDefender(target) {
         }
     }
 
-    function moveShip(game){
-        var pos = ship.getCoordObj();
-        pos.y += (ship.simpleAngle / 2)*game.ticks;
-        if (pos.y < 30)pos.y = 30;
-        if (pos.y > maxHeight)pos.y = maxHeight;
-        ship.setCoords(pos);
+    function moveShips(game){
+        players.forEach( function(player) {
+            if (player.ship) {
+                // console.log("moving ship for player: "+player);
+                var pos = player.ship.getCoordObj();
+                // console.log(pos);
+                pos.y += (player.ship.simpleAngle / 2)*game.ticks;
+                if (pos.y < 30) {
+                    pos.y = 30;
+                }
+                if (pos.y > maxHeight) {
+                    pos.y = maxHeight;
+                }
+                // console.log(pos);
+                player.ship.setCoords(pos);
+            }
+        });
     }
 
     function moveShots(game){
-        for(var s=0;s<shots.length;s++) {
-            shoot=shots[s];
-            if (shoot.move) {
-                shoot.addCoords(shoot.move.cloneVector().multiply(game.ticks));
-                var sx = shoot.position.getX();
-                if (sx > mural.canvas.width + 50) {
-                    killShot(shoot);
-                } else {
-                    var p = mural.canvas.width / (points - 2);
-                    var index = Math.floor(sx / p);
-                    var ppoint = path.getPoint(index);
-                    try {
-                        if (ppoint[1] < shoot.position.getY()) {
-                            killShot(shoot);
+        players.forEach( function(player) {
+            for(var s=0;s<player.shots.length;s++) {
+                shoot=player.shots[s];
+                if (shoot.move) {
+                    shoot.addCoords(shoot.move.cloneVector().multiply(game.ticks));
+                    var sx = shoot.position.getX();
+                    if (sx > mural.canvas.width + 50) {
+                        killShot(shoot);
+                    } else {
+                        var p = mural.canvas.width / (points - 2);
+                        var index = Math.floor(sx / p);
+                        var ppoint = path.getPoint(index);
+                        try {
+                            if (ppoint[1] < shoot.position.getY()) {
+                                killShot(shoot);
+                            }
+                        } catch (e) {
+                            //console.log(sx, index);
                         }
-                    } catch (e) {
-                        //console.log(sx, index);
                     }
                 }
             }
-        }
+        });
     }
 
     function moveLandscape(game){
         var value=play.ctx.canvas.height;
         if (soundArray) {
             var loudness = 0;
-            //var numba = 0;
-            //var varue = 0;
-            /*for (var i = 0; i < soundArray.length; i++) {
-             var vallie = soundArray[i];//*((i+1)/soundArray.length);
-             if (vallie > varue) {
-             varue = vallie;
-             numba = i;
-             }
 
-             }*/
             for (var j = 0; j < soundArray.length; j++) {
                 loudness += soundArray[j];
             }
@@ -296,17 +406,19 @@ function SoundDefender(target) {
                     al.addCoords(alienSpeed);
                     al.setAngleDegrees(al.getAngleDegrees() + al.rotspeed);
                 }
-                if (ship && al.position.getX() > 300 && al.isPointingAt(ship, 10)) {
-                    fireBullet(al);
-                }
+                // if (ship && al.position.getX() > 300 && al.isPointingAt(ship, 1)) {
+                //     fireBullet(al);
+                // }
                 if (al.position._x < -10) {
                     killAlien(al);
                 } else {
                     if(!alienShotCollision(al)){
-                        if (ship && ship.collidesWith(al)) {
-                            killAlien(al);
-                            killShip(ship);
-                        }
+                        players.forEach( function(player) {
+                            if (player.ship && player.ship.collidesWith(al)) {
+                                killAlien(al);
+                                killPlayer(player);
+                            }
+                        });
                     }
                 }
             }
@@ -314,25 +426,32 @@ function SoundDefender(target) {
     }
 
     function alienShotCollision(alien){
-        for (var sa = 0; sa < shots.length; sa++) {
-            shoot = shots[sa];
-            if (shoot.move) {
-                if (shoot.collidesWith(alien)) {
-                    killShot(shoot);
-                    killAlien(alien);
-                    return true;
-                }
+        for (var i=0; i<players.length; i++) {
+            var player=players[i];
+            if (player && player.shots) {
+                for (var sa = 0; sa < player.shots.length; sa++) {
+                    shot = player.shots[sa];
+                    if (shot.move) {
+                        if (shot.collidesWith(alien)) {
+                            player.hits++;
+                            killShot(shot);
+                            killAlien(alien);
+                            return true;
+                        }
 
+                    }
+                }
             }
         }
+
         return false;
     }
 
     var loop = function (game) {
-        if(ship) {
-            shipControls(game);
-            moveShip(game);
-        }
+        // if(ship) {
+        //     shipControls(game);
+        moveShips(game);
+        // }
         var value=moveLandscape(game);
 
         moveShots(game);
