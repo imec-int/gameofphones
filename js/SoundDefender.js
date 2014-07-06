@@ -386,7 +386,11 @@ function SoundDefender(target) {
                 path.changePoint(i, point[0], path.getPoint(i + game.ticks)[1]);
             }
             for(j=0;j<game.ticks;j++){
-                path.changePoint(i+j, path.getPoint(i+j)[0], value);
+                try {
+                    path.changePoint(i+j, path.getPoint(i+j)[0], value);
+                } catch (err) {
+                    onError(err);
+                }
 
             }
             path.relativePatternTranslate(alienSpeed.getX()*game.ticks);
