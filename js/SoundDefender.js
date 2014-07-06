@@ -1,19 +1,20 @@
 function SoundDefender(target) {
     var url;
     var mural = new Mural(target, false, false);
-    var play = mural.addPlayArea();
+    var playArea = mural.addPlayArea();
     var points = 128;
     var loudScale = 400;
     var path = new Poly();
     var context, javascriptNode, analyser;
     var soundArray=[];
     var shots=[];
-    var maxHeight=play.ctx.canvas.height-50;
-    var alienSpeed=new Vector2D(-play.ctx.canvas.width/points,0);
+    var maxHeight=playArea.ctx.canvas.height-50;
+    var alienSpeed=new Vector2D(-playArea.ctx.canvas.width/points,0);
     var aliens=[];
     var bullets=[];
     var players=new Array(5);
     var audio;
+    var godmode = false;
     var shipImages = ["img/0000FF.png","img/00FF00.png","img/00FFFF.png","img/FF00FF.png","img/FFFF00.png"];
 
     function Player(playArea, id) {
@@ -42,6 +43,14 @@ function SoundDefender(target) {
             this.shots.push(shoot);
         }
 
+        this.cleanUp = function() {
+            if (this.ship) this.ship.kill();
+            this.ship = null;
+            this.shots.forEach(function(shot) { try { playArea.removeChild(shot); } catch (err) {}; });
+            this.shots = [];
+            this.hits = 0;
+        }
+
         this.fireShot = function(){
             if (!this.ship) return;
             for (var s = 0; s < this.shots.length; s++) {
@@ -60,7 +69,6 @@ function SoundDefender(target) {
 
         this.moveDown = function() {
             if (!this.ship) return;
-            console.log(game.ticks);
             this.ship.simpleAngle+=5;
             if (this.ship.simpleAngle > 10) {
                 this.ship.simpleAngle = 10;
@@ -92,34 +100,40 @@ function SoundDefender(target) {
 
     }
 
-    // for (var i=0; i<4; i++) {
-    //     players.push(new Player(play, shipImages[i]));
-    // }
-
-    for(s=0;s<1;s++){
-        var alien =new Sprite('img/joeri.png',65,75,22,36);
-        alien.setRotationOffsetDegrees(-180);
+    function Alien(playArea) {
+        Sprite.apply(this,['img/joeri.png',65,75,22,36]);
+        this.setRotationOffsetDegrees(-180);
         //alien.setCollisionBox(-24,-27,28,25);
-        alien.setCollisionBox(-13,-29,32,33);
-        play.addChild(alien,2);
-        alien.setCoords([0,-20]);
-        alien.setScale(.5);
-        alien.active=false;
-        aliens.push(alien);
+        this.setCollisionBox(-13,-29,32,33);
+        playArea.addChild(this,2);
+        this.setCoords([0,-20]);
+        this.setScale(.5);
+        this.active=false;
+
+        this.cleanUp = function() {
+            try { playArea.removeChild(this); } catch (err) {};
+        }
     }
-    for(s=0;s<0;s++){
-        var bullet = new Sprite('img/bullet.png', 16, 16, 8, 8);
-        bullet.setCollisionBox(-4, -4, 4, 4);
-        play.addChild(bullet, 3);
-        bullet.setCoords([0,-10]);
-        bullet.addAnimation("pulse", [0, 1, 0, 2]);
-        bullet.startAnimation("pulse");
-        bullet.autoAnim(true);
-        bullet.setSpeed(4);
-        bullet.setScale(.5);
-        bullet.active=false;
-        bullets.push(bullet);
+    Alien.prototype = Sprite.prototype;
+
+    function Bullet(playArea) {
+        Sprite.apply(this,['img/bullet.png', 16, 16, 8, 8]);
+        this.setCollisionBox(-4, -4, 4, 4);
+        playArea.addChild(this, 3);
+        this.setCoords([0,-10]);
+        this.addAnimation("pulse", [0, 1, 0, 2]);
+        this.startAnimation("pulse");
+        this.autoAnim(true);
+        this.setSpeed(4);
+        this.setScale(.5);
+        this.active=false;
+
+        this.cleanUp = function() {
+            try { playArea.removeChild(this); } catch (err) {};
+        }
     }
+    Bullet.prototype = Sprite.prototype;
+
     //var shoot=new Sprite('img/shoot.png',145,11,140,6);
     //shoot.setCollisionBox(-120,-5,5,5);
 
@@ -128,18 +142,26 @@ function SoundDefender(target) {
     socket.on('news', function (data) {
         socket.emit('host');
         socket.on('down',function(data){
-            players[data.player].moveDown();
+            if (players[data.player]) players[data.player].moveDown();
         });
         socket.on('up',function(data){
-            players[data.player].moveUp();
+            if (players[data.player]) players[data.player].moveUp();
         });
         socket.on('shoot',function(data){
-            players[data.player].fireShot();
+            if (players[data.player]) players[data.player].fireShot();
         });
         socket.on('live',function(data){
             console.log("live!: ");
             console.log(data);
             createPlayer(data.player);
+        });
+        socket.on('newGame', function(data) {
+            godmode = true;
+            initNewGame();
+            document.getElem("#pincode").setText(data.pin);
+        });
+        socket.on('startGame', function(data) {
+            godmode = false;
         });
         // socket.on('admin',function(data){
         //     if(data.scale){
@@ -155,13 +177,13 @@ function SoundDefender(target) {
     });
 
     function createPlayer(index) {
-        players[index] = new Player(play, index);
+        players[index] = new Player(playArea, index);
     }
 
     initializePath();
     function initializePath() {
-        var width = play.ctx.canvas.width;
-        var height = play.ctx.canvas.height;
+        var width = playArea.ctx.canvas.width;
+        var height = playArea.ctx.canvas.height;
         path.addPoint(0, height);
         for (var i = 0; i < points; i++) {
             path.addPoint(width / points * i, height / 2);
@@ -211,12 +233,36 @@ function SoundDefender(target) {
     loadSound();
     path.strokeStyle("#df4b26");
     path.lineWidth(3);
-    play.addChild(path);
+    playArea.addChild(path);
     path.setCoords([0, 0]);
 
-    function killShot(shoot){
-        shoot.move = null;
-        shoot.setCoords([0, -200]);
+    initNewGame();
+
+    setInterval(function() {
+        aliens.push( new Alien(playArea) );
+    }, 5000);
+
+    function initNewGame() {
+        console.log("new game!");
+        players.forEach(function(player) { player.cleanUp(); });
+        aliens.forEach(function(alien) { alien.cleanUp(); });
+        bullets.forEach(function(bullet) { bullet.cleanUp(); });
+
+        aliens=[];
+        bullets=[];
+        players=new Array(5);
+
+        for(s=0;s<1;s++){
+            aliens.push( new Alien(playArea) );
+        }
+        for(s=0;s<0;s++){
+            bullets.push( new Bullet(playArea) );
+        }
+    }
+
+    function killShot(shot){
+        shot.move = null;
+        shot.setCoords([0, -200]);
     }
     function killAlien(alien){
         alien.active = false;
@@ -224,6 +270,7 @@ function SoundDefender(target) {
     }
 
     function killPlayer(player){
+        if (godmode) return;
         socket.emit("kill",{player:player.id,score:player.hits});
         player.ship.kill();
         player.ship=null;
@@ -241,7 +288,7 @@ function SoundDefender(target) {
                 var alien=aliens[s];
                 if(!alien.active){
                     var y=value/13*(newAlien-1);
-                    var x=play.ctx.canvas.width+40;
+                    var x=playArea.ctx.canvas.width+40;
                     alien.setAngleDegrees(180);
                     alien.setCoords([x,y]);
                     alien.rotspeed=Math.rnd(-20,20)/10;
@@ -284,7 +331,7 @@ function SoundDefender(target) {
 
     function moveShips(game){
         players.forEach( function(player) {
-            if (player.ship) {
+            if (player && player.ship) {
                 if (hitsCanvas(player.ship)) {
                     killPlayer(player);
                     return;
@@ -323,7 +370,7 @@ function SoundDefender(target) {
     }
 
     function moveLandscape(game){
-        var value=play.ctx.canvas.height;
+        var value=playArea.ctx.canvas.height;
         if (soundArray) {
             var loudness = 0;
 
@@ -331,8 +378,8 @@ function SoundDefender(target) {
                 loudness += soundArray[j];
             }
 
-            //var value ;//= play.ctx.canvas.height - numba * 4;
-            value = play.ctx.canvas.height - loudness / loudScale;
+            //var value ;//= playArea.ctx.canvas.height - numba * 4;
+            value = playArea.ctx.canvas.height - loudness / loudScale;
 
             for (var i = 1; i < (path.points.length - 1 - game.ticks); i++) {
                 var point = path.getPoint(i);
@@ -355,7 +402,7 @@ function SoundDefender(target) {
                 for (var i = 0; i < game.ticks; i++) {
                     bull.addCoords(bull.move);
                 }
-                if (bull.position.getX() < 0 || bull.position.getX() > play.ctx.canvas.width || bull.position.getY() < 0 || bull.position.getY() > play.ctx.canvas.height) {
+                if (bull.position.getX() < 0 || bull.position.getX() > playArea.ctx.canvas.width || bull.position.getY() < 0 || bull.position.getY() > playArea.ctx.canvas.height) {
                     killBullet(bull);
                 } else if (ship && ship.collidesWith(bull)) {
                     killBullet(bull);
@@ -381,7 +428,7 @@ function SoundDefender(target) {
                 } else {
                     if(!alienShotCollision(al)){
                         players.forEach( function(player) {
-                            if (player.ship && player.ship.collidesWith(al)) {
+                            if (player && player.ship && player.ship.collidesWith(al)) {
                                 killAlien(al);
                                 killPlayer(player);
                             }
@@ -400,7 +447,7 @@ function SoundDefender(target) {
                     shot = player.shots[sa];
                     if (shot.move) {
                         if (shot.collidesWith(alien)) {
-                            player.hits++;
+                            if (!godmode) player.hits++;
                             killShot(shot);
                             killAlien(alien);
                             return true;

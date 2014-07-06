@@ -16,12 +16,23 @@
     <script type="application/javascript" src="js/SoundDefender.js"></script>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
-    <style type="text/css"></style>
+    <style type="text/css">
+        #pincode {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 10px;
+            text-align: center;
+            font-size: 4em;
+            color: #FFFFFF;
+        }
+    </style>
 </head>
 <body style="background-color: #000000;">
     <div id="container">
         <canvas id="gameCanvas" width="1200" height="675"></canvas>
     </div>
+    <div id="pincode">1234</div>
 <script>
     document.ready(function() {
             var container = document.getElementById("container");
