@@ -128,19 +128,12 @@ function SoundDefender(target) {
     socket.on('news', function (data) {
         socket.emit('host');
         socket.on('down',function(data){
-            console.log("down ");
-            console.log(data);
-            console.log(players[data.player]);
             players[data.player].moveDown();
         });
         socket.on('up',function(data){
-            console.log("up: ");
-            console.log(data);
             players[data.player].moveUp();
         });
         socket.on('shoot',function(data){
-            console.log("shoot: ");
-            console.log(data);
             players[data.player].fireShot();
         });
         socket.on('live',function(data){
@@ -221,38 +214,6 @@ function SoundDefender(target) {
     play.addChild(path);
     path.setCoords([0, 0]);
 
-
-    function shipControls(game){
-        if (game.isKey(16, true)) { // shoot
-            fireShot();
-        }
-        if (game.isKey(40)) { // down
-            ship.simpleAngle+=game.ticks;
-            if (ship.simpleAngle > 15) {
-                ship.simpleAngle = 15;
-            }
-            ship.setAngleDegrees(ship.simpleAngle);
-
-        } else if (game.isKey(38)) { // up
-            ship.simpleAngle-=game.ticks;
-            if (ship.simpleAngle < -15) {
-                ship.simpleAngle = -15;
-            }
-            ship.setAngleDegrees(ship.simpleAngle);
-
-        } else { // straight
-            if (ship.simpleAngle !== 0) {
-                if (ship.simpleAngle < 0) {
-                    ship.simpleAngle+=game.ticks;
-                    ship.setAngleDegrees(ship.simpleAngle);
-                } else {
-                    ship.simpleAngle-=game.ticks;
-                    ship.setAngleDegrees(ship.simpleAngle);
-                }
-
-            }
-        }
-    }
     function killShot(shoot){
         shoot.move = null;
         shoot.setCoords([0, -200]);
@@ -260,11 +221,6 @@ function SoundDefender(target) {
     function killAlien(alien){
         alien.active = false;
         alien.setCoords([0, -20]);
-    }
-    function killShip(ship){
-        console.log(ship);
-        ship.kill();
-        ship=null;
     }
 
     function killPlayer(player){
@@ -310,9 +266,29 @@ function SoundDefender(target) {
         }
     }
 
+    function hitsCanvas(item) {
+        var x = item.getCoordObj().x;
+        var y = item.getCoordObj().y;
+        var p = mural.canvas.width / (points - 2);
+        var index = Math.floor(x / p);
+        var ppoint = path.getPoint(index);
+        try {
+            if (ppoint[1] < y) {
+                return true;
+            }
+        } catch (e) {
+            //console.log(sx, index);
+        }
+        return false;
+    }
+
     function moveShips(game){
         players.forEach( function(player) {
             if (player.ship) {
+                if (hitsCanvas(player.ship)) {
+                    killPlayer(player);
+                    return;
+                }
                 // console.log("moving ship for player: "+player);
                 var pos = player.ship.getCoordObj();
                 // console.log(pos);
@@ -338,17 +314,8 @@ function SoundDefender(target) {
                     var sx = shoot.position.getX();
                     if (sx > mural.canvas.width + 50) {
                         killShot(shoot);
-                    } else {
-                        var p = mural.canvas.width / (points - 2);
-                        var index = Math.floor(sx / p);
-                        var ppoint = path.getPoint(index);
-                        try {
-                            if (ppoint[1] < shoot.position.getY()) {
-                                killShot(shoot);
-                            }
-                        } catch (e) {
-                            //console.log(sx, index);
-                        }
+                    } else if (hitsCanvas(shoot)){
+                        killShot(shoot);
                     }
                 }
             }
