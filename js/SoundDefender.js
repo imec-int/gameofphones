@@ -101,11 +101,15 @@ function SoundDefender(target) {
     }
 
     function Alien(playArea) {
-        Sprite.apply(this,['img/joeri.png',65,75,22,36]);
+        Sprite.apply(this,['img/seagull.png',150,150,65,60]);
         this.setRotationOffsetDegrees(-180);
         //alien.setCollisionBox(-24,-27,28,25);
         this.setCollisionBox(-13,-29,32,33);
+        this.addAnimation("fly",[0,1,2,3,4,5,6,7]);
         playArea.addChild(this,2);
+        this.startAnimation("fly");
+        this.autoAnim(true);
+        this.setSpeed(4);
         this.setCoords([0,-20]);
         this.setScale(.5);
         this.active=false;
@@ -291,7 +295,7 @@ function SoundDefender(target) {
                     var x=playArea.ctx.canvas.width+40;
                     alien.setAngleDegrees(180);
                     alien.setCoords([x,y]);
-                    alien.rotspeed=Math.rnd(-20,20)/10;
+                    //alien.rotspeed=Math.rnd(-20,20)/10;
                     alien.active=true;
                     break;
                 }
@@ -422,7 +426,7 @@ function SoundDefender(target) {
             if(al.active) {
                 for (var i = 0; i < game.ticks; i++) {
                     al.addCoords(alienSpeed);
-                    al.setAngleDegrees(al.getAngleDegrees() + al.rotspeed);
+                    //al.setAngleDegrees(al.getAngleDegrees() + al.rotspeed);
                 }
                 // if (ship && al.position.getX() > 300 && al.isPointingAt(ship, 1)) {
                 //     fireBullet(al);
