@@ -109,9 +109,9 @@ function SoundDefender(target) {
         playArea.addChild(this,2);
         this.startAnimation("fly");
         this.autoAnim(true);
-        this.setSpeed(4);
+        this.setSpeed(3);
         this.setCoords([0,-20]);
-        this.setScale(.5);
+        this.setScale(1);
         this.active=false;
 
         this.cleanUp = function() {
@@ -195,7 +195,7 @@ function SoundDefender(target) {
         path.addPoint(width / points * i, height);
         path.addPoint(width, height);
         path.fillStyle="brown";
-        path.usePattern('img/craters.png');
+        path.usePattern('img/dune.jpg');
     }
     function loadSound() {
         if (url) {
