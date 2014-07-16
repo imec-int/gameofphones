@@ -4,3 +4,15 @@ html, body, #container {
     margin: 0;
     padding: 0;
 }
+body .playing{
+    background-image: url('../img/zee.jpg');
+}
+#waitScreen{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top:0px;
+    left:0px;
+    z-index: 100;
+    background-image: url('../img/gameOfPhones.jpg');
+}

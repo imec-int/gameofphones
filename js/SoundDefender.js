@@ -15,6 +15,7 @@ function SoundDefender(target) {
     var players=new Array(5);
     var audio;
     var godmode = false;
+    var gameOn=false;
     var shipImages = ["img/0000FF.png","img/00FF00.png","img/00FFFF.png","img/FF00FF.png","img/FFFF00.png"];
 
     function Player(playArea, id) {
@@ -470,17 +471,22 @@ function SoundDefender(target) {
     }
 
     var loop = function (game) {
-        // if(ship) {
-        //     shipControls(game);
-        moveShips(game);
-        // }
-        var value=moveLandscape(game);
+        if(gameOn){
 
-        moveShots(game);
+            // if(ship) {
+            //     shipControls(game);
+            moveShips(game);
+            // }
+            var value=moveLandscape(game);
 
-        createAliens(value);
-        moveAliens(game);
-        moveBullets(game);
+            moveShots(game);
+
+            createAliens(value);
+            moveAliens(game);
+            moveBullets(game);
+        }else{
+            showIntroScreen(game);
+        }
     };
 
     var game = new ScarletEngine(mural, loop);
