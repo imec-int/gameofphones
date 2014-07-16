@@ -1,5 +1,5 @@
 function SoundDefender(target) {
-    var url;
+    var mp3url;
     var mural = new Mural(target, false, false);
     var playArea = mural.addPlayArea();
     var points = 128;
@@ -7,7 +7,6 @@ function SoundDefender(target) {
     var path = new Poly();
     var context, javascriptNode, analyser;
     var soundArray=[];
-    var shots=[];
     var maxHeight=playArea.ctx.canvas.height-50;
     var alienSpeed=new Vector2D(-playArea.ctx.canvas.width/points,0);
     var aliens=[];
@@ -46,10 +45,10 @@ function SoundDefender(target) {
         this.cleanUp = function() {
             if (this.ship) this.ship.kill();
             this.ship = null;
-            this.shots.forEach(function(shot) { try { playArea.removeChild(shot); } catch (err) {}; });
+            this.shots.forEach(function(shot) { try { playArea.removeChild(shot); } catch (err) {} });
             this.shots = [];
             this.hits = 0;
-        }
+        };
 
         this.fireShot = function(){
             if (!this.ship) return;
@@ -65,7 +64,7 @@ function SoundDefender(target) {
                     break;
                 }
             }
-        }
+        };
 
         this.moveDown = function() {
             if (!this.ship) return;
@@ -74,16 +73,16 @@ function SoundDefender(target) {
                 this.ship.simpleAngle = 10;
             }
             this.ship.setAngleDegrees(this.ship.simpleAngle);
-        }
+        };
 
         this.moveUp = function() {
             if (!this.ship) return;
-            this.ship.simpleAngle-=5
+            this.ship.simpleAngle-=5;
             if (this.ship.simpleAngle < -10) {
                 this.ship.simpleAngle = -5;
             }
             this.ship.setAngleDegrees(this.ship.simpleAngle);
-        }
+        };
 
         this.straight = function() {
             if (!this.ship) return;
@@ -110,7 +109,7 @@ function SoundDefender(target) {
         this.startAnimation("fly");
         this.autoAnim(true);
         this.setSpeed(3);
-        this.setCoords([0,-20]);
+        this.setCoords([-200,-200]);
         this.setScale(1);
         this.active=false;
 
@@ -133,7 +132,7 @@ function SoundDefender(target) {
         this.active=false;
 
         this.cleanUp = function() {
-            try { playArea.removeChild(this); } catch (err) {};
+            try { playArea.removeChild(this); } catch (err) {}
         }
     }
     Bullet.prototype = Sprite.prototype;
@@ -198,8 +197,8 @@ function SoundDefender(target) {
         path.usePattern('img/dune.jpg');
     }
     function loadSound() {
-        if (url) {
-            initFromMP3(url);
+        if (mp3url) {
+            initFromMP3(mp3url);
         } else {
             navigator.getUserMedia({audio: true}, initAudio, onError);
         }
@@ -270,7 +269,7 @@ function SoundDefender(target) {
     }
     function killAlien(alien){
         alien.active = false;
-        alien.setCoords([0, -20]);
+        alien.setCoords([-200, -200]);
     }
 
     function killPlayer(player){
