@@ -1,5 +1,5 @@
 function SoundDefender(target) {
-    var url;
+    var mp3url;
     var mural = new Mural(target, false, false);
     var playArea = mural.addPlayArea();
     var points = 128;
@@ -7,7 +7,6 @@ function SoundDefender(target) {
     var path = new Poly();
     var context, javascriptNode, analyser;
     var soundArray=[];
-    var shots=[];
     var maxHeight=playArea.ctx.canvas.height-50;
     var alienSpeed=new Vector2D(-playArea.ctx.canvas.width/points,0);
     var aliens=[];
@@ -15,7 +14,9 @@ function SoundDefender(target) {
     var players=new Array(5);
     var audio;
     var godmode = false;
-    var gameOn=false;
+    var startGameCountDown = 0;
+    var addAliensInterval;
+    var startGameCountDownInterval;
     var shipImages = ["img/0000FF.png","img/00FF00.png","img/00FFFF.png","img/FF00FF.png","img/FFFF00.png"];
 
     function Player(playArea, id) {
@@ -47,10 +48,10 @@ function SoundDefender(target) {
         this.cleanUp = function() {
             if (this.ship) this.ship.kill();
             this.ship = null;
-            this.shots.forEach(function(shot) { try { playArea.removeChild(shot); } catch (err) {}; });
+            this.shots.forEach(function(shot) { try { playArea.removeChild(shot); } catch (err) {} });
             this.shots = [];
             this.hits = 0;
-        }
+        };
 
         this.fireShot = function(){
             if (!this.ship) return;
@@ -66,7 +67,7 @@ function SoundDefender(target) {
                     break;
                 }
             }
-        }
+        };
 
         this.moveDown = function() {
             if (!this.ship) return;
@@ -75,16 +76,16 @@ function SoundDefender(target) {
                 this.ship.simpleAngle = 10;
             }
             this.ship.setAngleDegrees(this.ship.simpleAngle);
-        }
+        };
 
         this.moveUp = function() {
             if (!this.ship) return;
-            this.ship.simpleAngle-=5
+            this.ship.simpleAngle-=5;
             if (this.ship.simpleAngle < -10) {
                 this.ship.simpleAngle = -5;
             }
             this.ship.setAngleDegrees(this.ship.simpleAngle);
-        }
+        };
 
         this.straight = function() {
             if (!this.ship) return;
@@ -111,7 +112,7 @@ function SoundDefender(target) {
         this.startAnimation("fly");
         this.autoAnim(true);
         this.setSpeed(3);
-        this.setCoords([0,-20]);
+        this.setCoords([-200,-200]);
         this.setScale(1);
         this.active=false;
 
@@ -134,7 +135,7 @@ function SoundDefender(target) {
         this.active=false;
 
         this.cleanUp = function() {
-            try { playArea.removeChild(this); } catch (err) {};
+            try { playArea.removeChild(this); } catch (err) {}
         }
     }
     Bullet.prototype = Sprite.prototype;
@@ -157,7 +158,6 @@ function SoundDefender(target) {
         });
         socket.on('live',function(data){
             console.log("live!: ");
-            console.log(data);
             createPlayer(data.player);
         });
         socket.on('newGame', function(data) {
@@ -165,9 +165,7 @@ function SoundDefender(target) {
             initNewGame();
             document.getElem("#pincode").setText(data.pin);
         });
-        socket.on('startGame', function(data) {
-            godmode = false;
-        });
+        socket.on('startGame', startGame);
         // socket.on('admin',function(data){
         //     if(data.scale){
         //         scale=data.scale;
@@ -185,6 +183,26 @@ function SoundDefender(target) {
         players[index] = new Player(playArea, index);
     }
 
+    function startGame() {
+        console.log("start game!");
+        var countDownElem = document.getElem("#countdown");
+        startGameCountDown = 11;
+        startGameCountDownInterval = setInterval(function() {
+            startGameCountDown--;
+            if (startGameCountDown === 0) {
+                clearInterval(startGameCountDownInterval);
+                countDownElem.setText("START!");
+                setTimeout(function() { countDownElem.clearElem(); }, 500)
+                godmode = false;
+                addAliensInterval = setInterval(function() {
+                    aliens.push( new Alien(playArea) );
+                }, 5000);
+            } else {
+                countDownElem.setText(startGameCountDown);
+            }
+        }, 1000);
+    }
+
     initializePath();
     function initializePath() {
         var width = playArea.ctx.canvas.width;
@@ -199,8 +217,8 @@ function SoundDefender(target) {
         path.usePattern('img/dune.jpg');
     }
     function loadSound() {
-        if (url) {
-            initFromMP3(url);
+        if (mp3url) {
+            initFromMP3(mp3url);
         } else {
             navigator.getUserMedia({audio: true}, initAudio, onError);
         }
@@ -243,10 +261,6 @@ function SoundDefender(target) {
 
     initNewGame();
 
-    setInterval(function() {
-        aliens.push( new Alien(playArea) );
-    }, 5000);
-
     function initNewGame() {
         console.log("new game!");
         players.forEach(function(player) { player.cleanUp(); });
@@ -263,6 +277,8 @@ function SoundDefender(target) {
         for(s=0;s<0;s++){
             bullets.push( new Bullet(playArea) );
         }
+
+        if (addAliensInterval) clearInterval(addAliensInterval);
     }
 
     function killShot(shot){
@@ -271,7 +287,7 @@ function SoundDefender(target) {
     }
     function killAlien(alien){
         alien.active = false;
-        alien.setCoords([0, -20]);
+        alien.setCoords([-200, -200]);
     }
 
     function killPlayer(player){
@@ -471,22 +487,17 @@ function SoundDefender(target) {
     }
 
     var loop = function (game) {
-        if(gameOn){
+        // if(ship) {
+        //     shipControls(game);
+        moveShips(game);
+        // }
+        var value=moveLandscape(game);
 
-            // if(ship) {
-            //     shipControls(game);
-            moveShips(game);
-            // }
-            var value=moveLandscape(game);
+        moveShots(game);
 
-            moveShots(game);
-
-            createAliens(value);
-            moveAliens(game);
-            moveBullets(game);
-        }else{
-            showIntroScreen(game);
-        }
+        createAliens(value);
+        moveAliens(game);
+        moveBullets(game);
     };
 
     var game = new ScarletEngine(mural, loop);
