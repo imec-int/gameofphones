@@ -14,6 +14,9 @@ function SoundDefender(target) {
     var players=new Array(5);
     var audio;
     var godmode = false;
+    var startGameCountDown = 0;
+    var addAliensInterval;
+    var startGameCountDownInterval;
     var shipImages = ["img/0000FF.png","img/00FF00.png","img/00FFFF.png","img/FF00FF.png","img/FFFF00.png"];
 
     function Player(playArea, id) {
@@ -155,7 +158,6 @@ function SoundDefender(target) {
         });
         socket.on('live',function(data){
             console.log("live!: ");
-            console.log(data);
             createPlayer(data.player);
         });
         socket.on('newGame', function(data) {
@@ -163,9 +165,7 @@ function SoundDefender(target) {
             initNewGame();
             document.getElem("#pincode").setText(data.pin);
         });
-        socket.on('startGame', function(data) {
-            godmode = false;
-        });
+        socket.on('startGame', startGame);
         // socket.on('admin',function(data){
         //     if(data.scale){
         //         scale=data.scale;
@@ -181,6 +181,26 @@ function SoundDefender(target) {
 
     function createPlayer(index) {
         players[index] = new Player(playArea, index);
+    }
+
+    function startGame() {
+        console.log("start game!");
+        var countDownElem = document.getElem("#countdown");
+        startGameCountDown = 11;
+        startGameCountDownInterval = setInterval(function() {
+            startGameCountDown--;
+            if (startGameCountDown === 0) {
+                clearInterval(startGameCountDownInterval);
+                countDownElem.setText("START!");
+                setTimeout(function() { countDownElem.clearElem(); }, 500)
+                godmode = false;
+                addAliensInterval = setInterval(function() {
+                    aliens.push( new Alien(playArea) );
+                }, 5000);
+            } else {
+                countDownElem.setText(startGameCountDown);
+            }
+        }, 1000);
     }
 
     initializePath();
@@ -241,10 +261,6 @@ function SoundDefender(target) {
 
     initNewGame();
 
-    setInterval(function() {
-        aliens.push( new Alien(playArea) );
-    }, 5000);
-
     function initNewGame() {
         console.log("new game!");
         players.forEach(function(player) { player.cleanUp(); });
@@ -261,6 +277,8 @@ function SoundDefender(target) {
         for(s=0;s<0;s++){
             bullets.push( new Bullet(playArea) );
         }
+
+        if (addAliensInterval) clearInterval(addAliensInterval);
     }
 
     function killShot(shot){

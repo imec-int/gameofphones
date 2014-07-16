@@ -19,6 +19,7 @@
     <style type="text/css">
         #pincode {
             position: fixed;
+            z-index: 100;
             left: 0;
             right: 0;
             top: 10px;
@@ -26,23 +27,34 @@
             font-size: 4em;
             color: #FFFFFF;
         }
+        #countdown {
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            right: 0;
+            top: 50%;
+            text-align: center;
+            font-size: 6em;
+            color: #FFFFFF;
+        }
     </style>
 </head>
 <body style="background-color: #000000;">
-    <div id="container">
-        <canvas id="gameCanvas" width="1200" height="675"></canvas>
-    </div>
-    <div id="pincode">1234</div>
+<div id="container">
+    <canvas id="gameCanvas" width="1200" height="675"></canvas>
+</div>
+<div id="pincode">1234</div>
+<div id="countdown"></div>
 <script>
     document.ready(function() {
-            var container = document.getElementById("container");
-            var canvas = document.getElementById("gameCanvas");
-            canvas.height = container.offsetHeight;
-            canvas.width  = container.offsetWidth;
+        var container = document.getElementById("container");
+        var canvas = document.getElementById("gameCanvas");
+        canvas.height = container.offsetHeight;
+        canvas.width  = container.offsetWidth;
 
-            new SoundDefender("#gameCanvas");
-            // var game = new ScarletEngine(mural, loop);
-            // game.start();
+        new SoundDefender("#gameCanvas");
+        // var game = new ScarletEngine(mural, loop);
+        // game.start();
     })
 
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
