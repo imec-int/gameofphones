@@ -197,6 +197,7 @@ article{
     left: 0;
     width: 100%;
     height: 100%;
+    box-sizing: border-box;
 }
 #fighterimg{
     margin-top: 2em;
@@ -341,8 +342,15 @@ article{
         messageBox.p("Verkeerde pin code!");
         messageBox.form({'action': 'index.html'}).button({'type': 'submit'},"opnieuw");
     }
+    function handleNoGame() {
+        var messageBox = document.getElem(".message");
+        messageBox.clearElem();
+        messageBox.style.display = 'block';
+        messageBox.p("Geen spel bezig :?");
+        messageBox.form({'action': 'index.html'}).button({'type': 'submit'},"opnieuw");
+    }
     socket.on('nok', function(data) {
-        console.log("nok");
+        socket.disconnect();
         if (data.status === '400') {
             handleWrongPin();
         } else if (data.status === '404') {
