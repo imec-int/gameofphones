@@ -17,6 +17,7 @@ function SoundDefender(target) {
     var startGameCountDown = 0;
     var addAliensInterval;
     var startGameCountDownInterval;
+    var seagullShootAngles=[190,180,170,160,150,160,170,180];
     var shipImages = ["img/0000FF.png","img/00FF00.png","img/00FFFF.png","img/FF00FF.png","img/FFFF00.png"];
 
     function Player(playArea, id) {
@@ -104,7 +105,7 @@ function SoundDefender(target) {
 
     function Alien(playArea) {
         Sprite.apply(this,['img/seagull.png',150,150,65,60]);
-        this.setRotationOffsetDegrees(-180);
+        //this.setRotationOffsetDegrees(-180);
         //alien.setCollisionBox(-24,-27,28,25);
         this.setCollisionBox(-13,-29,32,33);
         this.addAnimation("fly",[0,1,2,3,4,5,6,7]);
@@ -115,6 +116,9 @@ function SoundDefender(target) {
         this.setCoords([-200,-200]);
         this.setScale(1);
         this.active=false;
+        this.pointer = new Drawable(0,0,0);
+        this.addChild(this.pointer,true);
+        this.pointer.setCoords([-13,-40]);
 
         this.cleanUp = function() {
             try { playArea.removeChild(this); } catch (err) {};
@@ -144,7 +148,7 @@ function SoundDefender(target) {
     //shoot.setCollisionBox(-120,-5,5,5);
 
     // sound defender nodejs backend
-    var socket = io.connect("lacerta.be");
+    var socket = io.connect("/");
     socket.on('news', function (data) {
         socket.emit('host');
         socket.on('down',function(data){
@@ -274,7 +278,7 @@ function SoundDefender(target) {
         for(s=0;s<1;s++){
             aliens.push( new Alien(playArea) );
         }
-        for(s=0;s<0;s++){
+        for(s=0;s<10;s++){
             bullets.push( new Bullet(playArea) );
         }
 
@@ -310,7 +314,7 @@ function SoundDefender(target) {
                 if(!alien.active){
                     var y=value/13*(newAlien-1);
                     var x=playArea.ctx.canvas.width+40;
-                    alien.setAngleDegrees(180);
+                    //alien.setAngleDegrees(180);
                     alien.setCoords([x,y]);
                     //alien.rotspeed=Math.rnd(-20,20)/10;
                     alien.active=true;
@@ -321,12 +325,13 @@ function SoundDefender(target) {
     }
 
     function fireBullet(alien){
-        for(s=0;s<bullets.length;s++){
+        for(var s=0;s<bullets.length;s++){
             var bullet=bullets[s];
             if(!bullet.active){
                 bullet.position = alien.position.cloneVector();
-                bullet.move = alien.rotation.cloneVector();
-                bullet.move.setAngle(alien.getAbsoluteAngle());
+                bullet.addCoords(alien.pointer.position.cloneVector());
+                bullet.move = alien.pointer.rotation.cloneVector();
+                bullet.move.setAngle(alien.pointer.getAngle());
                 bullet.move.setLength(10);
                 bullet.active=true;
                 break;
@@ -429,9 +434,15 @@ function SoundDefender(target) {
                 }
                 if (bull.position.getX() < 0 || bull.position.getX() > playArea.ctx.canvas.width || bull.position.getY() < 0 || bull.position.getY() > playArea.ctx.canvas.height) {
                     killBullet(bull);
-                } else if (ship && ship.collidesWith(bull)) {
-                    killBullet(bull);
-                    killShip(ship);
+                } else{
+                    for(var i=0;i<players.length;i++){
+                        ship=players[i];
+                        if(ship && ship.ship && ship.ship.collidesWith(bull)){
+                            killBullet(bull);
+                            killPlayer(ship);
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -445,6 +456,12 @@ function SoundDefender(target) {
                     al.addCoords(alienSpeed);
                     //al.setAngleDegrees(al.getAngleDegrees() + al.rotspeed);
                 }
+                al.pointer.setAngleDegrees(seagullShootAngles[al.animationIndex]);
+                players.some(function(player){
+                    if(player && player.ship && al.pointer.isPointingAt(player.ship,5)){
+                        fireBullet(al);
+                    }
+                })
                 // if (ship && al.position.getX() > 300 && al.isPointingAt(ship, 1)) {
                 //     fireBullet(al);
                 // }
@@ -503,4 +520,5 @@ function SoundDefender(target) {
     var game = new ScarletEngine(mural, loop);
     game.registerKeys([16,40,38]);
     game.start();
+    window.game=game;
 }

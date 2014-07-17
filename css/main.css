@@ -4,8 +4,8 @@ html, body, #container {
     margin: 0;
     padding: 0;
 }
-body .playing{
-    background-image: url('../img/zee.jpg');
+body {
+    background-image: url('/img/zee.jpg');
 }
 #waitScreen{
     height: 100%;
@@ -14,5 +14,5 @@ body .playing{
     top:0px;
     left:0px;
     z-index: 100;
-    background-image: url('../img/gameOfPhones.jpg');
+    background-image: url('/img/gameOfPhones.jpg');
 }
