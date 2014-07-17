@@ -192,11 +192,16 @@ function SoundDefender(target) {
             if (startGameCountDown === 0) {
                 clearInterval(startGameCountDownInterval);
                 countDownElem.setText("START!");
-                setTimeout(function() { countDownElem.clearElem(); }, 500)
+                setTimeout(function () {
+                    countDownElem.clearElem();
+                }, 500)
                 godmode = false;
-                addAliensInterval = setInterval(function() {
-                    aliens.push( new Alien(playArea) );
+                addAliensInterval = setInterval(function () {
+                    aliens.push(new Alien(playArea));
                 }, 5000);
+            } else if (startGameCountDown < 0) {
+                countDownElem.clearElem();
+                clearInterval(startGameCountDownInterval);
             } else {
                 countDownElem.setText(startGameCountDown);
             }
@@ -278,6 +283,7 @@ function SoundDefender(target) {
             bullets.push( new Bullet(playArea) );
         }
 
+        if (startGameCountDownInterval) clearInterval(startGameCountDownInterval);
         if (addAliensInterval) clearInterval(addAliensInterval);
     }
 
