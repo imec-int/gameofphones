@@ -223,7 +223,8 @@ function SoundDefender(target) {
         }
         path.addPoint(width / points * i, height);
         path.addPoint(width, height);
-        path.fillStyle="brown";
+        path.lineWidth(3);
+        path.strokeStyle("#a4844c");
         path.usePattern('img/dune.jpg');
     }
     function loadSound() {
@@ -264,8 +265,6 @@ function SoundDefender(target) {
         console.error(e);
     }
     loadSound();
-    path.strokeStyle("#df4b26");
-    path.lineWidth(3);
     playArea.addChild(path);
     path.setCoords([0, 0]);
 
