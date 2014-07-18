@@ -2,7 +2,7 @@ function SoundDefender(target) {
     var mp3url;
     var mural = new Mural(target, false, false);
     var playArea = mural.addPlayArea();
-    var points = 128;
+    var points = 256;
     var loudScale = 400;
     var path = new Poly();
     var context, javascriptNode, analyser;
@@ -112,7 +112,7 @@ function SoundDefender(target) {
         playArea.addChild(this,2);
         this.startAnimation("fly");
         this.autoAnim(true);
-        this.setSpeed(3);
+        this.setSpeed(4);
         this.setCoords([-200,-200]);
         this.setScale(1);
         this.active=false;
@@ -420,6 +420,7 @@ function SoundDefender(target) {
             }
             for(j=0;j<game.ticks;j++){
                 try {
+                    if((i+j)>=path.points.length-1)break;
                     path.changePoint(i+j, path.getPoint(i+j)[0], value);
                 } catch (err) {
                     onError(err);
@@ -464,14 +465,13 @@ function SoundDefender(target) {
                     //al.setAngleDegrees(al.getAngleDegrees() + al.rotspeed);
                 }
                 al.pointer.setAngleDegrees(seagullShootAngles[al.animationIndex]);
-                players.some(function(player){
+                players.every(function(player){
                     if(player && player.ship && al.pointer.isPointingAt(player.ship,5)){
                         fireBullet(al);
+                        return false;
                     }
-                })
-                // if (ship && al.position.getX() > 300 && al.isPointingAt(ship, 1)) {
-                //     fireBullet(al);
-                // }
+                    return true;
+                });
                 if (al.position._x < -10) {
                     killAlien(al);
                 } else {
