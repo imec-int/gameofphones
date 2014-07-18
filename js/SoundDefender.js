@@ -121,7 +121,7 @@ function SoundDefender(target) {
         this.pointer.setCoords([-13,-40]);
 
         this.cleanUp = function() {
-            try { playArea.removeChild(this); } catch (err) {};
+            try { playArea.removeChild(this); } catch (err) {}
         }
     }
     Alien.prototype = Sprite.prototype;
@@ -149,7 +149,7 @@ function SoundDefender(target) {
 
     // sound defender nodejs backend
     var socket = io.connect("/");
-    socket.on('news', function (data) {
+    socket.on('news', function () {
         socket.emit('host');
         socket.on('down',function(data){
             if (players[data.player]) players[data.player].moveDown();
@@ -198,7 +198,7 @@ function SoundDefender(target) {
                 countDownElem.setText("START!");
                 setTimeout(function () {
                     countDownElem.clearElem();
-                }, 500)
+                }, 500);
                 godmode = false;
                 addAliensInterval = setInterval(function () {
                     aliens.push(new Alien(playArea));
