@@ -306,7 +306,7 @@ article{
     -webkit-appearance: button;
 }
 </style>
-<script src="http://lacerta.be/socket.io/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script src="js/elem.js"></script>
 <script>
     navigator.vibrate = navigator.vibrate ||
@@ -323,7 +323,7 @@ article{
 
     var readyToConnect=false;
     var connected=false;
-    var socket = io.connect("lacerta.be");
+    var socket = io.connect("/");
     socket.on('connect', function () {
         readyToConnect=true;
     });
