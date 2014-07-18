@@ -187,6 +187,7 @@ function SoundDefender(target) {
         console.log("start game!");
         var countDownElem = document.getElem("#countdown");
         startGameCountDown = 11;
+        if (startGameCountDownInterval) clearInterval(startGameCountDownInterval);
         startGameCountDownInterval = setInterval(function() {
             startGameCountDown--;
             if (startGameCountDown === 0) {
@@ -298,6 +299,7 @@ function SoundDefender(target) {
 
     function killPlayer(player){
         if (godmode) return;
+        console.log("player "+player.id+" died!");
         socket.emit("kill",{player:player.id,score:player.hits});
         player.ship.kill();
         player.ship=null;
