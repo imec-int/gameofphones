@@ -115,7 +115,7 @@ function SoundDefender(target) {
         helmetstart--;
         if(helmetstart<helmetmax)helmetstart=helmetmax;
         var rand=Math.rnd(0,helmetstart);
-        var img='img/seagull.png';
+        var img='img/seagull2.png';
         this.helmet=false;
         if(rand===helmetbase){
             img='img/helmet.png';
@@ -126,6 +126,11 @@ function SoundDefender(target) {
         //alien.setCollisionBox(-24,-27,28,25);
         this.setCollisionBox(-13,-29,32,33);
         this.addAnimation("fly",[0,1,2,3,4,5,6,7]);
+        if(!this.helmet){
+            this.addAnimation("death",[8,4,8,4,8,4,8,4,-1],function(){
+                killAlien(this);
+            }.bind(this));
+        }
         playArea.addChild(this,2);
         this.startAnimation("fly");
         this.autoAnim(true);
@@ -222,12 +227,18 @@ function SoundDefender(target) {
         }
     };
     function createPlayer(index) {
-        players[index] = new Player(playArea, index);
-        document.getElem("#ship"+index).removeClass("hide");
+        if(players.length<index || players[index]==null){
+            players[index] = new Player(playArea, index);
+            document.getElem("#ship"+index).removeClass("hide");
+        }
     }
     cdtimer=null;
     cdowner=99;
     function startCountDown(timer){
+        if(cdtimer!==null) {
+            clearInterval(cdtimer);
+            cdtimer=null;
+        }
         var countDownElem = document.getElem("#countdown");
         countDownElem.style.width="99%";
         cdowner=99;
@@ -238,8 +249,10 @@ function SoundDefender(target) {
         cdowner--;
         if(cdowner<0) {
             cdowner=0;
-            clearInterval(cdtimer);
-            cdtimer=null;
+            if(cdtimer!==null) {
+                clearInterval(cdtimer);
+                cdtimer=null;
+            }
         }
         countDownElem.style.width=cdowner+"%";
     }
@@ -363,6 +376,7 @@ function SoundDefender(target) {
     function killAlien(alien){
         alien.active = false;
         alien.setCoords([-200, -200]);
+        alien.startAnimation("fly");
     }
 
     function killPlayer(player){
@@ -567,7 +581,9 @@ function SoundDefender(target) {
                             killShot(shot);
                             if(!alien.helmet){
                                 if (!godmode) player.hits++;
-                                killAlien(alien);
+                                //killAlien(alien);
+
+                                alien.startAnimation("death");
                                 return true;
                             }
                         }

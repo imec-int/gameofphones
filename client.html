@@ -5,64 +5,7 @@
 <title>Sound defender client</title>
 <meta name="viewport" content="width=device-width, user-scalable=no">
 <link href="css/font-awesome.css" rel="stylesheet">
-<--style media="screen and (orientation: portrait)">
-  html, body {
-      height: 100%;
-  }
-  body {
-      width: 100%;
-      height: 100%;
-      font-size: 13px;
-      overflow: hidden;
-  }
-  article{
-      width: 100%;
-      height: 100%;
-  }
-  .portrait{
-      display: block;
-      width: 80%;
-      height: 80%;
-  }
-  /*@-webkit-keyframes spin {
-    0% {
-      -webkit-transform: rotate(0deg);
-    }
-    50% {
-      -webkit-transform: rotate(-90deg);
-    }
-    100% {
-      -webkit-transform: rotate(-90deg);
-    }
-  }*/
-  .portrait p{
-      font-size: 5vw;
-      top: 2em;
-      text-align: center;
-  }
-  .portrait span {
-     /* -webkit-animation-name: spin;
-      -webkit-animation-duration: 1000ms;
-      -webkit-animation-iteration-count: infinite;
-      -webkit-animation-timing-function: linear;
-      -moz-animation-name: spin;
-      -moz-animation-duration: 1000ms;
-      -moz-animation-iteration-count: infinite;
-      -moz-animation-timing-function: linear;
-      -ms-animation-name: spin;
-      -ms-animation-duration: 1000ms;
-      -ms-animation-iteration-count: infinite;
-      -ms-animation-timing-function: linear;*/
-      width: 100%;
-      text-align: center;
-      margin-top: 5vw;
-      font-size: 30vw;
-  }
-  .landscape{
-      display: none;
-  }
-</style-->
-<style media="screen and (orientation: landscape)">
+<style>/* media="screen and (orientation: landscape)">*/
 html, body {
     height: 100%;
     margin:0;
@@ -249,10 +192,9 @@ article,section{
 }
 .loser .form{
     font-size: 2.5em;
-
 }
 input {
-    margin: .25em 0;
+    margin: .25em 20px;
     padding: .5em .6em;
     border: 1px solid #ccc;
     box-shadow: inset 0 1px 3px #ddd;
@@ -266,6 +208,7 @@ input:focus {
     border-color: #129FEA;
 }
 .loser .form button {
+    margin: .25em 20px;
     background-color: #0078e7;
     color: #fff;
     padding: .5em 1em;
@@ -285,8 +228,13 @@ input:focus {
     -webkit-appearance: button;
 }
 
-
+.hud, .connecting{
+    font-family: "proxima-nova", sans-serif;
+    font-size:16px;
+}
 .message {
+    font-family: "proxima-nova", sans-serif;
+    font-size:16px;
     position: fixed;
     z-index: 10000;
     top: 0;
@@ -471,6 +419,8 @@ input:focus {
             event.preventDefault();
             if(connected && started){
                 socket.emit("shoot");
+                mySound.stop();
+                mySound.setPosition(0);
                 mySound.play();
                 /*var shoot=document.getElem("#shoot");
                 shoot.currentTime=0;
@@ -479,7 +429,6 @@ input:focus {
             }
         }).on('touchend',function(){
             document.getElem(".shoot").removeClass("pressed");
-                    mySound.stop();
         });
 
 
@@ -544,19 +493,20 @@ input:focus {
                 </div>
             </div>
             <div class="connecting">
-                <span>requesting permission for takeoff ... please wait</span>
+                <span>inloggen ... even geduld</span>
             </div>
         </div>
         <div class="loser">
             <div class="score">
-                Your score: <span class="theScore"></span>
+                Uw score: <span class="theScore"></span>
             </div>
             <br><br>
             <span class="form">
                 <input type="hidden" name="score" id="postscore">
                 <input name="name" placeholder="name" maxlength="20" id="postname"><br>
                 <input name="email" type="email" placeholder="email" id="postemail"><br>
-                <button onclick="asub()">Submit</button>
+                <button onclick="asub()">Stuur</button>
+                <br><br><br>
             </span>
 
         </div>
