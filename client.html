@@ -360,6 +360,7 @@ input:focus {
         document.getElem("body").style.backgroundColor = 'transparent';
         document.getElem(".loser").style.display = 'block';
         document.getElem(".connecting").style.display="block";
+        document.getElem(".controller").style.display = 'none';
     })
     function tryConnect(){
         if(readyToConnect && !connected /*&& window.matchMedia("(orientation: landscape)").matches*/){

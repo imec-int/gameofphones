@@ -252,6 +252,7 @@ function SoundDefender(target) {
             if(cdtimer!==null) {
                 clearInterval(cdtimer);
                 cdtimer=null;
+                countDownElem.style.width="0%";
             }
         }
         countDownElem.style.width=cdowner+"%";
@@ -263,7 +264,8 @@ function SoundDefender(target) {
         if(cdtimer!==null){
             clearInterval(cdtimer);
             cdtimer=null;
-
+            var countDownElem = document.getElem("#countdown");
+            countDownElem.style.width="0%";
         }
         var countDownElem = document.getElem("#countdown");
         startGameCountDown = 10;
