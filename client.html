@@ -315,7 +315,7 @@ input:focus {
     });
     socket.on('start',function(data){
         started=true;
-    })
+    });
     function handleWrongPin() {
         var messageBox = document.getElem(".message");
         messageBox.clearElem();
@@ -346,7 +346,7 @@ input:focus {
         } else if (data.status === '404') {
             handleNoGame();
         }
-    })
+    });
     socket.on('dead', function(data) {
         connected=false;
         readyToConnect=false;
@@ -361,7 +361,7 @@ input:focus {
         document.getElem(".loser").style.display = 'block';
         document.getElem(".connecting").style.display="block";
         document.getElem(".controller").style.display = 'none';
-    })
+    });
     function tryConnect(){
         if(readyToConnect && !connected /*&& window.matchMedia("(orientation: landscape)").matches*/){
             socket.emit("client", { pin: getParameterByName("pin") });
@@ -384,14 +384,14 @@ input:focus {
             event.preventDefault();
             document.getElem("."+direction).addClass("pressed");
             window['direction'] = direction;
-        }
+        };
         var stopControlPad = function(event,direction) {
             event.preventDefault();
             document.getElem("."+direction).removeClass("pressed");
             if (window['direction'] === direction) {
                 window['direction'] = '';
             }
-        }
+        };
         function prevent(event){
             if(died)return;
             event.preventDefault();
