@@ -188,6 +188,13 @@ function SoundDefender(target) {
             initNewGame();
             document.getElem("#pincode b").setText(data.pin);
         });
+        socket.on('lost',function(data){
+            for(i=0;i<players.length;i++){
+                if(players[i].id==data.id){
+                    killPlayer(players[i]);
+                }
+            }
+        });
         socket.on('scores', function(data){
             updateTopTen(data);
         });
@@ -223,8 +230,8 @@ function SoundDefender(target) {
     function startCountDown(timer){
         var countDownElem = document.getElem("#countdown");
         countDownElem.style.width="99%";
-        cdowner=99
-        cdtimer=setInterval(counterdown,timer/100);
+        cdowner=99;
+        cdtimer=setInterval(counterdown,timer/99);
     }
     function counterdown(){
         var countDownElem = document.getElem("#countdown");

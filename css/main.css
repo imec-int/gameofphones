@@ -9,6 +9,7 @@ body {
     background-size: 100%;
     -webkit-background-size: 100%;
     overflow: hidden;
+    cursor: none;
 }
 #waitScreen{
     height: 100%;
