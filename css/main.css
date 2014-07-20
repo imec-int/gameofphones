@@ -108,6 +108,13 @@ body {
 #ships div{
 
 }
+#countdown{
+    position: absolute;
+    margin: 10px;
+    bottom: 0px;
+    height: 40px;
+    background-color:#C0C0C0 ;
+}
 /*
 "img/p0000FF.png","img/p00FF00.png","img/p00FFFF.png","img/pFF00FF.png","img/pFFFF00.png"
 */

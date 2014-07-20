@@ -200,6 +200,9 @@ function SoundDefender(target) {
                  loudScale=data.loudness;
              }
          });
+        socket.on('countdown',function(data){
+            startCountDown(data.timer);
+        })
     });
     function updateTopTen(data){
         var kol1=document.getElem('#kol1').clearElem();
@@ -215,11 +218,33 @@ function SoundDefender(target) {
         players[index] = new Player(playArea, index);
         document.getElem("#ship"+index).removeClass("hide");
     }
-
+    cdtimer=null;
+    cdowner=99;
+    function startCountDown(timer){
+        var countDownElem = document.getElem("#countdown");
+        countDownElem.style.width="99%";
+        cdowner=99
+        cdtimer=setInterval(counterdown,timer/100);
+    }
+    function counterdown(){
+        var countDownElem = document.getElem("#countdown");
+        cdowner--;
+        if(cdowner<0) {
+            cdowner=0;
+            clearInterval(cdtimer);
+            cdtimer=null;
+        }
+        countDownElem.style.width=cdowner+"%";
+    }
     function startGame() {
         gopScreen=false;
         document.getElem("#GOP").addClass("hide");
         console.log("start game!");
+        if(cdtimer!==null){
+            clearInterval(cdtimer);
+            cdtimer=null;
+
+        }
         var countDownElem = document.getElem("#countdown");
         startGameCountDown = 10;
         if (startGameCountDownInterval) clearInterval(startGameCountDownInterval);
@@ -233,10 +258,10 @@ function SoundDefender(target) {
                     aliens.push(new Alien(playArea));
                 }, 5000);
             } else if (startGameCountDown < 0) {
-                countDownElem.clearElem();
+                //countDownElem.clearElem();
                 clearInterval(startGameCountDownInterval);
             } else {
-                countDownElem.setText(startGameCountDown);
+                //countDownElem.setText(startGameCountDown);
             }
         }, 1000);
     }
