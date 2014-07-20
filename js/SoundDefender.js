@@ -18,17 +18,23 @@ function SoundDefender(target) {
     var addAliensInterval;
     var startGameCountDownInterval;
     var seagullShootAngles=[190,180,170,160,150,160,170,180];
-    var shipImages = ["img/0000FF.png","img/00FF00.png","img/00FFFF.png","img/FF00FF.png","img/FFFF00.png"];
+    var gopScreen=true;
+    var helmetstart=100;
+    var helmetmax=10;
+    var helmetbase=-5;
+    var shipImages = ["img/p0000FF.png","img/p00FF00.png","img/p00FFFF.png","img/pFF00FF.png","img/pFFFF00.png"];
 
     function Player(playArea, id) {
         this.shots=[];
         this.hits=0;
         this.id=id;
 
-        this.ship = new Sprite(shipImages[id],155,75,87,50);
-        this.ship.setCollisionBox(-80,-30,60,10);
+        this.ship = new Sprite(shipImages[id],150,56,119,49);
+        //this.ship = new Sprite(shipImages[id],155,75,87,50);
+        this.ship.setCollisionBox(-117,-47,5,5); // 2-124 2-54
+        //this.ship.setCollisionBox(-80,-30,60,10);
         playArea.addChild(this.ship,1);
-        this.ship.setCoords([100,100]);
+        this.ship.setCoords([219+(id*100),199]);
         this.ship.setAngle(0);
         this.ship.setScale(.5);
         this.ship.simpleAngle=0;
@@ -104,7 +110,18 @@ function SoundDefender(target) {
     }
 
     function Alien(playArea) {
-        Sprite.apply(this,['img/seagull.png',150,150,65,60]);
+        helmetbase++;
+        if(helmetbase>0) helmetbase=0;
+        helmetstart--;
+        if(helmetstart<helmetmax)helmetstart=helmetmax;
+        var rand=Math.rnd(0,helmetstart);
+        var img='img/seagull.png';
+        this.helmet=false;
+        if(rand===helmetbase){
+            img='img/helmet.png';
+            this.helmet=true;
+        }
+        Sprite.apply(this,[img,150,150,65,60]);
         //this.setRotationOffsetDegrees(-180);
         //alien.setCollisionBox(-24,-27,28,25);
         this.setCollisionBox(-13,-29,32,33);
@@ -167,7 +184,10 @@ function SoundDefender(target) {
         socket.on('newGame', function(data) {
             godmode = true;
             initNewGame();
-            document.getElem("#pincode").setText(data.pin);
+            document.getElem("#pincode b").setText(data.pin);
+        });
+        socket.on('scores', function(data){
+            updateTopTen(data);
         });
         socket.on('startGame', startGame);
         // socket.on('admin',function(data){
@@ -182,15 +202,27 @@ function SoundDefender(target) {
         //     }
         // });
     });
-
+    function updateTopTen(data){
+        var kol1=document.getElem('#kol1').clearElem();
+        var kol2=document.getElem('#kol2').clearElem();
+        for(var i=0;i<data.length;i++){
+            var write=i<5?kol1:kol2;
+            write.span({class:'listfield'},(i+1)+'.');
+            write.span({class:'namefield'},data[i].name);
+            write.span({class:'scorefield'},data[i].score);
+        }
+    };
     function createPlayer(index) {
         players[index] = new Player(playArea, index);
+        document.getElem("#ship"+index).removeClass("hide");
     }
 
     function startGame() {
+        gopScreen=false;
+        document.getElem("#GOP").addClass("hide");
         console.log("start game!");
         var countDownElem = document.getElem("#countdown");
-        startGameCountDown = 11;
+        startGameCountDown = 3;
         if (startGameCountDownInterval) clearInterval(startGameCountDownInterval);
         startGameCountDownInterval = setInterval(function() {
             startGameCountDown--;
@@ -272,18 +304,23 @@ function SoundDefender(target) {
 
     function initNewGame() {
         console.log("new game!");
+        gopScreen=true;
+        document.getElem("#GOP").removeClass("hide");
         players.forEach(function(player) { player.cleanUp(); });
         aliens.forEach(function(alien) { alien.cleanUp(); });
         bullets.forEach(function(bullet) { bullet.cleanUp(); });
-
+        helmetbase=-5;
+        helmetmax=1;
+        helmetstart=10;
         aliens=[];
         bullets=[];
         players=new Array(5);
+        document.getElemAll("#ships > div").addClass("hide");
 
         for(s=0;s<1;s++){
             aliens.push( new Alien(playArea) );
         }
-        for(s=0;s<10;s++){
+        for(s=0;s<0;s++){
             bullets.push( new Bullet(playArea) );
         }
 
@@ -319,7 +356,7 @@ function SoundDefender(target) {
             for(var s=0;s<aliens.length;s++){
                 var alien=aliens[s];
                 if(!alien.active){
-                    var y=value/13*(newAlien-1);
+                    var y=value/12*(newAlien);
                     var x=playArea.ctx.canvas.width+40;
                     //alien.setAngleDegrees(180);
                     alien.setCoords([x,y]);
@@ -410,7 +447,9 @@ function SoundDefender(target) {
             for (var j = 0; j < soundArray.length; j++) {
                 loudness += soundArray[j];
             }
-
+            if(loudness<100){
+                loudness=100;
+            }
             //var value ;//= playArea.ctx.canvas.height - numba * 4;
             value = playArea.ctx.canvas.height - loudness / loudScale;
 
@@ -496,10 +535,12 @@ function SoundDefender(target) {
                     shot = player.shots[sa];
                     if (shot.move) {
                         if (shot.collidesWith(alien)) {
-                            if (!godmode) player.hits++;
                             killShot(shot);
-                            killAlien(alien);
-                            return true;
+                            if(!alien.helmet){
+                                if (!godmode) player.hits++;
+                                killAlien(alien);
+                                return true;
+                            }
                         }
 
                     }
@@ -511,19 +552,20 @@ function SoundDefender(target) {
     }
 
     var loop = function (game) {
-        // if(ship) {
-        //     shipControls(game);
-        moveShips(game);
-        // }
-        var value=moveLandscape(game);
-
-        moveShots(game);
-
-        createAliens(value);
-        moveAliens(game);
-        moveBullets(game);
+        if(gopScreen){
+            showGopScreen(game);
+        }else{
+            moveShips(game);
+            var value=moveLandscape(game);
+            moveShots(game);
+            createAliens(value);
+            moveAliens(game);
+            moveBullets(game);
+        }
     };
+    function showGopScreen(game){
 
+    }
     var game = new ScarletEngine(mural, loop);
     game.registerKeys([16,40,38]);
     game.start();

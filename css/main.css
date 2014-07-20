@@ -5,7 +5,10 @@ html, body, #container {
     padding: 0;
 }
 body {
-    background-image: url('/img/zee.jpg');
+    background-image: url('../img/zee.jpg');
+    background-size: 100%;
+    -webkit-background-size: 100%;
+    overflow: hidden;
 }
 #waitScreen{
     height: 100%;
@@ -15,4 +18,128 @@ body {
     left:0px;
     z-index: 100;
     background-image: url('/img/gameOfPhones.jpg');
+}
+#GOP{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    background-image: url('../img/gameOfPhonesiminds.jpg');
+    background-size: 100%;
+    -webkit-background-size: 100%;
+}
+.hide{
+    display: none;
+}
+#topten{
+    position: absolute;
+    top: 450px;
+    left: 200px;
+    right: 200px;
+    height: 300px;
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 15px;
+    color:#C0C0C0;
+    font-family: 'game_of_thronesregular';
+}
+#topten > span{
+    font-size: 30pt;
+    position: absolute;
+    top:-10px;
+    left: 5px;
+    right: 5px;
+    text-align: center;
+}
+#topten > hr {
+    margin-right: 10px;
+    margin-left: 10px;
+    position: relative;
+    top:50px;
+    border: 1px solid #C0C0C0;
+}
+#kol1{
+    font-size: 19pt;
+    position: absolute;
+    width: 40%;
+    top:60px;
+    left: 10px;
+}
+#kol2{
+    font-size: 19pt;
+    position: absolute;
+    width: 40%;
+    top:60px;
+    right: 10px;
+}
+.listfield{
+    clear: left;
+    margin-top: 10px;
+    float: left;
+    width:40px;
+}
+.namefield{
+    margin-top: 10px;
+    width: 82%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+}
+.scorefield{
+    margin-top: 10px;
+    float: right;
+    clear: right;
+}
+#ships{
+    position: absolute;
+    top:136px;
+    left: 92px;
+
+}
+#ships div{
+
+}
+/*
+"img/p0000FF.png","img/p00FF00.png","img/p00FFFF.png","img/pFF00FF.png","img/pFFFF00.png"
+*/
+#ship0,#ship1,#ship2,#ship3,#ship4{
+    float: left;
+    width: 90px;
+    height: 60px;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 5px;
+    margin: 5px;
+}
+.shp{
+    width: 80px;
+    height: 60px;
+    margin-top: 14px;
+    margin-left: 8px;
+}
+#ship0 > div{
+    background-image: url('../img/p0000FF.png');
+    background-size: 75px;
+    background-repeat: no-repeat;
+}
+#ship1 > div{
+    background-image: url('../img/p00FF00.png');
+    background-size: 75px;
+    background-repeat: no-repeat;
+}
+#ship2 > div{
+    background-image: url('../img/p00FFFF.png');
+    background-size: 75px;
+    background-repeat: no-repeat;
+}
+#ship3 > div{
+    background-image: url('../img/pFF00FF.png');
+    background-size: 75px;
+    background-repeat: no-repeat;
+}
+#ship4 > div{
+    background-image: url('../img/pFFFF00.png');
+    background-size: 75px;
+    background-repeat: no-repeat;
 }

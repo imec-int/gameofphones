@@ -218,9 +218,13 @@ article{
     right: 0;
     position: absolute;
     z-index: 1000;
-    background: url('img/loser.jpg');
+    color: #FAFAFA;
+    background-color: #222022;
+    font-family: proxima-nova, sans-serif;
+    font-size: 16px;
+    /*background: url('img/loser.jpg');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;*/
 }
 .loser .share {
     position: absolute;
@@ -249,9 +253,46 @@ article{
     text-shadow:2px 2px #000000;
     font-weight: bold;
     color: #FAFAFA;
-    font-size: 3em;
+    font-size: 2.5em;
     position: relative;
     top: 1em;
+}
+.loser form{
+    font-size: 2.5em;
+
+}
+input {
+    margin: .25em 0;
+    padding: .5em .6em;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 3px #ddd;
+    border-radius: 4px;
+    font-family: "proxima-nova", sans-serif;
+    display: inline-block;
+    font-size: 0.5em;
+}
+
+input:focus {
+    border-color: #129FEA;
+}
+.loser form button {
+    background-color: #0078e7;
+    color: #fff;
+    padding: .5em 1em;
+    border: 0 rgba(0,0,0,0);
+    text-decoration: none;
+    border-radius: 2px;
+    display: inline-block;
+    zoom: 1;
+    line-height: normal;
+    white-space: nowrap;
+    vertical-align: baseline;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.5em;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -webkit-appearance: button;
 }
 .fa-twitter{
     color:rgb(0, 172, 238);
@@ -323,18 +364,22 @@ article{
 
     var readyToConnect=false;
     var connected=false;
+    var started=false;
     var socket = io.connect("/");
     socket.on('connect', function () {
         readyToConnect=true;
     });
     socket.on('ok', function(data) {
         connected=true;
-        document.getElem("#fighterimg").src="img/"+data.color+".png";
+        document.getElem("#fighterimg").src="img/p"+data.color+".png";
         document.getElem(".connecting").style.display="none";
         document.getElem("body").style.backgroundColor = data.color;
         navigator.vibrate([200,200,200,200]);
 
     });
+    socket.on('start',function(data){
+        started=true;
+    })
     function handleWrongPin() {
         var messageBox = document.getElem(".message");
         messageBox.clearElem();
@@ -361,9 +406,12 @@ article{
         connected=false;
         readyToConnect=false;
         socket.disconnect();
+        died=true;
         document.getElem(".theScore").setText(""+data.score);
-        document.getElem(".share .twitter").attrib("data-prefilltext",
-                        "Just scored "+data.score+" points playing sound defender vs @CDDofficial at @ABconcerts");
+        document.getElemAll("form > input").forEach(function(item){item.value="";});
+        document.getElem("#postscore").value=data.score_encrypted;
+        /*document.getElem(".share .twitter").attrib("data-prefilltext",
+                        "Just scored "+data.score+" points playing sound defender vs @CDDofficial at @ABconcerts");*/
         document.getElem("body").style.backgroundColor = 'transparent';
         document.getElem(".loser").style.display = 'block';
         document.getElem(".connecting").style.display="block";
@@ -399,6 +447,7 @@ article{
             }
         }
         function prevent(event){
+            if(died)return;
             event.preventDefault();
         }
 
@@ -423,7 +472,7 @@ article{
         document.getElem(".shoot").on('touchstart', function(event) {
             document.getElem(".shoot").addClass("pressed");
             event.preventDefault();
-            if(connected){
+            if(connected && started){
                 socket.emit("shoot");
                 var shoot=document.getElem("#shoot");
                 shoot.currentTime=0;
@@ -507,13 +556,20 @@ article{
             <div class="score">
                 Your score: <span class="theScore"></span>
             </div>
-            <div class="share">
+            <br><br>
+            <form action="/addscore" method="post">
+                <input type="hidden" name="score" id="postscore">
+                <input name="name" placeholder="name" maxlength="20"><br>
+                <input name="email" placeholder="email"><br>
+                <button type="submit">Submit</button>
+            </form>
+            <!--div class="share">
                 <label>Share on: </label>
                 <button type="button" class="twitter" data-prefilltext="Just played sound defender vs @CDDofficial at @ABconcerts">
                     <span class="fa fa-twitter"></span>
                     Twitter
                 </button>
-            </div>
+            </div-->
             <div class="replay">
                 <button type="button"><span class="fa fa-gamepad"></span>Play again</button>
             </div>

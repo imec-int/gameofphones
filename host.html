@@ -14,18 +14,24 @@
     <script type="application/javascript" src="js/ScarletEngine.min.js"></script>
     <script type="application/javascript" src="js/elem.js"></script>
     <script type="application/javascript" src="js/SoundDefender.js"></script>
-    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/stylesheet.css">
     <link rel="stylesheet" href="css/main.css">
     <style type="text/css">
         #pincode {
+            background-color: rgba(0,0,0,0.7);
             position: fixed;
             z-index: 100;
             left: 0;
             right: 0;
-            top: 10px;
+            top: 300px;
             text-align: center;
-            font-size: 4em;
-            color: #FFFFFF;
+            font-size: 3em;
+            color: #C0C0C0;
+            font-family: 'game_of_thronesregular';
+        }
+        #pincode b, #topten b{
+            font-weight: normal;
+            font-size: 1.5em;
         }
         #countdown {
             position: fixed;
@@ -43,8 +49,25 @@
 <div id="container">
     <canvas id="gameCanvas" width="1200" height="675"></canvas>
 </div>
-<div id="pincode">1234</div>
-<div id="countdown"></div>
+<div id="GOP">
+    <div id="pincode">pincode : <b>1234</b></div>
+    <div id="ships">
+        <div id="ship0" class="hide"><div class="shp"></div></div>
+        <div id="ship1" class="hide"><div class="shp"></div></div>
+        <div id="ship2" class="hide"><div class="shp"></div></div>
+        <div id="ship3" class="hide"><div class="shp"></div></div>
+        <div id="ship4" class="hide"><div class="shp"></div></div>
+    </div>
+    <div id="topten">
+        <span>TOP <b>10</b></span>
+        <hr>
+        <div id="kol1">
+        </div>
+        <div id="kol2">
+        </div>
+    </div>
+    <div id="countdown"></div>
+</div>
 <script>
     document.ready(function() {
         var container = document.getElementById("container");
