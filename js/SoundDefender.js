@@ -379,6 +379,7 @@ function SoundDefender(target) {
         alien.active = false;
         alien.setCoords([-200, -200]);
         alien.startAnimation("fly");
+        alien.isdying=false;
     }
 
     function killPlayer(player){
@@ -584,8 +585,10 @@ function SoundDefender(target) {
                             if(!alien.helmet){
                                 if (!godmode) player.hits++;
                                 //killAlien(alien);
-
-                                alien.startAnimation("death");
+                                if(!alien.isdying){
+                                    alien.isdying=true;
+                                    alien.startAnimation("death");
+                                }
                                 return true;
                             }
                         }
