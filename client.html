@@ -222,31 +222,11 @@ article{
     background-color: #222022;
     font-family: proxima-nova, sans-serif;
     font-size: 16px;
-    /*background: url('img/loser.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;*/
+
 }
-.loser .share {
-    position: absolute;
-    width: 100%;
-    text-align: right;
-    bottom: .5em;
-    right: .5em;
-    font-size: 2em;
-}
-.loser .share label {
-    text-shadow:2px 2px #000000;
-    font-weight: bold;
-    color: #FAFAFA;
-}
-.loser .share button {
-    border: 1px solid #222022;
-    background-color: #FAFAFA;
-    font-size: 1em;
-    font-weight: normal;
-    border-radius: 5px;
-    color: #222022;
-}
+
+
+
 .loser .score {
     width: 100%;
     text-align: center;
@@ -257,7 +237,7 @@ article{
     position: relative;
     top: 1em;
 }
-.loser form{
+.loser .form{
     font-size: 2.5em;
 
 }
@@ -275,7 +255,7 @@ input {
 input:focus {
     border-color: #129FEA;
 }
-.loser form button {
+.loser .form button {
     background-color: #0078e7;
     color: #fff;
     padding: .5em 1em;
@@ -294,23 +274,8 @@ input:focus {
     -webkit-user-select: none;
     -webkit-appearance: button;
 }
-.fa-twitter{
-    color:rgb(0, 172, 238);
-}
-.loser .replay {
-    font-size: 2em;
-    position: absolute;
-    bottom: .5em;
-    left: .5em;
-}
-.loser .replay button {
-    border: 1px solid #222022;
-    background-color: #FAFAFA;
-    font-size: 1em;
-    font-weight: normal;
-    border-radius: 5px;
-    color: #222022;
-}
+
+
 .message {
     position: fixed;
     z-index: 10000;
@@ -394,6 +359,15 @@ input:focus {
         messageBox.p("Geen spel bezig :?");
         messageBox.form({'action': 'index.html'}).button({'type': 'submit'},"opnieuw");
     }
+    function handleError(message){
+        var messageBox = document.getElem(".message");
+        messageBox.clearElem();
+        messageBox.style.display = 'block';
+        messageBox.p(message);
+        messageBox.button("OK").on("click",function(event){
+            document.getElem(".message").style.display="none";
+        });
+    }
     socket.on('nok', function(data) {
         socket.disconnect();
         if (data.status === '400') {
@@ -451,18 +425,18 @@ input:focus {
             event.preventDefault();
         }
 
-        up.on("touchstart", function(event) { startControlPad(event,"up"); })
-        up.on("touchenter", function(event) { startControlPad(event,"up"); })
-        up.on("touchleave", function(event) { stopControlPad(event,"up"); })
-        up.on("touchcancel", function(event) { stopControlPad(event,"up"); })
-        up.on("touchend", function(event) { stopControlPad(event,"up"); })
+        up.on("touchstart", function(event) { startControlPad(event,"up"); });
+        up.on("touchenter", function(event) { startControlPad(event,"up"); });
+        up.on("touchleave", function(event) { stopControlPad(event,"up"); });
+        up.on("touchcancel", function(event) { stopControlPad(event,"up"); });
+        up.on("touchend", function(event) { stopControlPad(event,"up"); });
 
-        down.on("touchstart", function(event) { startControlPad(event,"down"); })
-        down.on("touchenter", function(event) { startControlPad(event,"down"); })
-        down.on("touchleave", function(event) { stopControlPad(event,"down"); })
-        down.on("touchcancel", function(event) { stopControlPad(event,"down"); })
-        down.on("touchend", function(event) { stopControlPad(event,"down"); })
-        var outside=document.getElemAll("section");
+        down.on("touchstart", function(event) { startControlPad(event,"down"); });
+        down.on("touchenter", function(event) { startControlPad(event,"down"); });
+        down.on("touchleave", function(event) { stopControlPad(event,"down"); });
+        down.on("touchcancel", function(event) { stopControlPad(event,"down"); });
+        down.on("touchend", function(event) { stopControlPad(event,"down"); });
+        var outside=document.getElemAll(".controller,section[class='portrait']");
         var touchevents=["touchstart","touchenter","touchleave","touchcancel","touchend"];
         outside.forEach(function(elm){
             for(var i=0;i<touchevents.length;i++){
@@ -482,26 +456,11 @@ input:focus {
             document.getElem(".shoot").removeClass("pressed");
         });
 
-        /*document.getElemAll(".controller, .loser").forEach(function(elem) {
-         elem.on("touchstart", function(event) { event.preventDefault(); })
-         });
-         document.getElemAll(".controller, .loser").forEach(function(elem) {
-         elem.on("touchend", function(event) { event.preventDefault(); })
-         });*/
 
-        document.getElem(".loser .twitter").on("click", tweet);
-        document.getElem(".loser .twitter").on("touchstart", tweet);
-        document.getElem(".loser .replay").on("click", replay);
-        document.getElem(".loser .replay").on("touchstart", replay);
         doOnOrientationChange();
 
     });
 
-    function tweet() {
-        var url = "https://twitter.com/intent/tweet?text=";
-        url += encodeURIComponent(this.getAttribute("data-prefilltext"));
-        window.open(url);
-    }
     setInterval(function(){
         if (direction && connected) socket.emit(direction);
     },100);
@@ -518,12 +477,21 @@ input:focus {
          document.getElem(".controller").style.height = parseInt(winwidth/ratio)+"px";*/
 
     }
+    function postSuccess(text){
+        document.getElem(".form").clearElem().setText(text);
+    }
+    function postError(text){
+        handleError(text);
+    }
+    function asub(){
+        var score=document.getElem("#postscore").value;
+        var name=document.getElem("#postname").value;
+        var email=document.getElem("#postemail").value;
+        Window.http.POST({url:'/addscore',data:{score:score,name:name,email:email},success:postSuccess,error:postError});
+    }
 </script>
 </head>
 <body>
-<!--     <div class="connecting">
-        <div class="text">Connecting...</div>
-    </div> -->
 
 <div class="message"></div>
 <article>
@@ -557,22 +525,13 @@ input:focus {
                 Your score: <span class="theScore"></span>
             </div>
             <br><br>
-            <form action="/addscore" method="post">
+            <span class="form">
                 <input type="hidden" name="score" id="postscore">
-                <input name="name" placeholder="name" maxlength="20"><br>
-                <input name="email" placeholder="email"><br>
-                <button type="submit">Submit</button>
-            </form>
-            <!--div class="share">
-                <label>Share on: </label>
-                <button type="button" class="twitter" data-prefilltext="Just played sound defender vs @CDDofficial at @ABconcerts">
-                    <span class="fa fa-twitter"></span>
-                    Twitter
-                </button>
-            </div-->
-            <div class="replay">
-                <button type="button"><span class="fa fa-gamepad"></span>Play again</button>
-            </div>
+                <input name="name" placeholder="name" maxlength="20" id="postname"><br>
+                <input name="email" placeholder="email" id="postemail"><br>
+                <button onclick="asub()">Submit</button>
+            </span>
+
         </div>
     </section>
     <section class="portrait">

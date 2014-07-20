@@ -144,15 +144,17 @@ function SoundDefender(target) {
     Alien.prototype = Sprite.prototype;
 
     function Bullet(playArea) {
-        Sprite.apply(this,['img/bullet.png', 16, 16, 8, 8]);
-        this.setCollisionBox(-4, -4, 4, 4);
+        //Sprite.apply(this,['img/bullet.png', 16, 16, 8, 8]);
+        Sprite.apply(this,['img/bullet2.png', 40, 10, 40, 5]);
+        //this.setCollisionBox(-4, -4, 4, 4);
+        this.setCollisionBox(-20, -2, 0, 2);
         playArea.addChild(this, 3);
         this.setCoords([0,-10]);
         this.addAnimation("pulse", [0, 1, 0, 2]);
         this.startAnimation("pulse");
         this.autoAnim(true);
         this.setSpeed(4);
-        this.setScale(.5);
+        this.setScale(1);
         this.active=false;
 
         this.cleanUp = function() {
@@ -190,17 +192,14 @@ function SoundDefender(target) {
             updateTopTen(data);
         });
         socket.on('startGame', startGame);
-        // socket.on('admin',function(data){
-        //     if(data.scale){
-        //         scale=data.scale;
-        //     }
-        //     if(data.loudness){
-        //         loudscale=data.loudness;
-        //     }
-        //     if(data.channels){
-        //         midichannels=data.channels;
-        //     }
-        // });
+         socket.on('admin',function(data){
+             if(data.scale){
+                 scale=data.scale;
+             }
+             if(data.loudness){
+                 loudScale=data.loudness;
+             }
+         });
     });
     function updateTopTen(data){
         var kol1=document.getElem('#kol1').clearElem();
@@ -209,7 +208,7 @@ function SoundDefender(target) {
             var write=i<5?kol1:kol2;
             write.span({class:'listfield'},(i+1)+'.');
             write.span({class:'namefield'},data[i].name);
-            write.span({class:'scorefield'},data[i].score);
+            write.span({class:'scorefield'},''+data[i].score);
         }
     };
     function createPlayer(index) {
@@ -222,16 +221,13 @@ function SoundDefender(target) {
         document.getElem("#GOP").addClass("hide");
         console.log("start game!");
         var countDownElem = document.getElem("#countdown");
-        startGameCountDown = 3;
+        startGameCountDown = 10;
         if (startGameCountDownInterval) clearInterval(startGameCountDownInterval);
         startGameCountDownInterval = setInterval(function() {
             startGameCountDown--;
             if (startGameCountDown === 0) {
                 clearInterval(startGameCountDownInterval);
-                countDownElem.setText("START!");
-                setTimeout(function () {
-                    countDownElem.clearElem();
-                }, 500);
+
                 godmode = false;
                 addAliensInterval = setInterval(function () {
                     aliens.push(new Alien(playArea));
@@ -320,7 +316,7 @@ function SoundDefender(target) {
         for(s=0;s<1;s++){
             aliens.push( new Alien(playArea) );
         }
-        for(s=0;s<0;s++){
+        for(s=0;s<10;s++){
             bullets.push( new Bullet(playArea) );
         }
 
@@ -351,12 +347,12 @@ function SoundDefender(target) {
     }
 
     function createAliens(value){
-        var newAlien=Math.rnd(-48,12);
+        var newAlien=Math.rnd(1,12);
         if(newAlien>0){
             for(var s=0;s<aliens.length;s++){
                 var alien=aliens[s];
                 if(!alien.active){
-                    var y=value/12*(newAlien);
+                    var y=value/13*(newAlien);
                     var x=playArea.ctx.canvas.width+40;
                     //alien.setAngleDegrees(180);
                     alien.setCoords([x,y]);
@@ -375,6 +371,7 @@ function SoundDefender(target) {
                 bullet.position = alien.position.cloneVector();
                 bullet.addCoords(alien.pointer.position.cloneVector());
                 bullet.move = alien.pointer.rotation.cloneVector();
+                bullet.rotation=alien.pointer.rotation.cloneVector();
                 bullet.move.setAngle(alien.pointer.getAngle());
                 bullet.move.setLength(10);
                 bullet.active=true;
@@ -505,7 +502,7 @@ function SoundDefender(target) {
                 }
                 al.pointer.setAngleDegrees(seagullShootAngles[al.animationIndex]);
                 players.every(function(player){
-                    if(player && player.ship && al.pointer.isPointingAt(player.ship,5)){
+                    if(startGameCountDown===0 && player && player.ship && al.pointer.isPointingAt(player.ship,5)){
                         fireBullet(al);
                         return false;
                     }
