@@ -22,6 +22,7 @@ function SoundDefender(target) {
     var helmetstart=100;
     var helmetmax=10;
     var helmetbase=-5;
+    var gameOn=false;
     var shipImages = ["img/p0000FF.png","img/p00FF00.png","img/p00FFFF.png","img/pFF00FF.png","img/pFFFF00.png"];
 
     function Player(playArea, id) {
@@ -258,6 +259,18 @@ function SoundDefender(target) {
         countDownElem.style.width=cdowner+"%";
     }
     function startGame() {
+        if(gameOn)return;
+        gameOn=true;
+        if(addAliensInterval!==null){
+            clearInterval(addAliensInterval);
+            addAliensInterval=null;
+        }
+        aliens.forEach(function(alien) { alien.cleanUp(); });
+        helmetbase=-5;
+        helmetmax=1;
+        helmetstart=10;
+        aliens=[];
+
         gopScreen=false;
         document.getElem("#GOP").addClass("hide");
         console.log("start game!");
@@ -347,6 +360,7 @@ function SoundDefender(target) {
 
     function initNewGame() {
         console.log("new game!");
+        gameOn=false;
         gopScreen=true;
         document.getElem("#GOP").removeClass("hide");
         players.forEach(function(player) { player.cleanUp(); });
@@ -368,7 +382,10 @@ function SoundDefender(target) {
         }
 
         if (startGameCountDownInterval) clearInterval(startGameCountDownInterval);
-        if (addAliensInterval) clearInterval(addAliensInterval);
+        if (addAliensInterval!==null){
+            clearInterval(addAliensInterval);
+            addAliensInterval=null;
+        }
     }
 
     function killShot(shot){
