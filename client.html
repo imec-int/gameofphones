@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <title>Sound defender client</title>
-<meta name="viewport" content="width=device-width, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <link href="css/font-awesome.css" rel="stylesheet">
 <style>/* media="screen and (orientation: landscape)">*/
 html, body {
@@ -272,6 +272,7 @@ input:focus {
 </style>
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/elem.js"></script>
+<script src="js/touchControls.js"></script>
 <script src="js/soundmanager2-nodebug-jsmin.js"></script>
 <script>
     var mySound=null;
@@ -307,6 +308,7 @@ input:focus {
     });
     socket.on('ok', function(data) {
         connected=true;
+        tc.start(handleControls);
         document.getElem("#fighterimg").src="img/p"+data.color+".png";
         document.getElem(".connecting").style.display="none";
         document.getElem("body").style.backgroundColor = data.color;
@@ -341,6 +343,7 @@ input:focus {
     }
     socket.on('nok', function(data) {
         socket.disconnect();
+        tc.stop();
         if (data.status === '400') {
             handleWrongPin();
         } else if (data.status === '404') {
@@ -351,6 +354,7 @@ input:focus {
         connected=false;
         readyToConnect=false;
         socket.disconnect();
+        tc.stop();
         died=true;
         document.getElem(".theScore").setText(""+data.score);
         document.getElemAll("form > input").forEach(function(item){item.value="";});
@@ -372,71 +376,37 @@ input:focus {
         socket.socket.reconnect();
     }
     var direction = '';
+    var tc=new TouchControls();
     document.ready(function() {
+        var joystick=document.getElem(".controller .movement");
+        var firebutton=document.getElem(".controller .shoot");
+        tc.addElement("joystick",joystick,TouchControls.JOYSTICK);
+        tc.addElement("fire",firebutton,TouchControls.BUTTON);
 
         setInterval(tryConnect,1000);
         var ratio = 889/366;
-        var up=document.getElem(".controller .up");
-        var down=document.getElem(".controller .down");
-
-        var startControlPad = function(event,direction) {
-            console.log("lalala");
-            event.preventDefault();
-            document.getElem("."+direction).addClass("pressed");
-            window['direction'] = direction;
-        };
-        var stopControlPad = function(event,direction) {
-            event.preventDefault();
-            document.getElem("."+direction).removeClass("pressed");
-            if (window['direction'] === direction) {
-                window['direction'] = '';
-            }
-        };
-        function prevent(event){
-            if(died)return;
-            event.preventDefault();
-        }
-
-        up.on("touchstart", function(event) { startControlPad(event,"up"); });
-        up.on("touchenter", function(event) { startControlPad(event,"up"); });
-        up.on("touchleave", function(event) { stopControlPad(event,"up"); });
-        up.on("touchcancel", function(event) { stopControlPad(event,"up"); });
-        up.on("touchend", function(event) { stopControlPad(event,"up"); });
-
-        down.on("touchstart", function(event) { startControlPad(event,"down"); });
-        down.on("touchenter", function(event) { startControlPad(event,"down"); });
-        down.on("touchleave", function(event) { stopControlPad(event,"down"); });
-        down.on("touchcancel", function(event) { stopControlPad(event,"down"); });
-        down.on("touchend", function(event) { stopControlPad(event,"down"); });
-        var outside=document.getElemAll(".controller,section[class='portrait']");
-        var touchevents=["touchstart","touchenter","touchleave","touchcancel","touchend"];
-        outside.forEach(function(elm){
-            for(var i=0;i<touchevents.length;i++){
-                elm.on(touchevents[i],prevent);
-            }
-        });
-        document.getElem(".shoot").on('touchstart', function(event) {
-            document.getElem(".shoot").addClass("pressed");
-            event.preventDefault();
-            if(connected && started){
-                socket.emit("shoot");
-                mySound.stop();
-                mySound.setPosition(0);
-                mySound.play();
-                /*var shoot=document.getElem("#shoot");
-                shoot.currentTime=0;
-                shoot.volume=1.0;
-                shoot.play();*/
-            }
-        }).on('touchend',function(){
-            document.getElem(".shoot").removeClass("pressed");
-        });
 
 
         doOnOrientationChange();
 
     });
-
+    function handleControls(){
+        var js=tc.isElement("joystick");
+        var shoot=tc.isElement("fire");
+        if(js && js.y>0){
+            window['direction']='up';
+        }else if(js && js.y<0){
+            window['direction']='down';
+        }else{
+            window['direction']='';
+        }
+        if(shoot && connected && started){
+            socket.emit("shoot");
+            mySound.stop();
+            mySound.setPosition(0);
+            mySound.play();
+        }
+    }
     setInterval(function(){
         if (direction && connected) socket.emit(direction);
     },100);
