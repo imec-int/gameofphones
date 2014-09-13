@@ -313,7 +313,7 @@ function SoundDefender(target) {
         path.addPoint(width, height);
         path.lineWidth(3);
         path.strokeStyle("#a4844c");
-        path.usePattern('img/dune.jpg');
+        path.usePattern('img/speesmountain.jpg');
     }
     function loadSound() {
         if (mp3url) {
