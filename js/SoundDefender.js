@@ -9,6 +9,7 @@ function SoundDefender(target) {
     var soundArray=[];
     var maxHeight=playArea.ctx.canvas.height-50;
     var alienSpeed=new Vector2D(-playArea.ctx.canvas.width/points,0);
+    var alienCrash=new Vector2D(0,playArea.ctx.canvas.height/200);
     var aliens=[];
     var bullets=[];
     var players=new Array(5);
@@ -116,22 +117,23 @@ function SoundDefender(target) {
         helmetstart--;
         if(helmetstart<helmetmax)helmetstart=helmetmax;
         var rand=Math.rnd(0,helmetstart);
-        var img='img/seagull2.png';
+        var img='img/space_bad_01.png';
         this.helmet=false;
-        if(rand===helmetbase){
+        /*if(rand===helmetbase){
             img='img/helmet.png';
             this.helmet=true;
-        }
-        Sprite.apply(this,[img,150,150,65,60]);
+        }*/
+        Sprite.apply(this,[img,200,200,95,129]);
         //this.setRotationOffsetDegrees(-180);
-        //alien.setCollisionBox(-24,-27,28,25);
-        this.setCollisionBox(-13,-29,32,33);
-        this.addAnimation("fly",[0,1,2,3,4,5,6,7]);
-        if(!this.helmet){
-            this.addAnimation("death",[8,4,8,4,8,4,8,4,-1],function(){
+        //alien.setCollisionBox(-24,-27,28,25); 51-139 40-145
+        this.setCollisionBox(-95+51,-129+40,-95+139,-129+145);
+        //this.setCollisionBox(-13,-29,32,33);
+        this.addAnimation("fly",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
+        //if(!this.helmet){
+            this.addAnimation("death",[26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,-1],function(){
                 killAlien(this);
             }.bind(this));
-        }
+        //}
         playArea.addChild(this,2);
         this.startAnimation("fly");
         this.autoAnim(true);
@@ -565,6 +567,10 @@ function SoundDefender(target) {
                 for (var i = 0; i < game.ticks; i++) {
                     al.addCoords(alienSpeed);
                     //al.setAngleDegrees(al.getAngleDegrees() + al.rotspeed);
+                }
+                if(al.isdying){
+                    al.addCoords(alienCrash);
+
                 }
                 al.pointer.setAngleDegrees(seagullShootAngles[al.animationIndex]);
                 players.every(function(player){
