@@ -160,7 +160,7 @@ var TouchControls=(function(){
             }
         }
         if(this.callback!==null && typeof this.callback === "function"){
-            this.callback();
+            this.callback(this);
         }
     };
 

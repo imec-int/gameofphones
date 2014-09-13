@@ -390,9 +390,9 @@ input:focus {
         doOnOrientationChange();
 
     });
-    function handleControls(){
-        var js=tc.isElement("joystick");
-        var shoot=tc.isElement("fire");
+    function handleControls(control){
+        var js=control.isElement("joystick");
+        var shoot=control.isElement("fire");
         if(js && js.y>0){
             window['direction']='up';
         }else if(js && js.y<0){
