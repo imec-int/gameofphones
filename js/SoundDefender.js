@@ -35,7 +35,10 @@ function SoundDefender(target) {
         //this.ship = new Sprite(shipImages[id],155,75,87,50);
         this.ship.setCollisionBox(-100+56,-125+30,-100+147,-100+155); // 2-124 2-54  56-147  30-155
         this.ship.addAnimation("fly",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
-        this.ship.addAnimation("death",[26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,-1]);
+        this.ship.addAnimation("death",[26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,-1],function(){
+            killPlayer(this);
+        }.bind(this));
+        this.dying=false;
         //this.ship.setCollisionBox(-80,-30,60,10);
         playArea.addChild(this.ship,1);
         this.ship.startAnimation("fly");
@@ -413,6 +416,10 @@ function SoundDefender(target) {
         player.ship.kill();
         player.ship=null;
     }
+    function diePlayer(player){
+        player.dying=true;
+        player.ship.startAnimation("death");
+    }
 
     function killBullet(bullet){
         bullet.active=false;
@@ -473,21 +480,27 @@ function SoundDefender(target) {
         players.forEach( function(player) {
             if (player && player.ship) {
                 if (hitsCanvas(player.ship)) {
-                    killPlayer(player);
+                    //killPlayer(player);
+                    diePlayer(player);
                     return;
                 }
-                // console.log("moving ship for player: "+player);
-                var pos = player.ship.getCoordObj();
-                // console.log(pos);
-                pos.y += (player.ship.simpleAngle / 2)*game.ticks;
-                if (pos.y < 30) {
-                    pos.y = 30;
+                if(player.dying){
+                    player.ship.addCoords(alienCrash);
+
+                }else{
+                    // console.log("moving ship for player: "+player);
+                    var pos = player.ship.getCoordObj();
+                    // console.log(pos);
+                    pos.y += (player.ship.simpleAngle / 2)*game.ticks;
+                    if (pos.y < 30) {
+                        pos.y = 30;
+                    }
+                    if (pos.y > maxHeight) {
+                        pos.y = maxHeight;
+                    }
+                    // console.log(pos);
+                    player.ship.setCoords(pos);
                 }
-                if (pos.y > maxHeight) {
-                    pos.y = maxHeight;
-                }
-                // console.log(pos);
-                player.ship.setCoords(pos);
             }
         });
     }
@@ -556,7 +569,8 @@ function SoundDefender(target) {
                         ship=players[i];
                         if(ship && ship.ship && ship.ship.collidesWith(bull)){
                             killBullet(bull);
-                            killPlayer(ship);
+                            //killPlayer(ship);
+                            diePlayer(ship);
                             break;
                         }
                     }
@@ -592,7 +606,8 @@ function SoundDefender(target) {
                         players.forEach( function(player) {
                             if (player && player.ship && player.ship.collidesWith(al)) {
                                 killAlien(al);
-                                killPlayer(player);
+                                //killPlayer(player);
+                                diePlayer(player);
                             }
                         });
                     }
