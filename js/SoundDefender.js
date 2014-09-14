@@ -24,21 +24,26 @@ function SoundDefender(target) {
     var helmetmax=10;
     var helmetbase=-5;
     var gameOn=false;
-    var shipImages = ["img/p0000FF.png","img/p00FF00.png","img/p00FFFF.png","img/pFF00FF.png","img/pFFFF00.png"];
+    var shipImages = ["players/bear.png","players/cat.png","players/monkey.png","players/penguin.png","img/pFFFF00.png"];
 
     function Player(playArea, id) {
         this.shots=[];
         this.hits=0;
         this.id=id;
 
-        this.ship = new Sprite(shipImages[id],150,56,119,49);
+        this.ship = new Sprite(shipImages[id],200,200,100,125);
         //this.ship = new Sprite(shipImages[id],155,75,87,50);
-        this.ship.setCollisionBox(-117,-47,5,5); // 2-124 2-54
+        this.ship.setCollisionBox(-100+56,-125+30,-100+147,-100+155); // 2-124 2-54  56-147  30-155
+        this.ship.addAnimation("fly",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
+        this.ship.addAnimation("death",[26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,-1]);
         //this.ship.setCollisionBox(-80,-30,60,10);
         playArea.addChild(this.ship,1);
+        this.ship.startAnimation("fly");
+        this.ship.autoAnim(true);
+        this.ship.setSpeed(2);
         this.ship.setCoords([219+(id*100),199]);
         this.ship.setAngle(0);
-        this.ship.setScale(.5);
+        this.ship.setScale(1);
         this.ship.simpleAngle=0;
 
         for(var s=0;s<5;s++){
@@ -137,7 +142,7 @@ function SoundDefender(target) {
         playArea.addChild(this,2);
         this.startAnimation("fly");
         this.autoAnim(true);
-        this.setSpeed(4);
+        this.setSpeed(2);
         this.setCoords([-200,-200]);
         this.setScale(1);
         this.active=false;

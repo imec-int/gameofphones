@@ -64,7 +64,7 @@ var TouchControls=(function(){
             this.calcElement(i);
         }
     };
-    TouchControls.prototype.start=function(callback){
+    TouchControls.prototype.start=function(callback,speed){
         this.calcElements();
         this.winwidth=window.innerWidth;
         this.winheight=window.innerHeight;
@@ -78,7 +78,7 @@ var TouchControls=(function(){
         document.addEventListener('touchcancel',this.bindedcontrols,false);
         window.addEventListener('resize', this.bindedorientation,false);
         this.callback=callback;
-        this.looper=setInterval(this.detectionLoop.bind(this),16);
+        this.looper=setInterval(this.detectionLoop.bind(this),speed||16);
     };
 
     TouchControls.prototype.stop=function(){
@@ -118,7 +118,7 @@ var TouchControls=(function(){
             for(k=0;k<this.elements.length;k++){
                 el=this.elements[k];
                 if(el.type===TouchControls.BUTTON){
-                    this.elements[k].fire = el.update.fire;
+                    this.elements[k].fire = el.update?el.update.fire:false;
                 }else if(el.type===TouchControls.CONTINUOUSBUTTON){
                     if(el.update){
                         this.elements[k].fire=true;

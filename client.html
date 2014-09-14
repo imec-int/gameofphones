@@ -308,7 +308,7 @@ input:focus {
     });
     socket.on('ok', function(data) {
         connected=true;
-        tc.start(handleControls);
+        tc.start(handleControls,100);
         document.getElem("#fighterimg").src="img/p"+data.color+".png";
         document.getElem(".connecting").style.display="none";
         document.getElem("body").style.backgroundColor = data.color;
@@ -359,8 +359,6 @@ input:focus {
         document.getElem(".theScore").setText(""+data.score);
         document.getElemAll("form > input").forEach(function(item){item.value="";});
         document.getElem("#postscore").value=data.score_encrypted;
-        /*document.getElem(".share .twitter").attrib("data-prefilltext",
-                        "Just scored "+data.score+" points playing sound defender vs @CDDofficial at @ABconcerts");*/
         document.getElem("body").style.backgroundColor = 'transparent';
         document.getElem(".loser").style.display = 'block';
         document.getElem(".connecting").style.display="block";
@@ -393,23 +391,18 @@ input:focus {
     function handleControls(control){
         var js=control.isElement("joystick");
         var shoot=control.isElement("fire");
-        if(js && js.y>0){
-            window['direction']='up';
-        }else if(js && js.y<0){
-            window['direction']='down';
-        }else{
-            window['direction']='';
-        }
-        if(shoot && connected && started){
-            socket.emit("shoot");
-            mySound.stop();
-            mySound.setPosition(0);
-            mySound.play();
+        if(connected && started){
+            if(js && js.y>0){
+                socket.emit('up');
+            }else if(js && js.y<0){
+                socket.emit('down');
+            }
+            if(shoot){
+                socket.emit("shoot");
+                mySound.play();
+            }
         }
     }
-    setInterval(function(){
-        if (direction && connected) socket.emit(direction);
-    },100);
     window.addEventListener('orientationchange', doOnOrientationChange);
     function doOnOrientationChange(){
         var winwidth=window.innerWidth;
