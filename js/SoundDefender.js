@@ -50,15 +50,15 @@ function SoundDefender(target) {
         this.ship.simpleAngle=0;
 
         for(var s=0;s<5;s++){
-            var shoot=new Sprite('img/shoot3.png',145,19,140,10);
-            shoot.addAnimation("bang",[0,1,2,3]);
-            shoot.setCollisionBox(-120,-5,5,5);
+            var shoot=new Sprite('lasers/'+id+'.png',150,50,100,25);
+            shoot.addAnimation("bang",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
+            shoot.setCollisionBox(-70,-5,10,5); // 30-110 20-30
             playArea.addChild(shoot,0);
             shoot.startAnimation("bang");
             shoot.autoAnim(true);
-            shoot.setSpeed(4);
+            shoot.setSpeed(2);
             shoot.setCoords([0,-20]);
-            shoot.setScale(.5);
+            shoot.setScale(1);
             this.shots.push(shoot);
         }
 
@@ -79,8 +79,9 @@ function SoundDefender(target) {
                     shoot.setAngle(this.ship.getAngle());
                     shoot.move = shoot.rotation.cloneVector();
                     shoot.move.setLength(20);
-                    shoot.addCoords(shoot.move);
-                    shoot.addCoords(shoot.move);
+                    var offset=shoot.move.cloneVector();
+                    offset.multiply(4);
+                    shoot.addCoords(offset);
                     break;
                 }
             }
@@ -99,7 +100,7 @@ function SoundDefender(target) {
             if (!this.ship) return;
             this.ship.simpleAngle-=5;
             if (this.ship.simpleAngle < -10) {
-                this.ship.simpleAngle = -5;
+                this.ship.simpleAngle = -10;
             }
             this.ship.setAngleDegrees(this.ship.simpleAngle);
         };

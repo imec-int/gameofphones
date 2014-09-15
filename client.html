@@ -49,9 +49,9 @@ article{
     padding: 0px;
 }
 .controller .movement{
-    width:33vw;
+    width:33%;
     height: 100%;
-    padding: 5vh 5vw 5vh 5vw;
+    padding: 5% 5% 5% 5%;
     margin:0;
     /*border: 1em solid rgb(197, 33, 41);
     border-radius: 3em;*/
@@ -99,9 +99,9 @@ article{
     border-radius: 0 0 10px 10px;
 }
 .controller .action{
-    width:33vw;
+    width:33%;
     height: 100%;
-    padding: 5vh 5vw 5vw 5vh;
+    padding: 5% 5% 5% 5%;
     margin:0;
     /*border: 3px solid rgb(197, 33, 41);
     border-radius: 3px;*/
@@ -128,7 +128,7 @@ article{
     text-align: right;
 }
 .controller .hud{
-    width:33vw;
+    width:33%;
     height:100%;
     position: absolute;
     left:33.333%;
@@ -309,7 +309,7 @@ input:focus {
     socket.on('ok', function(data) {
         connected=true;
         tc.start(handleControls,100);
-        document.getElem("#fighterimg").src="img/p"+data.color+".png";
+        document.getElem("#fighterimg").src="players/a-"+data.color+".png";
         document.getElem(".connecting").style.display="none";
         document.getElem("body").style.backgroundColor = data.color;
         navigator.vibrate([200,200,200,200]);
@@ -410,8 +410,8 @@ input:focus {
         window.scrollTo(0,0);
         /*document.getElem(".landscape").style.width = winwidth+"px";
          document.getElem(".landscape").style.height = winheight+"px";*/
-        document.getElem(".portrait").style.width = winwidth+"px";
-        document.getElem(".portrait").style.height = winheight+"px";
+        //document.getElem(".portrait").style.width = winwidth+"px";
+        //document.getElem(".portrait").style.height = winheight+"px";
         /*document.getElem(".controller").style.width = winwidth+"px";
          document.getElem(".controller").style.height = parseInt(winwidth/ratio)+"px";*/
 

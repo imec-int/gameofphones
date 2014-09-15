@@ -139,29 +139,29 @@ body {
     margin: 5px;
 }
 .shp{
-    width: 80px;
-    height: 60px;
+    width: 200px;
+    height: 200px;
     margin-top: 14px;
     margin-left: 8px;
 }
 #ship0 > div{
-    background-image: url('../img/p0000FF.png');
-    background-size: 75px;
+    background-image: url('../players/a-bear.png');
+    background-size: 200px;
     background-repeat: no-repeat;
 }
 #ship1 > div{
-    background-image: url('../img/p00FF00.png');
-    background-size: 75px;
+    background-image: url('../players/a-cat.png');
+    background-size: 200px;
     background-repeat: no-repeat;
 }
 #ship2 > div{
-    background-image: url('../img/p00FFFF.png');
-    background-size: 75px;
+    background-image: url('../players/a-monkey.png');
+    background-size: 200px;
     background-repeat: no-repeat;
 }
 #ship3 > div{
-    background-image: url('../img/pFF00FF.png');
-    background-size: 75px;
+    background-image: url('../players/a-penguin.png');
+    background-size: 200px;
     background-repeat: no-repeat;
 }
 #ship4 > div{
