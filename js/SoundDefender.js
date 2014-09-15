@@ -44,7 +44,7 @@ function SoundDefender(target) {
         this.ship.startAnimation("fly");
         this.ship.autoAnim(true);
         this.ship.setSpeed(2);
-        this.ship.setCoords([219+(id*100),199]);
+        this.ship.setCoords([219+(id*200),199]);
         this.ship.setAngle(0);
         this.ship.setScale(1);
         this.ship.simpleAngle=0;
@@ -152,7 +152,7 @@ function SoundDefender(target) {
         this.active=false;
         this.pointer = new Drawable(0,0,0);
         this.addChild(this.pointer,true);
-        this.pointer.setCoords([-13,-40]);
+        this.pointer.setCoords([-95+51,0]);
 
         this.cleanUp = function() {
             try { playArea.removeChild(this); } catch (err) {}
@@ -162,16 +162,17 @@ function SoundDefender(target) {
 
     function Bullet(playArea) {
         //Sprite.apply(this,['img/bullet.png', 16, 16, 8, 8]);
-        Sprite.apply(this,['img/bullet2.png', 40, 10, 40, 5]);
+        Sprite.apply(this,['lasers/alien.png', 150, 30, 20, 15]);
         //this.setCollisionBox(-4, -4, 4, 4);
-        this.setCollisionBox(-20, -2, 0, 2);
+        this.setCollisionBox(0, -15+8, 100, -15+22);  //20-120     8-22
         playArea.addChild(this, 3);
         this.setCoords([0,-10]);
-        this.addAnimation("pulse", [0, 1, 0, 2]);
+        this.addAnimation("pulse", [0, 1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
         this.startAnimation("pulse");
         this.autoAnim(true);
-        this.setSpeed(4);
+        this.setSpeed(2);
         this.setScale(1);
+        this.setRotationOffsetDegrees(-180);
         this.active=false;
 
         this.cleanUp = function() {
@@ -209,6 +210,7 @@ function SoundDefender(target) {
             for(i=0;i<players.length;i++){
                 if(players[i].id==data.id){
                     killPlayer(players[i]);
+                    i--;
                 }
             }
         });
@@ -388,7 +390,7 @@ function SoundDefender(target) {
         for(s=0;s<1;s++){
             aliens.push( new Alien(playArea) );
         }
-        for(s=0;s<10;s++){
+        for(s=0;s<20;s++){
             bullets.push( new Bullet(playArea) );
         }
 
