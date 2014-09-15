@@ -30,13 +30,19 @@ function SoundDefender(target) {
         this.shots=[];
         this.hits=0;
         this.id=id;
+        this.lives=3;
 
         this.ship = new Sprite(shipImages[id],200,200,100,125);
         //this.ship = new Sprite(shipImages[id],155,75,87,50);
         this.ship.setCollisionBox(-100+56,-125+30,-100+147,-100+155); // 2-124 2-54  56-147  30-155
         this.ship.addAnimation("fly",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
         this.ship.addAnimation("death",[26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,-1],function(){
-            killPlayer(this);
+            this.lives--;
+            if(this.lives===0){
+                killPlayer(this);
+            }else{
+                respawn(this);
+            }
         }.bind(this));
         this.dying=false;
         //this.ship.setCollisionBox(-80,-30,60,10);
@@ -118,6 +124,14 @@ function SoundDefender(target) {
             }
         }
 
+    }
+    function respawn(player){
+        player.dying=false;
+        player.ship.startAnimation("fly");
+        player.ship.setCoords([219+(player.id*200),199]);
+        player.ship.setAngle(0);
+        player.ship.setScale(1);
+        player.ship.simpleAngle=0;
     }
 
     function Alien(playArea) {
@@ -210,7 +224,7 @@ function SoundDefender(target) {
             for(i=0;i<players.length;i++){
                 if(players[i].id==data.id){
                     killPlayer(players[i]);
-                    i--;
+                    break;
                 }
             }
         });
@@ -420,8 +434,10 @@ function SoundDefender(target) {
         player.ship=null;
     }
     function diePlayer(player){
-        player.dying=true;
-        player.ship.startAnimation("death");
+        if(!player.dying){
+            player.dying=true;
+            player.ship.startAnimation("death");
+        }
     }
 
     function killBullet(bullet){
