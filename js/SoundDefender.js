@@ -24,6 +24,7 @@ function SoundDefender(target) {
     var helmetmax=10;
     var helmetbase=-5;
     var gameOn=false;
+    var godTime=500;
     var shipImages = ["players/bear.png","players/cat.png","players/monkey.png","players/penguin.png","img/pFFFF00.png"];
 
     function Player(playArea, id) {
@@ -31,6 +32,8 @@ function SoundDefender(target) {
         this.hits=0;
         this.id=id;
         this.lives=3;
+        this.godcounter=godTime;
+        this.godmode=true;
 
         this.ship = new Sprite(shipImages[id],200,200,100,125);
         //this.ship = new Sprite(shipImages[id],155,75,87,50);
@@ -132,6 +135,9 @@ function SoundDefender(target) {
         player.ship.setAngle(0);
         player.ship.setScale(1);
         player.ship.simpleAngle=0;
+        player.ship.setAlpha(0.5);
+        player.godmode=true;
+        player.godcounter=godTime;
     }
 
     function Alien(playArea) {
@@ -326,6 +332,9 @@ function SoundDefender(target) {
                 //countDownElem.setText(startGameCountDown);
             }
         }, 1000);
+        for(var i=0;i<players.length;i++){
+            if(players[i])respawn(players[i]);
+        }
     }
 
     initializePath();
@@ -500,7 +509,7 @@ function SoundDefender(target) {
             if (player && player.ship) {
                 if (hitsCanvas(player.ship)) {
                     //killPlayer(player);
-                    diePlayer(player);
+                    if(!player.godmode)diePlayer(player);
                     return;
                 }
                 if(player.dying){
@@ -589,7 +598,7 @@ function SoundDefender(target) {
                         if(ship && ship.ship && ship.ship.collidesWith(bull)){
                             killBullet(bull);
                             //killPlayer(ship);
-                            diePlayer(ship);
+                            if(!ship.godmode)diePlayer(ship);
                             break;
                         }
                     }
@@ -626,7 +635,7 @@ function SoundDefender(target) {
                             if (player && player.ship && player.ship.collidesWith(al)) {
                                 killAlien(al);
                                 //killPlayer(player);
-                                diePlayer(player);
+                                if(!player.godmode)diePlayer(player);
                             }
                         });
                     }
@@ -662,11 +671,29 @@ function SoundDefender(target) {
 
         return false;
     }
+    function falseGod(){
+        for(var i=0;i<players.length;i++){
+            if(players[i] && players[i].godcounter>0){
+                players[i].godcounter--;
+                if(players[i].godcounter<50){
+                    players[i].ship.setAlpha(players[i].godcounter%2===0?1:0.5);
+                }
+                if(players[i].godcounter<=0){
+                    players[i].godcounter=0;
+                    players[i].godmode=false;
+                    players[i].ship.setAlpha(1);
+
+                }
+            }
+
+        }
+    }
 
     var loop = function (game) {
         if(gopScreen){
             showGopScreen(game);
         }else{
+            falseGod();
             moveShips(game);
             var value=moveLandscape(game);
             moveShots(game);
