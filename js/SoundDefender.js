@@ -178,7 +178,7 @@ function SoundDefender(target) {
         //Sprite.apply(this,['img/bullet.png', 16, 16, 8, 8]);
         Sprite.apply(this,['lasers/alien.png', 150, 30, 20, 15]);
         //this.setCollisionBox(-4, -4, 4, 4);
-        this.setCollisionBox(0, -15+8, 100, -15+22);  //20-120     8-22
+        this.setCollisionBox(-100, 22, 20, 8,true);  //20-120     8-22
         playArea.addChild(this, 3);
         this.setCoords([0,-10]);
         this.addAnimation("pulse", [0, 1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
@@ -222,7 +222,7 @@ function SoundDefender(target) {
         });
         socket.on('lost',function(data){
             for(i=0;i<players.length;i++){
-                if(players[i].id==data.id){
+                if(players[i] && players[i].id==data.id){
                     killPlayer(players[i]);
                     break;
                 }
@@ -404,7 +404,7 @@ function SoundDefender(target) {
         for(s=0;s<1;s++){
             aliens.push( new Alien(playArea) );
         }
-        for(s=0;s<20;s++){
+        for(s=0;s<10;s++){
             bullets.push( new Bullet(playArea) );
         }
 
@@ -610,7 +610,7 @@ function SoundDefender(target) {
                     al.addCoords(alienCrash);
 
                 }
-                al.pointer.setAngleDegrees(seagullShootAngles[al.animationIndex]);
+                al.pointer.setAngleDegrees(seagullShootAngles[al.animationIndex%8]);
                 players.every(function(player){
                     if(startGameCountDown===0 && player && player.ship && al.pointer.isPointingAt(player.ship,5)){
                         fireBullet(al);
