@@ -2,11 +2,11 @@
 <html>
 <head>
 	<meta charset="UTF-8"/>
-	<script src="http://localhost:9080/socket.io/socket.io.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
 	<script src="js/elem.js"></script>
 	<script type="text/javascript">
-		var webSocketHost = 'http://localhost:9080/';
-		var imageBaseUrl = 'http://localhost/jimImages/';
+		var webSocketHost = '/';
+		var imageBaseUrl = '/custom/';
 	</script>
 	<link href="css/font-awesome.css" rel="stylesheet">
 	<style type="text/css">
@@ -48,11 +48,13 @@
 			background-position: -45px 0;
 			cursor: pointer;
 		}
-		#refreshAliens {
+		.aliens .fa {
 			float: left;
-			clear: both;
 			margin: 10px;
 			color: #666;
+		}
+		.aliens ul {
+			clear: both;
 		}
 		.reloading {
 			animation:rotate 600ms infinite linear;
@@ -78,6 +80,7 @@
 </div>
 <div class="panel aliens">
 	<i class="fa fa-refresh" id="refreshAliens" title="reload aliens!"></i>
+	<i class="fa fa-trash" id="trashAliens" title="clear custom aliens"></i>
 	<ul id="aliens">
 	</ul>
 </div>
@@ -120,6 +123,9 @@ function decay(){
 document.getElem("#refreshAliens").on('click', function() {
 	this.addClass("reloading");
 	socket.emit('gimmeAliens', {});
+})
+document.getElem("#trashAliens").on('click', function() {
+	socket.emit('setAlien', {});
 })
 socket.on('aliens', function(data) {
 	var alienUl = document.getElem('#aliens');

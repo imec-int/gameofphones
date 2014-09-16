@@ -249,7 +249,11 @@ function SoundDefender(target) {
             updateTopTen(data);
         });
         socket.on('setAlien', function(data) {
-            customs.push(data.image);
+            if (!data || !data.image) {
+                customs = []
+            } else {
+                customs.push(data.image);
+            }
         })
         socket.on('startGame', startGame);
          socket.on('admin',function(data){
