@@ -319,7 +319,7 @@ function SoundDefender(target) {
             clearInterval(cdtimer);
             cdtimer=null;
             var countDownElem = document.getElem("#countdown");
-            countDownElem.style.width="0%";
+            countDownElem.style.width="100%";
         }
         var countDownElem = document.getElem("#countdown");
         startGameCountDown = 10;

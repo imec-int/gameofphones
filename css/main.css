@@ -38,9 +38,32 @@ body {
     height: 100%;
     width: 100%;
     z-index: 100;
-    background-image: url('../img/gameOfPhonesiminds.jpg');
+    background-image: url('../img/gameOfPhonesNew.jpg');
     background-size: 100%;
     -webkit-background-size: 100%;
+}
+
+@-webkit-keyframes spin {
+    0%   {-webkit-transform: rotate(0deg)}
+    100% {-webkit-transform: rotate(360deg)}
+}
+#GOPlogo{
+
+    -webkit-animation: spin 30s infinite linear;
+    position: absolute;
+    left: 579px;
+    top: 151px;
+    width: 805px;
+    height: 753px;
+    background-image: url('../img/GOPlogo.png');
+}
+#JIM{
+    position: absolute;
+    left:805px;
+    top: 117px;
+    width: 311px;
+    height: 136px;
+    background-image: url('../img/jimmobile.png');
 }
 .hide{
     display: none;
@@ -122,10 +145,12 @@ body {
 }
 #countdown{
     position: absolute;
-    margin: 10px;
+    margin: 0px;
     bottom: 0px;
-    height: 40px;
-    background-color:#C0C0C0 ;
+    height: 37px;
+    width:100%;
+    /*background-color:#C0C0C0 ;*/
+    background-image: url('../img/line.png');
 }
 /*
 "img/p0000FF.png","img/p00FF00.png","img/p00FFFF.png","img/pFF00FF.png","img/pFFFF00.png"
@@ -165,7 +190,7 @@ body {
     background-repeat: no-repeat;
 }
 #ship4 > div{
-    background-image: url('../img/pFFFF00.png');
+    background-image: url('../players/a-penguin.png');
     background-size: 75px;
     background-repeat: no-repeat;
 }
