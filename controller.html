@@ -123,13 +123,13 @@ function decay(){
 document.getElem("#refreshAliens").on('click', function() {
 	this.addClass("reloading");
 	socket.emit('gimmeAliens', {});
-})
+});
 document.getElem("#trashAliens").on('click', function() {
 	socket.emit('setAlien', {});
     document.getElemAll("#aliens li").forEach(function(alien){
         alien.style.backgroundColor="";
-    })
-})
+    });
+});
 socket.on('aliens', function(data) {
 	var alienUl = document.getElem('#aliens');
 	alienUl.clearElem();
@@ -141,6 +141,11 @@ socket.on('aliens', function(data) {
         }.bind(alien));
 	});
 	document.getElem("#refreshAliens").removeClass("reloading");
+});
+socket.on("newGame",function(){
+    document.getElemAll("#aliens li").forEach(function(alien){
+        alien.style.backgroundColor="";
+    });
 });
 socket.emit('gimmeAliens', {});
 </script>
