@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/elem.js"></script>
+    <title>Scores</title>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: black;
+            background-image: url('img/scores.jpg');
+            background-repeat: no-repeat;
+            /*background-size: 100%;
+            -webkit-background-size: 100%;*/
+            overflow: hidden;
+            /*cursor: none;*/
+        }
+        .title{
+            position: absolute;
+            font-size: 33pt;
+            font-family: "Rockwell Extra Bold", "Rockwell Bold", monospace;
+            width: 500px;
+            text-align: center;
+            top: 521px;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            color:#1570cf;
+        }
+        .kol1{
+            font-size: 19pt;
+            position: absolute;
+            width: 40%;
+            top:60px;
+            left: 10px;
+            font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
+            font-size: 20pt;
+            color:#1570cf;
+            top: 610px;
+            left: 160px;
+        }
+        .kol2{
+            font-size: 19pt;
+            position: absolute;
+            width: 40%;
+            top:610px;
+            right: 190px;
+            font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
+            font-size: 20pt;
+            color:#1570cf;
+        }
+        .listfield{
+            clear: left;
+            margin-top: 10px;
+            float: left;
+            width:70px;
+        }
+        .namefield{
+            margin-top: 10px;
+            width: 82%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            float: left;
+        }
+        .scorefield{
+            margin-top: 10px;
+            float: right;
+            clear: right;
+        }
+        .slide{
+            position: absolute;
+            top:0px;
+            transition:5s;
+            width:1920px;
+        }
+        #s1{
+            left:0px;
+
+        }
+        #s2{
+            left:1920px;
+        }
+        .switch #s1{
+            left:-1920px !important;
+        }
+        .switch #s2{
+            left:0px !important;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    var scores=[];
+    var socket = io.connect('/');
+    var slide=1;
+    var starter=0;
+    var started=false;
+
+    socket.emit("scorepanel", {"hello": true});
+
+    socket.on("scores",function(data){
+        console.log("getting scores");
+        scores=data;
+        starter=0;
+        if(!started)display();
+    });
+    setInterval(display,20000);
+
+    function display(){
+        started=true;
+        fillSlide(starter);
+
+        starter+=10;
+        if((!scores[starter])||(!scores[starter+1])){
+            socket.emit("getscores");
+        }
+    }
+
+    function fillSlide(start){
+        var title=document.getElem('#t'+slide).clearElem();
+        var kol1=document.getElem('#k1'+slide).clearElem();
+        var kol2=document.getElem('#k2'+slide).clearElem();
+        if(start==0){
+            title.textElem('TOP 10');
+        }else{
+            title.textElem((start+1)+' TOT '+(start+10));
+        }
+        for(var i=0;i<10;i++){
+            var write=i<5?kol1:kol2;
+            if(scores[start+i]){
+                write.span({class:'listfield'},(start+i+1)+'.');
+                write.span({class:'namefield'},scores[start+i].name);
+                write.span({class:'scorefield'},''+scores[start+i].score);
+            }
+        }
+        document.getElem("#scorepanel").toggleClass("switch");
+        slide=(slide===1?2:1);
+    }
+
+</script>
+<div id="scorepanel" class="switch">
+    <div class="slide" id="s1">
+        <div class="title" id="t1"></div>
+        <div class="kol1" id="k11"></div>
+        <div class="kol2" id="k21"></div>
+    </div>
+    <div class="slide" id="s2">
+        <div class="title" id="t2"></div>
+        <div class="kol1" id="k12"></div>
+        <div class="kol2" id="k22"></div>
+    </div>
+</div>
+</body>
+</html>
