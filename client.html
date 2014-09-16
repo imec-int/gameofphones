@@ -363,6 +363,14 @@ input:focus {
         document.getElem(".loser").style.display = 'block';
         document.getElem(".connecting").style.display="block";
         document.getElem(".controller").style.display = 'none';
+        if(localStorage.getItem("JIMuserdata")!==null){
+            document.getElem("#userdataform").style.display = 'none';
+            var data=localStorage.getItem("JIMuserdata");
+            //{score:score,name:name,email:email}
+            var jdata=JSON.parse(data);
+            jdata.score=data.data.score_encrypted;
+            Window.http.POST({url:'/addscore',data:jdata,success:postSuccess,error:postError});
+        }
     });
     function tryConnect(){
         if(readyToConnect && !connected /*&& window.matchMedia("(orientation: landscape)").matches*/){
@@ -440,6 +448,7 @@ input:focus {
         var score=document.getElem("#postscore").value;
         var name=document.getElem("#postname").value;
         var email=document.getElem("#postemail").value;
+        localStorage.setItem("JIMuserdata",JSON.stringify({name:name,email:email}));
         Window.http.POST({url:'/addscore',data:{score:score,name:name,email:email},success:postSuccess,error:postError});
     }
 </script>
@@ -479,7 +488,7 @@ input:focus {
                 Uw score: <span class="theScore"></span>
             </div>
             <br><br>
-            <span class="form">
+            <span id="userdataform" class="form">
                 <input type="hidden" name="score" id="postscore">
                 <input name="name" placeholder="name" maxlength="20" id="postname"><br>
                 <input name="email" type="email" placeholder="email" id="postemail"><br>
