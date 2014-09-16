@@ -2,8 +2,13 @@
 <html>
 <head>
 	<meta charset="UTF-8"/>
-	<script src="/socket.io/socket.io.js"></script>
+	<script src="http://localhost:9080/socket.io/socket.io.js"></script>
 	<script src="js/elem.js"></script>
+	<script type="text/javascript">
+		var webSocketHost = 'http://localhost:9080/';
+		var imageBaseUrl = 'http://localhost/jimImages/';
+	</script>
+	<link href="css/font-awesome.css" rel="stylesheet">
 	<style type="text/css">
 		td{
 			width:100px;
@@ -25,44 +30,41 @@
 		.panel{
 			float: left;
 			text-align: right;
+			clear: left;
 		}
 		input[type=range]{
 			width:400px;
 		}
+		.aliens {
+			border: 1px solid #000;
+			margin-top: 10px;
+		}
+		#aliens li {
+			list-style-type: none;
+			float: left;
+			display: block;
+			height: 180px;
+			width: 120px;
+			background-position: -45px 0;
+			cursor: pointer;
+		}
+		#refreshAliens {
+			float: left;
+			clear: both;
+			margin: 10px;
+			color: #666;
+		}
+		.reloading {
+			animation:rotate 600ms infinite linear;
+			-o-animation:rotate 600ms infinite linear;
+			-moz-animation:rotate 600ms infinite linear;
+			-webkit-animation:rotate 600ms infinite linear;
+		}
+		@keyframes rotate { from {transform:rotate(0deg);} to {transform:rotate(360deg);} }
+		@-o-keyframes rotate { from {-o-transform:rotate(0deg);} to {-o-transform:rotate(360deg);} }
+		@-moz-keyframes rotate { from {-moz-transform:rotate(0deg);} to {-moz-transform:rotate(360deg);} }
+		@-webkit-keyframes rotate { from {-webkit-transform:rotate(0deg);} to {-webkit-transform:rotate(360deg);} }
 	</style>
-	<script type="text/javascript">
-	var socket = io.connect('/');
-
-	function sendScale(){
-		var scale=parseFloat(document.getElem("#scaler").value);
-		console.log(scale);
-		socket.emit("admin",{'scale':scale});
-	}
-	function sendLoudness(){
-		var loud=parseInt(document.getElem("#loud").value,10);
-		loud=1100-loud;
-		console.log(loud);
-		socket.emit("admin",{'loudness':loud});
-	}
-	var meters=null;
-	document.ready(function(){
-
-		meters=document.getElemAll('div.meter');
-		setInterval(decay,10);
-
-		document.getElem("#scaler").on("change",sendScale);
-		document.getElem("#loud").on("change",sendLoudness);
-	});
-	function decay(){
-		meters.forEach(function(line){
-			var w=parseInt(line.offsetWidth);
-			if(w>1){
-				w-=2;
-				line.style.width=w+"px";
-			}
-		});
-	}
-	</script>
 </head>
 <body>
 
@@ -74,5 +76,64 @@
 	<input type="range" value="400" min="100" max="1000" step="1" id="loud">
 	<br/>
 </div>
+<div class="panel aliens">
+	<i class="fa fa-refresh" id="refreshAliens" title="reload aliens!"></i>
+	<ul id="aliens">
+	</ul>
+</div>
+
+<script type="text/javascript">
+var socket = io.connect(webSocketHost);
+
+socket.emit("admin", {"hello": true});
+
+function sendScale(){
+	var scale=parseFloat(document.getElem("#scaler").value);
+	console.log(scale);
+	socket.emit("admin",{'scale':scale});
+}
+function sendLoudness(){
+	var loud=parseInt(document.getElem("#loud").value,10);
+	loud=1100-loud;
+	console.log(loud);
+	socket.emit("admin",{'loudness':loud});
+}
+var meters=null;
+document.ready(function(){
+
+	meters=document.getElemAll('div.meter');
+	setInterval(decay,10);
+
+	document.getElem("#scaler").on("change",sendScale);
+	document.getElem("#loud").on("change",sendLoudness);
+});
+function decay(){
+	meters.forEach(function(line){
+		var w=parseInt(line.offsetWidth);
+		if(w>1){
+			w-=2;
+			line.style.width=w+"px";
+		}
+	});
+}
+
+document.getElem("#refreshAliens").on('click', function() {
+	this.addClass("reloading");
+	socket.emit('gimmeAliens', {});
+})
+socket.on('aliens', function(data) {
+	var alienUl = document.getElem('#aliens');
+	alienUl.clearElem();
+	data.forEach(function(image) {
+		var alien = alienUl.li({style:"background-image: url('"+imageBaseUrl+'/'+image+"')"});
+		alien.on('click', function() {
+			socket.emit("setAlien", { image:  image });
+		});
+	});
+	document.getElem("#refreshAliens").removeClass("reloading");
+});
+socket.emit('gimmeAliens', {});
+</script>
+
 </body>
 </html>
