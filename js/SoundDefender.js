@@ -248,6 +248,9 @@ function SoundDefender(target) {
         socket.on('scores', function(data){
             updateTopTen(data);
         });
+        socket.on('setAlien', function(data) {
+            customs.push(data.image);
+        })
         socket.on('startGame', startGame);
          socket.on('admin',function(data){
              if(data.scale){
@@ -303,7 +306,7 @@ function SoundDefender(target) {
         countDownElem.style.width=cdowner+"%";
     }
     function startGame(data) {
-        customs=data.customs||[];
+        //customs=data.customs||[];
         if(gameOn)return;
         gameOn=true;
         if(addAliensInterval!==null){
@@ -410,6 +413,7 @@ function SoundDefender(target) {
 
     function initNewGame() {
         console.log("new game!");
+        customs = [];
         gameOn=false;
         gopScreen=true;
         document.getElem("#GOP").removeClass("hide");
