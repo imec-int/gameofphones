@@ -155,7 +155,7 @@ body {
 #countdown{
     position: absolute;
     margin: 0px;
-    bottom: 0px;
+    bottom: -1px;
     height: 37px;
     width:100%;
     /*background-color:#C0C0C0 ;*/

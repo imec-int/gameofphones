@@ -151,7 +151,7 @@ function SoundDefender(target) {
         if(rand>0){
             img="custom/"+customs[rand-1];
         }else{
-            img='aliens/space_bad_0'+Math.rnd(0,3)+'.png';
+            img='aliens/space_bad_0'+Math.rnd(1,3)+'.png';
         }
         this.helmet=false;
         /*if(rand===helmetbase){
@@ -233,7 +233,7 @@ function SoundDefender(target) {
             document.getElem("#pincode b").setText(data.pin);
         });
         socket.on('lost',function(data){
-            for(i=0;i<players.length;i++){
+            for(var i=0;i<players.length;i++){
                 if(players[i] && players[i].id==data.id){
                     killPlayer(players[i]);
                     break;
@@ -265,15 +265,15 @@ function SoundDefender(target) {
             write.span({class:'namefield'},data[i].name);
             write.span({class:'scorefield'},''+data[i].score);
         }
-    };
+    }
     function createPlayer(index) {
         if(players.length<index || players[index]==null){
             players[index] = new Player(playArea, index);
             document.getElem("#ship"+index).removeClass("hide");
         }
     }
-    cdtimer=null;
-    cdowner=99;
+    var cdtimer=null;
+    var cdowner=99;
     function startCountDown(timer){
         if(cdtimer!==null) {
             clearInterval(cdtimer);
@@ -309,7 +309,7 @@ function SoundDefender(target) {
         helmetmax=1;
         helmetstart=10;
         aliens=[];
-        for(s=0;s<1;s++){
+        for(var s=0;s<1;s++){
             aliens.push( new Alien(playArea) );
         }
         gopScreen=false;
@@ -418,10 +418,10 @@ function SoundDefender(target) {
         players=new Array(5);
         document.getElemAll("#ships > div").addClass("hide");
 
-        for(s=0;s<1;s++){
+        for(var s=0;s<1;s++){
             aliens.push( new Alien(playArea) );
         }
-        for(s=0;s<10;s++){
+        for(var s=0;s<10;s++){
             bullets.push( new Bullet(playArea) );
         }
 
@@ -544,7 +544,7 @@ function SoundDefender(target) {
     function moveShots(game){
         players.forEach( function(player) {
             for(var s=0;s<player.shots.length;s++) {
-                shoot=player.shots[s];
+                var shoot=player.shots[s];
                 if (shoot.move) {
                     shoot.addCoords(shoot.move.cloneVector().multiply(game.ticks));
                     var sx = shoot.position.getX();
@@ -602,7 +602,7 @@ function SoundDefender(target) {
                     killBullet(bull);
                 } else{
                     for(var i=0;i<players.length;i++){
-                        ship=players[i];
+                        var ship=players[i];
                         if(ship && ship.ship && ship.ship.collidesWith(bull)){
                             killBullet(bull);
                             //killPlayer(ship);
@@ -657,7 +657,7 @@ function SoundDefender(target) {
             var player=players[i];
             if (player && player.shots) {
                 for (var sa = 0; sa < player.shots.length; sa++) {
-                    shot = player.shots[sa];
+                    var shot = player.shots[sa];
                     if (shot.move) {
                         if (shot.collidesWith(alien)) {
                             killShot(shot);
