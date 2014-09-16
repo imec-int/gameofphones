@@ -388,17 +388,31 @@ input:focus {
         doOnOrientationChange();
 
     });
+    var counter=0;
     function handleControls(control){
+        counter++;
+        if(counter>10){
+            counter=0;
+            document.getElem('.shoot').removeClass('pressed');
+        }
         var js=control.isElement("joystick");
         var shoot=control.isElement("fire");
         if(connected && started){
             if(js && js.y>0){
                 socket.emit('up');
+                document.getElem('.up').addClass('pressed');
+                document.getElem('.down').removeClass('pressed');
             }else if(js && js.y<0){
                 socket.emit('down');
+                document.getElem('.up').removeClass('pressed');
+                document.getElem('.down').addClass('pressed');
+            }else{
+                document.getElem('.down').removeClass('pressed');
+                document.getElem('.up').removeClass('pressed');
             }
             if(shoot){
                 socket.emit("shoot");
+                document.getElem('.shoot').addClass('pressed');
                 mySound.play();
             }
         }
