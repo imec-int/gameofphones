@@ -26,6 +26,7 @@ function SoundDefender(target) {
     var gameOn=false;
     var godTime=500;
     var shipImages = ["players/bear.png","players/cat.png","players/monkey.png","players/penguin.png","img/pFFFF00.png"];
+    var customs=["cedrik.png"];
 
     function Player(playArea, id) {
         this.shots=[];
@@ -141,12 +142,17 @@ function SoundDefender(target) {
     }
 
     function Alien(playArea) {
-        helmetbase++;
+        /*helmetbase++;
         if(helmetbase>0) helmetbase=0;
         helmetstart--;
-        if(helmetstart<helmetmax)helmetstart=helmetmax;
-        var rand=Math.rnd(0,helmetstart);
-        var img='img/space_bad_01.png';
+        if(helmetstart<helmetmax)helmetstart=helmetmax;*/
+        var img='';
+        var rand=Math.rnd(-1,customs.length);
+        if(rand>0){
+            img="custom/"+customs[rand-1];
+        }else{
+            img='aliens/space_bad_0'+Math.rnd(0,3)+'.png';
+        }
         this.helmet=false;
         /*if(rand===helmetbase){
             img='img/helmet.png';
@@ -303,7 +309,9 @@ function SoundDefender(target) {
         helmetmax=1;
         helmetstart=10;
         aliens=[];
-
+        for(s=0;s<1;s++){
+            aliens.push( new Alien(playArea) );
+        }
         gopScreen=false;
         document.getElem("#GOP").addClass("hide");
         console.log("start game!");
@@ -618,15 +626,16 @@ function SoundDefender(target) {
                 if(al.isdying){
                     al.addCoords(alienCrash);
 
+                }else{
+                    al.pointer.setAngleDegrees(seagullShootAngles[al.animationIndex%8]);
+                    players.every(function(player){
+                        if(startGameCountDown===0 && player && player.ship && al.pointer.isPointingAt(player.ship,5)){
+                            fireBullet(al);
+                            return false;
+                        }
+                        return true;
+                    });
                 }
-                al.pointer.setAngleDegrees(seagullShootAngles[al.animationIndex%8]);
-                players.every(function(player){
-                    if(startGameCountDown===0 && player && player.ship && al.pointer.isPointingAt(player.ship,5)){
-                        fireBullet(al);
-                        return false;
-                    }
-                    return true;
-                });
                 if (al.position._x < -10) {
                     killAlien(al);
                 } else {
@@ -634,7 +643,6 @@ function SoundDefender(target) {
                         players.forEach( function(player) {
                             if (player && player.ship && player.ship.collidesWith(al)) {
                                 killAlien(al);
-                                //killPlayer(player);
                                 if(!player.godmode)diePlayer(player);
                             }
                         });
