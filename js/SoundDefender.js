@@ -149,19 +149,22 @@ function SoundDefender(target) {
         var img='';
         var rand=Math.rnd(-1,customs.length);
         if(rand>0){
-            img="custom/"+customs[rand-1];
+            img="custom/"+customs[rand-1];// 120/103
+            Sprite.apply(this,[img,200,200,120,103]);
+            this.setCollisionBox(50,21,155,140,true);
         }else{
             img='aliens/space_bad_0'+Math.rnd(1,3)+'.png';
+            Sprite.apply(this,[img,200,200,95,129]);
+            this.setCollisionBox(-95+51,-129+40,-95+139,-129+145);
         }
         this.helmet=false;
         /*if(rand===helmetbase){
             img='img/helmet.png';
             this.helmet=true;
         }*/
-        Sprite.apply(this,[img,200,200,95,129]);
         //this.setRotationOffsetDegrees(-180);
         //alien.setCollisionBox(-24,-27,28,25); 51-139 40-145
-        this.setCollisionBox(-95+51,-129+40,-95+139,-129+145);
+
         //this.setCollisionBox(-13,-29,32,33);
         this.addAnimation("fly",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
         //if(!this.helmet){
@@ -178,7 +181,7 @@ function SoundDefender(target) {
         this.active=false;
         this.pointer = new Drawable(0,0,0);
         this.addChild(this.pointer,true);
-        this.pointer.setCoords([-95+51,0]);
+        this.pointer.setCoords(rand>0?[-30,0]:[-95+32,0]);
 
         this.cleanUp = function() {
             try { playArea.removeChild(this); } catch (err) {}
@@ -188,9 +191,11 @@ function SoundDefender(target) {
 
     function Bullet(playArea) {
         //Sprite.apply(this,['img/bullet.png', 16, 16, 8, 8]);
-        Sprite.apply(this,['lasers/alien.png', 150, 30, 20, 15]);
+        //Sprite.apply(this,['lasers/alien.png', 150, 30, 20, 15]);
+        Sprite.apply(this,['lasers/alien.png', 150, 30, 30, 15]);
         //this.setCollisionBox(-4, -4, 4, 4);
-        this.setCollisionBox(-100, 22, 20, 8,true);  //20-120     8-22
+        //this.setCollisionBox(-100, 22, 20, 8,true);  //20-120     8-22
+        this.setCollisionBox(0,-7,-101,7);
         playArea.addChild(this, 3);
         this.setCoords([0,-10]);
         this.addAnimation("pulse", [0, 1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
@@ -479,7 +484,7 @@ function SoundDefender(target) {
             }
         }
     }
-
+    var bulletOffset=new Vector2D(-50,0);
     function fireBullet(alien){
         for(var s=0;s<bullets.length;s++){
             var bullet=bullets[s];
@@ -490,6 +495,7 @@ function SoundDefender(target) {
                 bullet.rotation=alien.pointer.rotation.cloneVector();
                 bullet.move.setAngle(alien.pointer.getAngle());
                 bullet.move.setLength(10);
+                bullet.addCoords(bulletOffset);
                 bullet.active=true;
                 break;
             }
