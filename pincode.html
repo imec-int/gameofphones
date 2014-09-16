@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>Sound defender client</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <link href="css/font-awesome.css" rel="stylesheet">
+  <script src="/socket.io/socket.io.js"></script>
+  <style>/* media="screen and (orientation: landscape)">*/
+    html, body {
+        height: 100%;
+        margin:0;
+        padding: 0px;
+    }
+    body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        color: #FAFAFA;
+        background-color: #222022;
+        text-align: center;
+        font-family: proxima-nova, sans-serif;
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 40vh;
+    }
+  </style>
+  <script src="js/elem.js"></script>
+  <script>
+    var socket = io.connect("/");
+    socket.emit('pincodepanel');
+    socket.on('newGame', function(data) {
+        if (data && data.pin) {
+            document.getElem("#pincode").setText(data.pin);
+        }
+    })
+  </script>
+</head>
+  <body>
+    <h1 id="pincode">1234</h1>
+ </body>
+</html>
