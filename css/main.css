@@ -166,8 +166,8 @@ body {
 */
 #ship0,#ship1,#ship2,#ship3,#ship4{
     float: left;
-    width: 90px;
-    height: 60px;
+    width: 200px;
+    height: 200px;
     background-color: rgba(0,0,0,0.5);
     border-radius: 5px;
     margin: 5px;

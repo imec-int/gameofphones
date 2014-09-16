@@ -130,8 +130,8 @@ function SoundDefender(target) {
 
     }
     function respawn(player){
-        player.dying=false;
         player.ship.startAnimation("fly");
+        player.dying=false;
         player.ship.setCoords([219+(player.id*200),199]);
         player.ship.setAngle(0);
         player.ship.setScale(1);
@@ -235,7 +235,6 @@ function SoundDefender(target) {
         socket.on('newGame', function(data) {
             godmode = true;
             initNewGame();
-            document.getElem("#pincode b").setText(data.pin);
         });
         socket.on('lost',function(data){
             for(var i=0;i<players.length;i++){
@@ -245,9 +244,7 @@ function SoundDefender(target) {
                 }
             }
         });
-        socket.on('scores', function(data){
-            updateTopTen(data);
-        });
+
         socket.on('setAlien', function(data) {
             if (!data || !data.image) {
                 customs = []
@@ -268,16 +265,7 @@ function SoundDefender(target) {
             startCountDown(data.timer);
         })
     });
-    function updateTopTen(data){
-        var kol1=document.getElem('#kol1').clearElem();
-        var kol2=document.getElem('#kol2').clearElem();
-        for(var i=0;i<data.length;i++){
-            var write=i<5?kol1:kol2;
-            write.span({class:'listfield'},(i+1)+'.');
-            write.span({class:'namefield'},data[i].name);
-            write.span({class:'scorefield'},''+data[i].score);
-        }
-    }
+
     function createPlayer(index) {
         if(players.length<index || players[index]==null){
             players[index] = new Player(playArea, index);
