@@ -302,7 +302,8 @@ function SoundDefender(target) {
         }
         countDownElem.style.width=cdowner+"%";
     }
-    function startGame() {
+    function startGame(data) {
+        customs=data.customs||[];
         if(gameOn)return;
         gameOn=true;
         if(addAliensInterval!==null){
