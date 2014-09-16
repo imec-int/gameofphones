@@ -126,6 +126,9 @@ document.getElem("#refreshAliens").on('click', function() {
 })
 document.getElem("#trashAliens").on('click', function() {
 	socket.emit('setAlien', {});
+    document.getElemAll("#aliens li").forEach(function(alien){
+        alien.style.backgroundColor="";
+    })
 })
 socket.on('aliens', function(data) {
 	var alienUl = document.getElem('#aliens');
@@ -134,7 +137,8 @@ socket.on('aliens', function(data) {
 		var alien = alienUl.li({style:"background-image: url('"+imageBaseUrl+'/'+image+"')"});
 		alien.on('click', function() {
 			socket.emit("setAlien", { image:  image });
-		});
+            this.style.backgroundColor="#888";
+        }.bind(alien));
 	});
 	document.getElem("#refreshAliens").removeClass("reloading");
 });
