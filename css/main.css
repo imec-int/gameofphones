@@ -16,7 +16,8 @@ body {
     width:100%;
     color:#E0E0E0;
     bottom:10px;
-    font-family: "proxima-nova", sans-serif;
+    /*font-family: "proxima-nova", sans-serif;*/
+    font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
     font-size: 29pt;
     text-align: center;
     text-shadow: 2px 2px 1px #000;
@@ -51,7 +52,11 @@ body {
 
     -webkit-animation: spin 30s infinite linear;
     position: absolute;
-    left: 579px;
+    /*left: 579px;*/
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
     top: 151px;
     width: 805px;
     height: 753px;
@@ -59,7 +64,11 @@ body {
 }
 #JIM{
     position: absolute;
-    left:805px;
+    /*left:805px;*/
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
     top: 117px;
     width: 311px;
     height: 136px;
@@ -77,7 +86,7 @@ body {
     background-color: rgba(0,0,0,0.7);
     border-radius: 15px;
     color:#C0C0C0;
-    font-family: 'game_of_thronesregular';
+    font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
 }
 #topten > span{
     font-size: 30pt;
@@ -132,7 +141,7 @@ body {
     top:120px;
     left: 100px;
     color:#C0C0C0;
-    font-family: 'game_of_thronesregular';
+    font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
 }
 #ships{
     position: absolute;
