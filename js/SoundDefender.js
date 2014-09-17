@@ -147,7 +147,7 @@ function SoundDefender(target) {
         helmetstart--;
         if(helmetstart<helmetmax)helmetstart=helmetmax;*/
         var img='';
-        var rand=Math.rnd(-1,customs.length);
+        var rand=Math.rnd(0,customs.length);
         if(rand>0){
             img="custom/"+customs[rand-1];// 120/103
             Sprite.apply(this,[img,200,200,120,103]);
