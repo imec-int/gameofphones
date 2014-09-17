@@ -135,9 +135,18 @@ socket.on('aliens', function(data) {
 	alienUl.clearElem();
 	data.forEach(function(image) {
 		var alien = alienUl.li({style:"background-image: url('"+imageBaseUrl+'/'+image+"')"});
+        alien.setAttribute("data-selected","false");
 		alien.on('click', function() {
-			socket.emit("setAlien", { image:  image });
-            this.style.backgroundColor="#888";
+            var sel=this.getAttribute("data-selected");
+            if(sel==="true"){
+                socket.emit("removeAlien",{image:image});
+                this.setAttribute("data-selected","false");
+                this.style.backgroundColor="";
+            }else{
+                socket.emit("setAlien", { image:  image });
+                this.style.backgroundColor="#888";
+                this.setAttribute("data-selected","true");
+            }
         }.bind(alien));
 	});
 	document.getElem("#refreshAliens").removeClass("reloading");

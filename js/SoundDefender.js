@@ -236,20 +236,28 @@ function SoundDefender(target) {
             godmode = true;
             initNewGame();
         });
-        socket.on('lost',function(data){
+        /*socket.on('lost',function(data){
             for(var i=0;i<players.length;i++){
                 if(players[i] && players[i].id==data.id){
                     killPlayer(players[i]);
                     break;
                 }
             }
-        });
+        });*/
 
         socket.on('setAlien', function(data) {
             if (!data || !data.image) {
                 customs = []
             } else {
                 customs.push(data.image);
+            }
+        });
+        socket.on('removeAlien',function(data){
+            if(data && data.image){
+                var index=customs.indexOf(data.image);
+                if(index!==-1){
+                    customs.splice(index,1);
+                }
             }
         })
         socket.on('startGame', startGame);
@@ -715,6 +723,9 @@ function SoundDefender(target) {
     };
     function showGopScreen(game){
 
+    }
+    window.getCustoms=function(){
+        return customs;
     }
     var game = new ScarletEngine(mural, loop);
     game.registerKeys([16,40,38]);

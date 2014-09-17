@@ -16,12 +16,12 @@ body {
     width:100%;
     /*color:#E0E0E0;*/
     color:#1673cc;
-    bottom:20px;
+    bottom:60px;
     /*font-family: "proxima-nova", sans-serif;*/
     font-family: "Rockwell Extra Bold", "Rockwell Bold", monospace;
-    font-size: 29pt;
+    font-size: 25pt;
     text-align: center;
-    text-shadow: 2px 2px 1px #000;
+    text-shadow: 2px 2px 1px #eee;
     z-index: 1000;
 }
 #www span{
