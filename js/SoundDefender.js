@@ -341,7 +341,7 @@ function SoundDefender(target) {
                 godmode = false;
                 addAliensInterval = setInterval(function () {
                     aliens.push(new Alien(playArea));
-                }, 5000);
+                }, 10000);
             } else if (startGameCountDown < 0) {
                 //countDownElem.clearElem();
                 clearInterval(startGameCountDownInterval);
@@ -431,7 +431,7 @@ function SoundDefender(target) {
         for(var s=0;s<1;s++){
             aliens.push( new Alien(playArea) );
         }
-        for(var s=0;s<10;s++){
+        for(var s=0;s<5;s++){
             bullets.push( new Bullet(playArea) );
         }
 
@@ -690,10 +690,10 @@ function SoundDefender(target) {
 
         return false;
     }
-    function falseGod(){
+    function falseGod(game){
         for(var i=0;i<players.length;i++){
             if(players[i] && players[i].godcounter>0){
-                players[i].godcounter--;
+                players[i].godcounter-=game.ticks;
                 if(players[i].godcounter<50){
                     players[i].ship.setAlpha(players[i].godcounter%2===0?1:0.5);
                 }
