@@ -151,6 +151,24 @@ socket.on('aliens', function(data) {
 	});
 	document.getElem("#refreshAliens").removeClass("reloading");
 });
+socket.on('newAlien',function(data){
+    var alienUl = document.getElem('#aliens');
+    var alien = document.li({style:"background-image: url('"+imageBaseUrl+'/'+data+"')"});
+    alien.setAttribute("data-selected","false");
+    alien.on('click', function() {
+        var sel=this.getAttribute("data-selected");
+        if(sel==="true"){
+            socket.emit("removeAlien",{image:data});
+            this.setAttribute("data-selected","false");
+            this.style.backgroundColor="";
+        }else{
+            socket.emit("setAlien", { image:  data });
+            this.style.backgroundColor="#888";
+            this.setAttribute("data-selected","true");
+        }
+    }.bind(alien));
+    alienUl.insertBefore(alien,alienUl.firstChild);
+});
 socket.on("newGame",function(){
     document.getElemAll("#aliens li").forEach(function(alien){
         alien.style.backgroundColor="";
