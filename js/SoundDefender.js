@@ -712,7 +712,7 @@ function SoundDefender(target) {
         if(gopScreen){
             showGopScreen(game);
         }else{
-            falseGod();
+            falseGod(game);
             moveShips(game);
             var value=moveLandscape(game);
             moveShots(game);
