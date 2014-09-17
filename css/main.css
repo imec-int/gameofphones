@@ -14,14 +14,18 @@ body {
 #www{
     position: absolute;
     width:100%;
-    color:#E0E0E0;
-    bottom:10px;
+    /*color:#E0E0E0;*/
+    color:#1673cc;
+    bottom:20px;
     /*font-family: "proxima-nova", sans-serif;*/
-    font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
+    font-family: "Rockwell Extra Bold", "Rockwell Bold", monospace;
     font-size: 29pt;
     text-align: center;
     text-shadow: 2px 2px 1px #000;
     z-index: 1000;
+}
+#www span{
+    color:#e20700;
 }
 #waitScreen{
     height: 100%;
