@@ -2,6 +2,7 @@ var fs = require('fs');
 var watch = require('watch');
 var im = require('imagemagick');
 var path = require('path');
+var _ = require('underscore');
 
 var destinationFolder = "converted/"
 var sourceFolder = "source/"
@@ -16,20 +17,27 @@ alienImages.init = function(options) {
 
 alienImages.watchFolder = function(folder, callback) {
     watch.createMonitor(folder, function (monitor) {
-        function handleFile(f, state) {
-            if (fs.lstatSync(f).isDirectory()) {
-                console.log("new directory: "+f);
+
+        function handleFile(file, state) {
+            if (fs.lstatSync(file).isDirectory()) {
+                console.log("new directory: "+file);
             } else {
-                console.log("new file: "+f);
-                convertImage(f);
+                if( isImage(file) ) {
+                    console.log("new image: "+file);
+                    convertImage(file);
+                }
             }
         }
 
-        monitor.on("created", function(f, state) {
+        monitor.on("created", function (file, state) {
+            console.log("watchfolder - file created: " + file);
             // workaround, anders triggered dit dubbel
-            if (monitor.files[f] === undefined) handleFile(f, state);
+            if (monitor.files[file] === undefined) handleFile(file, state);
         });
-        monitor.on("changed", handleFile);
+        monitor.on("changed", function (file,state) {
+             console.log("watchfolder - file changed: " + file);
+             handleFile(file, state);
+        });
     });
 }
 
@@ -40,8 +48,10 @@ alienImages.rescanFolder = function(folder, callback) {
         files.forEach(function(file) {
             var fullPath = folder+"/"+file;
             if (!fs.lstatSync(fullPath).isDirectory() && convertedFiles.indexOf( getConvertedFilename(fullPath) ) < 0 ) {
-                console.log("No convertion found for "+fullPath+", creating one ...");
-                convertImage( fullPath , callback );
+                if( isImage(fullPath) ) {
+                    console.log("No convertion found for "+fullPath+", creating one ...");
+                    convertImage( fullPath , callback );
+                }
             }
         })
     });
@@ -49,6 +59,12 @@ alienImages.rescanFolder = function(folder, callback) {
 
 alienImages.getLatestConverted = function(count, callback) {
     fs.readdir(destinationFolder, function (err, files) {
+
+        // filter only files that are images:
+        files = _.filter(files, function (file) {
+            return isImage(file);
+        });
+
         files.sort(function(a, b) {
             return fs.statSync(destinationFolder + b).mtime.getTime() - fs.statSync(destinationFolder + a).mtime.getTime();
         });
@@ -95,6 +111,10 @@ var convertImage = function(source, callback) {
         );
     }
     step1();
+}
+
+function isImage (filename) {
+    return filename.toLowerCase().match(/\.(jpg|jpeg|png|gif)$/);
 }
 
 module.exports = alienImages;
