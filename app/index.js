@@ -174,13 +174,15 @@ io.sockets.on("connection",function(socket){
 		console.log('received scorepanel from: '+socket.handshake.address.address);
 		scorepanel=socket;
 		sendScores();
-	})
+	});
     socket.on("getscores",function(){
         sendScores();
-    })
+    });
 	socket.on("pincodepanel",function(){
 		pincodepanel=socket;
-	})
+        pinCode=generatePinCode();
+        pincodepanel.emit("newGame", { pin: pinCode });
+	});
 	socket.on("gimmeAliens", function(data) {
 		sendAliens(socket);
 	});

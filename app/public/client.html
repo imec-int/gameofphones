@@ -329,7 +329,7 @@ input:focus {
         var messageBox = document.getElem(".message");
         messageBox.clearElem();
         messageBox.style.display = 'block';
-        messageBox.p("Geen spel bezig :?");
+        messageBox.p("Spel al bezig");
         messageBox.form({'action': 'index.html'}).button({'type': 'submit'},"opnieuw");
     }
     function handleError(message){
@@ -364,12 +364,15 @@ input:focus {
         document.getElem(".connecting").style.display="block";
         document.getElem(".controller").style.display = 'none';
         if(localStorage.getItem("JIMuserdata")!==null){
-            document.getElem("#userdataform").style.display = 'none';
+            //document.getElem("#userdataform").style.display = 'none';
             var ldata=localStorage.getItem("JIMuserdata");
             //{score:score,name:name,email:email}
+
             var jdata=JSON.parse(ldata);
+            document.getElem("#postname").value=jdata.name;
+            document.getElem("#postemail").value=jdata.email;
             jdata.score=data.score_encrypted;
-            Window.http.POST({url:'/addscore',data:jdata,success:postSuccess,error:postError});
+            //Window.http.POST({url:'/addscore',data:jdata,success:postSuccess,error:postError});
         }
     });
     function tryConnect(){
