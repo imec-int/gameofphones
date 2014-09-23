@@ -360,4 +360,4 @@ function initNewGame() {
     if(adminClient) adminClient.emit("newGame");
 }
 
-server.listen(process.env.PORT || 9080);
+server.listen(process.env.PORT || 3000);
