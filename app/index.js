@@ -22,7 +22,10 @@ app.use(express.static(__dirname + "/public"));
 // Start server.
 var server = http.createServer(app);
 
+// Bind socket:
 var io = require('socket.io').listen(server);
+io.set('log level', 0);
+
 //var colors=["0000FF","00FF00","00FFFF","FF00FF","FFFF00"];
 var colors=["bear","cat","monkey","penguin"];
 var connections=0;
