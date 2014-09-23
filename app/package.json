@@ -1,5 +1,5 @@
 {
-  "name": "sound-defender-backend",
+  "name": "gameofphones",
   "version": "0.1.0",
   "author": "godawsf",
   "dependencies": {
@@ -9,6 +9,7 @@
     "path": "^0.4.9",
     "socket.io": "~0.9.16",
     "sqlite3": "^2.2.4",
+    "underscore": "^1.7.0",
     "validator": "^3.16.1",
     "watch": "^0.11.0"
   }

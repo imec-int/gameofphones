@@ -8,16 +8,16 @@ var app = express();
 var alienImages = require("./alienImages");
 
 alienImages.init({
-	destinationFolder: "temp/converted/",
-	sourceFolder: "temp/source/",
+	destinationFolder:__dirname + "/public/custom/",
+	sourceFolder:__dirname + "/temp/source/",
     callback: newAlien
 });
 
-alienImages.watchFolder("temp/images/", function(prev) {
+alienImages.watchFolder(__dirname + "/temp/images/", function (prev) {
 	if (adminClient) sendAliens(adminClient);
-})
+});
 
-app.use(express.static('../sound-defender'));
+app.use(express.static(__dirname + "/public"));
 
 // Start server.
 var server = http.createServer(app);
