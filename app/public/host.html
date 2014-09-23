@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!--script type="application/javascript" src="js/vector2D.js"></script>
+    <script type="application/javascript" src="js/ScarletEngine.js"></script-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="application/javascript" src="js/ScarletEngine.min.js"></script>
+    <script type="application/javascript" src="js/elem.js"></script>
+    <script type="application/javascript" src="js/SoundDefender.js"></script>
+    <link rel="stylesheet" href="css/stylesheet.css">
+    <link rel="stylesheet" href="css/main.css">
+    <style type="text/css">
+        #pincode {
+            background-color: rgba(0,0,0,0.7);
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            right: 0;
+            top: 300px;
+            text-align: center;
+            font-size: 3em;
+            color: #C0C0C0;
+            font-family: "Rockwell Extra Bold", "Rockwell Bold", monospace;
+        }
+        #pincode b, #topten b{
+            font-weight: normal;
+            font-size: 1.5em;
+        }
+
+    </style>
+</head>
+<body style="background-color: #000000;">
+<div id="container">
+    <canvas id="gameCanvas" width="1200" height="675"></canvas>
+</div>
+<div id="GOP">
+    <div id="GOPlogo"></div><div id="JIM"></div>
+    <div id="playersTitle"></div>
+    <div id="ships">
+        <div id="ship0" class="hide"><div class="shp"></div></div>
+        <div id="ship1" class="hide"><div class="shp"></div></div>
+        <div id="ship2" class="hide"><div class="shp"></div></div>
+        <div id="ship3" class="hide"><div class="shp"></div></div>
+        <div id="ship4" class="hide"><div class="shp"></div></div>
+    </div>
+
+    <div id="www">surf naar <span>gameofphones.be</span><br> om mee te spelen!</div>
+    <div id="countdown"></div>
+</div>
+<script>
+    document.ready(function() {
+        var container = document.getElementById("container");
+        var canvas = document.getElementById("gameCanvas");
+        canvas.height = container.offsetHeight;
+        canvas.width  = container.offsetWidth;
+
+        new SoundDefender("#gameCanvas");
+        // var game = new ScarletEngine(mural, loop);
+        // game.start();
+    });
+
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+html, body, #container {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-image: url('../img/spees.jpg');
+    background-size: 100%;
+    -webkit-background-size: 100%;
+    overflow: hidden;
+    cursor: none;
+}
+#www{
+    position: absolute;
+    width:100%;
+    /*color:#E0E0E0;*/
+    color:#1673cc;
+    bottom:60px;
+    /*font-family: "proxima-nova", sans-serif;*/
+    font-family: "Rockwell Extra Bold", "Rockwell Bold", monospace;
+    font-size: 25pt;
+    text-align: center;
+    text-shadow: 2px 2px 1px #eee;
+    z-index: 1000;
+}
+#www span{
+    color:#e20700;
+}
+#waitScreen{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top:0px;
+    left:0px;
+    z-index: 100;
+    background-image: url('/img/gameOfPhones.jpg');
+}
+#GOP{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    background-image: url('../img/gameOfPhonesNew.jpg');
+    background-size: 100%;
+    -webkit-background-size: 100%;
+}
+
+@-webkit-keyframes spin {
+    0%   {-webkit-transform: rotate(0deg)}
+    100% {-webkit-transform: rotate(360deg)}
+}
+#GOPlogo{
+
+    -webkit-animation: spin 30s infinite linear;
+    position: absolute;
+    /*left: 579px;*/
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    top: 151px;
+    width: 805px;
+    height: 753px;
+    background-image: url('../img/GOPlogo.png');
+}
+#JIM{
+    position: absolute;
+    /*left:805px;*/
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    top: 117px;
+    width: 311px;
+    height: 136px;
+    background-image: url('../img/jimmobile.png');
+}
+.hide{
+    display: none;
+}
+#topten{
+    position: absolute;
+    top: 450px;
+    left: 200px;
+    right: 200px;
+    height: 300px;
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 15px;
+    color:#C0C0C0;
+    font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
+}
+#topten > span{
+    font-size: 30pt;
+    position: absolute;
+    top:-10px;
+    left: 5px;
+    right: 5px;
+    text-align: center;
+}
+#topten > hr {
+    margin-right: 10px;
+    margin-left: 10px;
+    position: relative;
+    top:50px;
+    border: 1px solid #C0C0C0;
+}
+#kol1{
+    font-size: 19pt;
+    position: absolute;
+    width: 40%;
+    top:60px;
+    left: 10px;
+}
+#kol2{
+    font-size: 19pt;
+    position: absolute;
+    width: 40%;
+    top:60px;
+    right: 10px;
+}
+.listfield{
+    clear: left;
+    margin-top: 10px;
+    float: left;
+    width:40px;
+}
+.namefield{
+    margin-top: 10px;
+    width: 82%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+}
+.scorefield{
+    margin-top: 10px;
+    float: right;
+    clear: right;
+}
+#playersTitle{
+    position: absolute;
+    top:120px;
+    left: 100px;
+    color:#C0C0C0;
+    font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
+}
+#ships{
+    position: absolute;
+    top:136px;
+    left: 92px;
+
+}
+#ships div{
+
+}
+#countdown{
+    position: absolute;
+    margin: 0px;
+    bottom: -1px;
+    height: 37px;
+    width:100%;
+    /*background-color:#C0C0C0 ;*/
+    background-image: url('../img/line.png');
+}
+/*
+"img/p0000FF.png","img/p00FF00.png","img/p00FFFF.png","img/pFF00FF.png","img/pFFFF00.png"
+*/
+#ship0,#ship1,#ship2,#ship3,#ship4{
+    float: left;
+    width: 200px;
+    height: 200px;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 5px;
+    margin: 5px;
+}
+.shp{
+    width: 200px;
+    height: 200px;
+    margin-top: 14px;
+    margin-left: 8px;
+}
+#ship0 > div{
+    background-image: url('../players/a-bear.png');
+    background-size: 200px;
+    background-repeat: no-repeat;
+}
+#ship1 > div{
+    background-image: url('../players/a-cat.png');
+    background-size: 200px;
+    background-repeat: no-repeat;
+}
+#ship2 > div{
+    background-image: url('../players/a-monkey.png');
+    background-size: 200px;
+    background-repeat: no-repeat;
+}
+#ship3 > div{
+    background-image: url('../players/a-penguin.png');
+    background-size: 200px;
+    background-repeat: no-repeat;
+}
+#ship4 > div{
+    background-image: url('../players/a-penguin.png');
+    background-size: 75px;
+    background-repeat: no-repeat;
+}
