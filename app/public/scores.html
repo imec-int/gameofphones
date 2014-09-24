@@ -143,6 +143,10 @@
         slide=(slide===1?2:1);
     }
 
+    socket.on('refreshpage', function (data) {
+        location.reload();
+    });
+
 </script>
 <div id="scorepanel" class="switch">
     <div class="slide" id="s1">

@@ -37,7 +37,12 @@
         if (data && data.pin) {
             document.getElem("#pincode").setText(data.pin);
         }
-    })
+    });
+
+    socket.on('refreshpage', function (data) {
+        location.reload();
+    });
+
   </script>
 </head>
   <body>

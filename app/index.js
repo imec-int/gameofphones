@@ -8,21 +8,24 @@ var app = express();
 var alienImages = require("./alienImages");
 
 alienImages.init({
-	destinationFolder: "temp/converted/",
-	sourceFolder: "temp/source/",
+	destinationFolder:__dirname + "/public/custom/",
+	sourceFolder:__dirname + "/temp/source/",
     callback: newAlien
 });
 
-alienImages.watchFolder("temp/images/", function(prev) {
+alienImages.watchFolder(__dirname + "/temp/images/", function (prev) {
 	if (adminClient) sendAliens(adminClient);
-})
+});
 
-app.use(express.static('../sound-defender'));
+app.use(express.static(__dirname + "/public"));
 
 // Start server.
 var server = http.createServer(app);
 
+// Bind socket:
 var io = require('socket.io').listen(server);
+io.set('log level', 0);
+
 //var colors=["0000FF","00FF00","00FFFF","FF00FF","FFFF00"];
 var colors=["bear","cat","monkey","penguin"];
 var connections=0;
@@ -205,7 +208,7 @@ io.sockets.on("connection",function(socket){
     socket.on("removeAlien",function(data){
         if(host) host.emit("removeAlien",data);
     });
-	socket.on("admin", function(data){
+	socket.on("admin", function (data){
 		if (data.hello) {
 			adminClient=socket;
 			return;
@@ -222,6 +225,18 @@ io.sockets.on("connection",function(socket){
 			console.log('admin');
 			console.log(data);
 			host.emit('admin',data);
+		}
+
+		if(host && data == 'refreshHostscreen'){
+			host.emit('refreshpage');
+		}
+
+		if(scorepanel && data == 'refreshScorescreen'){
+			scorepanel.emit('refreshpage');
+		}
+
+		if(pincodepanel && data == 'refreshPincodescreen'){
+			pincodepanel.emit('refreshpage');
 		}
 	});
   	socket.on('up', function(data){
@@ -370,4 +385,12 @@ function initNewGame() {
     if(adminClient) adminClient.emit("newGame");
 }
 
-server.listen(process.env.PORT || 9080);
+var webserverport = process.env.PORT || 3000;
+server.listen(webserverport, function () {
+	console.log("Express server listening on port " + webserverport);
+});
+
+
+
+
+

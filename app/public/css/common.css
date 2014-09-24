@@ -1,0 +1,28 @@
+.button,
+button {
+  border: 1px #aaa solid;
+  background: #f0f0f0;
+  color: #666;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  height: 32px;
+  min-width: 140px;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.button:active,
+button:active {
+  padding-left: 4px;
+}
+.button:disabled,
+button:disabled {
+  color: #b6b6b6;
+  padding-left: 0px;
+}
+a.button {
+  padding-top: 6px;
+}
