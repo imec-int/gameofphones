@@ -195,7 +195,7 @@ io.sockets.on("connection",function(socket){
     socket.on("removeAlien",function(data){
         if(host) host.emit("removeAlien",data);
     });
-	socket.on("admin", function(data){
+	socket.on("admin", function (data){
 		if (data.hello) {
 			adminClient=socket;
 			return;
@@ -212,6 +212,18 @@ io.sockets.on("connection",function(socket){
 			console.log('admin');
 			console.log(data);
 			host.emit('admin',data);
+		}
+
+		if(host && data == 'refreshHostscreen'){
+			host.emit('refreshpage');
+		}
+
+		if(scorepanel && data == 'refreshScorescreen'){
+			scorepanel.emit('refreshpage');
+		}
+
+		if(pincodepanel && data == 'refreshPincodescreen'){
+			pincodepanel.emit('refreshpage');
 		}
 	});
   	socket.on('up', function(data){

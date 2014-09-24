@@ -216,7 +216,8 @@ function SoundDefender(target) {
     //shoot.setCollisionBox(-120,-5,5,5);
 
     // sound defender nodejs backend
-    var socket = io.connect("/");
+    var socket = io.connect(window.location.hostname);
+
     socket.on('news', function () {
         socket.emit('host');
         socket.on('down',function(data){
@@ -236,6 +237,11 @@ function SoundDefender(target) {
             godmode = true;
             initNewGame();
         });
+
+        socket.on('refreshpage', function (data) {
+            location.reload();
+        });
+
         /*socket.on('lost',function(data){
             for(var i=0;i<players.length;i++){
                 if(players[i] && players[i].id==data.id){

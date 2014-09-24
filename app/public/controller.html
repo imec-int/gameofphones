@@ -5,10 +5,10 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="js/elem.js"></script>
 	<script type="text/javascript">
-		var webSocketHost = '/';
 		var imageBaseUrl = '/custom/';
 	</script>
 	<link href="css/font-awesome.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/common.css">
 	<style type="text/css">
 		td{
 			width:100px;
@@ -66,15 +66,19 @@
 		@-o-keyframes rotate { from {-o-transform:rotate(0deg);} to {-o-transform:rotate(360deg);} }
 		@-moz-keyframes rotate { from {-moz-transform:rotate(0deg);} to {-moz-transform:rotate(360deg);} }
 		@-webkit-keyframes rotate { from {-webkit-transform:rotate(0deg);} to {-webkit-transform:rotate(360deg);} }
+
+		.panel.dangerous{
+			margin-top: 40px;
+		}
 	</style>
 </head>
 <body>
 
 <div class="panel">
-	<label>Enemy scale (0.5 - 5)</label>
+<!-- 	<label>Enemy scale (0.5 - 5)</label>
 	<input type="range" value="1" min="0.5" max="5" step="0.1" id="scaler">
-	<br/>
-	<label>Mountain scale</label>
+	<br/> -->
+	<label>Grootte van de bergen</label>
 	<input type="range" value="400" min="100" max="1000" step="1" id="loud">
 	<br/>
 </div>
@@ -85,8 +89,15 @@
 	</ul>
 </div>
 
+
+<div class="panel dangerous">
+	<button id="refreshHostscreen">Refresh hoofdscherm</button>
+	<button id="refreshScorescreen">Refresh scoreboard</button>
+	<button id="refreshPincodescreen">Refresh pincodescherm</button>
+</div>
+
 <script type="text/javascript">
-var socket = io.connect(webSocketHost);
+var socket = io.connect(window.location.hostname);
 
 socket.emit("admin", {"hello": true});
 
@@ -109,6 +120,22 @@ document.ready(function(){
 
 	document.getElem("#scaler").on("change",sendScale);
 	document.getElem("#loud").on("change",sendLoudness);
+
+
+	document.getElem('#refreshHostscreen').on('click', function (event) {
+		if(!socket) return;
+		socket.emit('admin', 'refreshHostscreen');
+	});
+
+	document.getElem('#refreshScorescreen').on('click', function (event) {
+		if(!socket) return;
+		socket.emit('admin', 'refreshScorescreen');
+	});
+
+	document.getElem('#refreshPincodescreen').on('click', function (event) {
+		if(!socket) return;
+		socket.emit('admin', 'refreshPincodescreen');
+	});
 });
 function decay(){
 	meters.forEach(function(line){
