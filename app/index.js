@@ -107,6 +107,19 @@ app.post('/addscore', function(req, res) {
 	res.end();
     sendTopTen();
 });
+app.get('/getscores',function(req,res){
+    res.type("text/csv");
+    var scores=[];
+    scoreDB.each("SELECT name, email,score FROM scores ORDER BY score DESC", function(err, row){
+        res.write(row.name+","+row.email+","+row.score+"\n");
+    },function(){
+        res.end();
+    });
+});
+app.get('/clearscores',function(req,res){
+    scoreDB.run("DELETE from scores",function(err){})
+    res.end();
+});
 
 function decryptScore(input) {
 	var decipher = crypto.createDecipher('aes256', cryptoKey);

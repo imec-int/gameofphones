@@ -62,6 +62,9 @@
 			-moz-animation:rotate 600ms infinite linear;
 			-webkit-animation:rotate 600ms infinite linear;
 		}
+        #hidframe{
+            display: none;
+        }
 		@keyframes rotate { from {transform:rotate(0deg);} to {transform:rotate(360deg);} }
 		@-o-keyframes rotate { from {-o-transform:rotate(0deg);} to {-o-transform:rotate(360deg);} }
 		@-moz-keyframes rotate { from {-moz-transform:rotate(0deg);} to {-moz-transform:rotate(360deg);} }
@@ -84,7 +87,9 @@
 	<ul id="aliens">
 	</ul>
 </div>
-
+<button type="button" id="scorebutton">Download scores</button>
+<button type="button" id="clearbutton">Wis alle scores</button>
+<iframe id="hidframe"></iframe>
 <script type="text/javascript">
 var socket = io.connect(webSocketHost);
 
@@ -109,6 +114,16 @@ document.ready(function(){
 
 	document.getElem("#scaler").on("change",sendScale);
 	document.getElem("#loud").on("change",sendLoudness);
+    document.getElem("#scorebutton").on("click",function(){
+        document.getElem("#hidframe").src="";
+        document.getElem("#hidframe").src="/getscores";
+    });
+    document.getElem("#clearbutton").on('click',function(){
+        var result=confirm("Weet je zeker dat je de scores wil wissen?")
+        if(result){
+            document.getElem("#hidframe").src="/clearscores";
+        }
+    })
 });
 function decay(){
 	meters.forEach(function(line){
