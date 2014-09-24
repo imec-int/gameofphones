@@ -360,4 +360,12 @@ function initNewGame() {
     if(adminClient) adminClient.emit("newGame");
 }
 
-server.listen(process.env.PORT || 3000);
+var webserverport = process.env.PORT || 3000;
+server.listen(webserverport, function () {
+	console.log("Express server listening on port " + webserverport);
+});
+
+
+
+
+
