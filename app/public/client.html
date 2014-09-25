@@ -368,6 +368,7 @@ input:focus {
         document.getElem(".loser").style.display = 'block';
         document.getElem(".connecting").style.display="block";
         document.getElem(".controller").style.display = 'none';
+        /*
         if(localStorage.getItem("JIMuserdata")!==null){
             //document.getElem("#userdataform").style.display = 'none';
             var ldata=localStorage.getItem("JIMuserdata");
@@ -379,6 +380,7 @@ input:focus {
             jdata.score=data.score_encrypted;
             //Window.http.POST({url:'/addscore',data:jdata,success:postSuccess,error:postError});
         }
+        */
     });
     function tryConnect(){
         if(readyToConnect && !connected /*&& window.matchMedia("(orientation: landscape)").matches*/){
