@@ -114,7 +114,7 @@ app.get('/getscores',function(req,res){
     res.type("text/csv");
     var scores=[];
     scoreDB.each("SELECT name, email,score FROM scores ORDER BY score DESC", function(err, row){
-        res.write(row.name+","+row.email+","+row.score+"\n");
+        res.write(row.name+";"+row.email+";"+row.score+"\n");
     },function(){
         res.end();
     });
