@@ -195,9 +195,8 @@ io.sockets.on("connection",function(socket){
         sendScores();
     });
 	socket.on("pincodepanel",function(){
-		pincodepanel=socket;
-        pinCode=generatePinCode();
-        pincodepanel.emit("newGame", { pin: pinCode });
+		socket.join('pincodeRoom');
+		io.sockets.in('pincodeRoom').emit('updatepin', pinCode);
 	});
 	socket.on("gimmeAliens", function(data) {
 		sendAliens(socket);
@@ -235,9 +234,10 @@ io.sockets.on("connection",function(socket){
 			scorepanel.emit('refreshpage');
 		}
 
-		if(pincodepanel && data == 'refreshPincodescreen'){
-			pincodepanel.emit('refreshpage');
+		if(data == 'refreshPincodescreen'){
+			io.sockets.in('pincodeRoom').emit('refreshpage');
 		}
+
 	});
   	socket.on('up', function(data){
   		if(host!=null && socket.player && socket.player.alive) host.emit('up',{player:socket.player.id});
@@ -379,9 +379,13 @@ function initNewGame() {
         clearTimeout(startGameCountDown);
         startGameCountDown = null;
     }
+
 	pinCode = generatePinCode();
+
 	if (host) host.emit("newGame", { pin: pinCode });
-	if (pincodepanel) pincodepanel.emit("newGame", { pin: pinCode });
+
+	io.sockets.in('pincodeRoom').emit('updatepin', pinCode);
+
     if(adminClient) adminClient.emit("newGame");
 }
 

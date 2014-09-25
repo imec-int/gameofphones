@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8"/>
-  <title>Sound defender client</title>
+  <title>pincodescherm</title>
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <link href="css/font-awesome.css" rel="stylesheet">
   <script src="/socket.io/socket.io.js"></script>
@@ -33,10 +33,9 @@
   <script>
     var socket = io.connect("/");
     socket.emit('pincodepanel');
-    socket.on('newGame', function(data) {
-        if (data && data.pin) {
-            document.getElem("#pincode").setText(data.pin);
-        }
+
+    socket.on('updatepin', function (pin) {
+      document.getElem("#pincode").setText(pin);
     });
 
     socket.on('refreshpage', function (data) {
@@ -46,6 +45,6 @@
   </script>
 </head>
   <body>
-    <h1 id="pincode">1234</h1>
+    <h1 id="pincode">....</h1>
  </body>
 </html>
