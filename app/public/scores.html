@@ -14,10 +14,16 @@
         }
         body {
             background-color: black;
+
+        }
+        #scorepanel{
             background-image: url('img/scores.jpg');
             background-repeat: no-repeat;
+            width: 1920px;
+            height: 1080px;
             overflow: hidden;
             cursor: none;
+            transform-origin: 0 0;
         }
         .title{
             position: absolute;
@@ -146,6 +152,24 @@
     socket.on('refreshpage', function (data) {
         location.reload();
     });
+
+    function updatePanelscale () {
+        var scorepanelEl = document.getElem('#scorepanel');
+        var scaleX = document.body.clientWidth / scorepanelEl.clientWidth;
+        var scaleY = document.body.clientHeight / scorepanelEl.clientHeight;
+
+        scorepanelEl.style['transform'] = 'scale('+scaleX+','+scaleY+')';
+    }
+
+    document.ready(function(){
+        updatePanelscale();
+    });
+
+    window.onresize = function(event) {
+        updatePanelscale();
+    };
+
+
 
 </script>
 <div id="scorepanel" class="switch">
