@@ -32,7 +32,10 @@
   <script src="js/elem.js"></script>
   <script>
     var socket = io.connect("/");
-    socket.emit('pincodepanel');
+
+    socket.on('connect', function () {
+      socket.emit('pincodepanel');
+    });
 
     socket.on('updatepin', function (pin) {
       document.getElem("#pincode").setText(pin);
