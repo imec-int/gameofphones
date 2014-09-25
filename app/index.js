@@ -264,15 +264,15 @@ io.sockets.on("connection",function(socket){
   	});
   	socket.on("disconnect",function(data){
 
-  		if(socket.player){
-            if(host!==null){
-                host.emit('lost',{id:socket.player.id});
-            }
-  			socket.player.alive = false;
-			socket.player.socket = undefined;
-  			delete socket.player;
+  	// 	if(socket.player){
+   //          if(host!==null){
+   //              host.emit('lost',{id:socket.player.id});
+   //          }
+  	// 		socket.player.alive = false;
+			// socket.player.socket = undefined;
+  	// 		delete socket.player;
 
-  		}
+  	// 	}
   		if(socket==host){
   			host=null;
   		}else{
