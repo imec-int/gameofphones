@@ -136,7 +136,7 @@ article{
     left:33.333%;
 }
 .controller .connecting {
-    color: #dc291a;
+    color: white;
     font-family: sans-serif;
     font-size: 2em;
     text-align: center;
@@ -180,7 +180,7 @@ article,section{
     background-color: #222022;
     font-family: proxima-nova, sans-serif;
     font-size: 16px;
-
+    text-align: center;
 }
 
 
@@ -214,7 +214,6 @@ input:focus {
 }
 .loser .form button {
     margin: .25em 20px;
-    background-color: #0078e7;
     color: #fff;
     padding: .5em 1em;
     border: 0 rgba(0,0,0,0);
@@ -231,6 +230,12 @@ input:focus {
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -webkit-appearance: button;
+    background-color: #0078e7;
+    text-align: center;
+}
+
+#replay{
+    display: none;
 }
 
 .hud, .connecting{
@@ -274,6 +279,26 @@ input:focus {
     -webkit-user-select: none;
     -webkit-appearance: button;
 }
+
+a.button {
+    background-color: #0078e7;
+    color: #fff;
+    padding: .5em 1em;
+    border: 1px #aaa solid;
+    text-decoration: none;
+    border-radius: 2px;
+    display: inline-block;
+    zoom: 1;
+    line-height: normal;
+    white-space: nowrap;
+    vertical-align: baseline;
+    text-align: center;
+    cursor: pointer;
+    font-size: 100%;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+}
+
 </style>
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/elem.js"></script>
@@ -387,10 +412,7 @@ input:focus {
             socket.emit("client", { pin: getParameterByName("pin") });
         }
     }
-    function replay(){
-        document.getElem(".loser").style.display = 'none';
-        socket.socket.reconnect();
-    }
+
     var direction = '';
     var tc=new TouchControls();
     document.ready(function() {
@@ -450,6 +472,7 @@ input:focus {
     }
     function postSuccess(text){
         document.getElem(".form").clearElem().setText(text);
+        document.getElem("#replay").style.display = 'inline-block';
     }
     function postError(text){
         handleError(text);
@@ -505,7 +528,9 @@ input:focus {
                 <button onclick="asub()">Stuur</button>
                 <br><br><br>
             </span>
-
+            <br />
+            <br />
+            <a href="/" id="replay" class="button">Speel Opnieuw</button>
         </div>
     </section>
     <!--section class="portrait">
