@@ -108,7 +108,9 @@
     var starter=0;
     var started=false;
 
-    socket.emit("scorepanel", {"hello": true});
+    socket.on('connect', function () {
+        socket.emit("scorepanel");
+    });
 
     socket.on("scores",function(data){
         console.log("getting scores");
