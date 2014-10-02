@@ -309,10 +309,10 @@ io.sockets.on("connection",function(socket){
   	// 	}
   		if(socket==host){
   			host=null;
-  		}else{
+  		}/*else{
   			connections--;
 			verifyGameState();
-  		}
+  		}*/
   	});
 });
 function sendTopTen(){
