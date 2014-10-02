@@ -144,7 +144,10 @@
 <script type="text/javascript">
 var socket = io.connect(window.location.hostname);
 
-socket.emit("admin", {"hello": true});
+
+socket.on('connect', function () {
+	socket.emit("admin", {"hello": true});
+});
 
 function sendScale(){
 	var scale=parseFloat(document.getElem("#scaler").value);
