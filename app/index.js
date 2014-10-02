@@ -137,6 +137,11 @@ app.get('/clearscores',function(req,res){
     res.end();
 });
 
+
+app.post('/api/browsertoold', function (req, res) {
+	log('browser too old', {useragent: req.get('User-Agent'), ip: getRemoteIp(req)});
+});
+
 function decryptScore(input) {
 	var decipher = crypto.createDecipher('aes256', cryptoKey);
 	return decipher.update(input, 'hex', 'utf8') + decipher.final('utf8');

@@ -64,9 +64,7 @@
   }
   </style>
   <script src="js/elem.js"></script>
-  <script>
-
-  </script>
+  <script src="/vendor/jquery.min.js"></script>
 </head>
   <body>
     <h1>Voer pin code in:</h1>
@@ -80,5 +78,11 @@
             </div>
         </fieldset>
     </form>
+    <script>
+      if(!Function.prototype.bind){
+        alert('Je browser is helaas te oud. Probeer het eens met Google Chrome.');
+        $.post('/api/browsertoold', {});
+      }
+    </script>
  </body>
 </html>
