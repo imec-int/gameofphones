@@ -305,18 +305,18 @@ a.button {
 <script src="js/touchControls.js"></script>
 <script src="js/soundmanager2-nodebug-jsmin.js"></script>
 <script>
-    var mySound=null;
-    soundManager.setup({preferFlash: false,
-        onready:function(){
-            mySound = soundManager.createSound({
-                id: 'shoetie',
-                url: 'shoot.mp3',
-                autoload:true,
-                from:0,
-                multiShot:true
-            });
-        }
-    });
+    // var mySound=null;
+    // soundManager.setup({preferFlash: false,
+    //     onready:function(){
+    //         mySound = soundManager.createSound({
+    //             id: 'shoetie',
+    //             url: 'shoot.mp3',
+    //             autoload:true,
+    //             from:0,
+    //             multiShot:true
+    //         });
+    //     }
+    // });
     navigator.vibrate = navigator.vibrate ||
             navigator.webkitVibrate ||
             navigator.mozVibrate ||
@@ -453,7 +453,7 @@ a.button {
             if(shoot){
                 socket.emit("shoot");
                 document.getElem('.shoot').addClass('pressed');
-                mySound.play();
+                // mySound.play();
             }
         }
     }
