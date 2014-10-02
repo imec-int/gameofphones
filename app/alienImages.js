@@ -4,6 +4,8 @@ var im = require('imagemagick');
 var path = require('path');
 var _ = require('underscore');
 
+var log = require('./log');
+
 var destinationFolder = "converted/"
 var sourceFolder = "source/"
 var backendCall=null;
@@ -20,22 +22,22 @@ alienImages.watchFolder = function(folder, callback) {
 
         function handleFile(file, state) {
             if (fs.lstatSync(file).isDirectory()) {
-                console.log("new directory: "+file);
+                log("new directory: "+file);
             } else {
                 if( isImage(file) ) {
-                    console.log("new image: "+file);
+                    log("new image: "+file);
                     convertImage(file);
                 }
             }
         }
 
         monitor.on("created", function (file, state) {
-            console.log("watchfolder - file created: " + file);
+            log("watchfolder - file created: " + file);
             // workaround, anders triggered dit dubbel
             if (monitor.files[file] === undefined) handleFile(file, state);
         });
         monitor.on("changed", function (file,state) {
-             console.log("watchfolder - file changed: " + file);
+             log("watchfolder - file changed: " + file);
              handleFile(file, state);
         });
     });
@@ -49,7 +51,7 @@ alienImages.rescanFolder = function(folder, callback) {
             var fullPath = folder+"/"+file;
             if (!fs.lstatSync(fullPath).isDirectory() && convertedFiles.indexOf( getConvertedFilename(fullPath) ) < 0 ) {
                 if( isImage(fullPath) ) {
-                    console.log("No convertion found for "+fullPath+", creating one ...");
+                    log("No convertion found for "+fullPath+", creating one ...");
                     convertImage( fullPath , callback );
                 }
             }
@@ -88,19 +90,19 @@ var convertImage = function(source, callback) {
     var tempFile = sourceFolder + "/" + destFileName;
     var finalFile = destinationFolder + "/" + destFileName;
     var step1 = function() {
-        console.log("Converting "+source+" step 1...");
+        log("Converting "+source+" step 1...");
         im.convert( [source, '-resize', '60x60^','-gravity','Center','-crop','60x60+0+0', '+repage','-gravity', 'South-East', '-extent', '134x100', '-gravity', 'North-West', '-extent', '200x200', '-background', 'none', tempFile],
             function(err, stdout){ if (err) console.error(err); else step2(); }
         );
     }
     var step2 = function() {
-        console.log("Converting "+source+" step 2...");
+        log("Converting "+source+" step 2...");
         im.convert( ['-size', '1024x1024', 'tile:'+tempFile, '+repage', sourceFolder+'/bigmask.png', '-compose', 'CopyOpacity', '-composite', 'PNG32:'+tempFile],
             function(err, stdout){ if (err) console.error(err); else step3(); }
         );
     }
     var step3 = function() {
-        console.log("Converting "+source+" step 3...");
+        log("Converting "+source+" step 3...");
         im.convert( [sourceFolder+'/spaceship_badguys_user.png', tempFile, '-compose', 'Over', '-composite', sourceFolder+'/bigover.png', '-compose', 'Overlay', '-composite', finalFile],
             function(err, stdout){ if (err) console.error(err); else {
                 fs.unlink(tempFile,  function (err) { if (err) console.error(err); });

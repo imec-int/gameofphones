@@ -7,6 +7,9 @@ var sqlite3 = require("sqlite3").verbose();
 var app = express();
 var alienImages = require("./alienImages");
 
+var log = require('./log');
+
+
 alienImages.init({
 	destinationFolder:__dirname + "/public/custom/",
 	sourceFolder:__dirname + "/temp/source/",
@@ -105,7 +108,7 @@ app.post('/addscore', function(req, res) {
 	stmt.run(name, email, score);
 	stmt.finalize();
 
-	console.log("score: "+score+" email: "+email+" naam: "+name);
+	log("score: "+score+" email: "+email+" naam: "+name);
 	res.send(200, 'Uw score werd opgeslagen. Bedankt!');
 	res.end();
     sendTopTen();
@@ -154,7 +157,7 @@ io.sockets.on("connection",function(socket){
 
 		for (var i=0; i<players.length; i++) {
 			if (!players[i] || !players[i].alive) {
-				console.log("creating client");
+				log("creating client");
 				players[i] = new Player(i, socket);
 				socket.player = players[i];
 				socket.player.alive = true;
@@ -170,14 +173,14 @@ io.sockets.on("connection",function(socket){
 		if (accepted) {
 			verifyGameState();
 		} else {
-			console.log(players);
+			log('no player slots available');
 			socket.emit("nok", { status: "409", message: "Game already busy." });
 			socket.disconnect();
 		}
 	});
 	socket.on("host",function(){
 
-        console.log('received host from: '+socket.handshake.address.address);
+        log('main screen connected: '+socket.handshake.address.address);
 		host=socket;
 		if(adminvars!==null){
 			socket.emit('admin',adminvars);
@@ -187,7 +190,7 @@ io.sockets.on("connection",function(socket){
 		initNewGame();
 	});
 	socket.on("scorepanel",function(){
-		console.log('received scorepanel from: '+socket.handshake.address.address);
+		log('scorepanel connected: '+socket.handshake.address.address);
 		scorepanel=socket;
 		sendScores();
 	});
@@ -195,6 +198,8 @@ io.sockets.on("connection",function(socket){
         sendScores();
     });
 	socket.on("pincodepanel",function(){
+		log('pincode panel connected: '+socket.handshake.address.address);
+
 		socket.join('pincodeRoom');
 		io.sockets.in('pincodeRoom').emit('updatepin', pinCode);
 	});
@@ -208,6 +213,8 @@ io.sockets.on("connection",function(socket){
         if(host) host.emit("removeAlien",data);
     });
 	socket.on("admin", function (data){
+		log('admin panel connected: '+socket.handshake.address.address);
+
 		if (data.hello) {
 			adminClient=socket;
 			return;
@@ -221,8 +228,7 @@ io.sockets.on("connection",function(socket){
 				adminvars.loudness=data.loudness||adminvars.loudness;
 			}
 		}else{
-			console.log('admin');
-			console.log(data);
+			log('sending admin data to main screen', data);
 			host.emit('admin',data);
 		}
 
@@ -391,7 +397,7 @@ function initNewGame() {
 
 var webserverport = process.env.PORT || 3000;
 server.listen(webserverport, function () {
-	console.log("Express server listening on port " + webserverport);
+	log("Express server listening on port " + webserverport);
 });
 
 
