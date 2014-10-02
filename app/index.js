@@ -118,7 +118,8 @@ app.post('/addscore', function(req, res) {
 	stmt.run(name, email, score);
 	stmt.finalize();
 
-	log("score: "+score+" email: "+email+" naam: "+name);
+	log('score saved', {ip: getRemoteIp(req), score: score, name: name, email: email});
+
 	res.send(200, 'Uw score werd opgeslagen. Bedankt!');
 	res.end();
     sendTopTen();
