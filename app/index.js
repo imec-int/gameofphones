@@ -397,7 +397,7 @@ function startGame() {
         if (player &&  player.alive && player.socket) {
             player.socket.emit("start",{start:true});
             nrOfPlayersInThisGame++;
-            playerips.push(player.socket.handshake.address.address);
+            if(player.socket.handshake) playerips.push(player.socket.handshake.address.address);
         }
     }
 
