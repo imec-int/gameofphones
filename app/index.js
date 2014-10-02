@@ -292,6 +292,12 @@ io.sockets.on("connection",function(socket){
   	});
   	socket.on("disconnect",function(data){
 
+  		if(socket.player){
+  			var ip = null;
+  			if(socket && socket.handshake && socket.handshake.address && socket.handshake.address.address) ip = socket.handshake.address.address;
+  			log("player disconnected", {ip: ip})
+  		}
+
   	// 	if(socket.player){
    //          if(host!==null){
    //              host.emit('lost',{id:socket.player.id});
