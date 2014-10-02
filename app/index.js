@@ -9,6 +9,16 @@ var alienImages = require("./alienImages");
 
 var log = require('./log');
 
+// easy file based json db, just one object to store stuff (game data):
+var jsondb =  require('./jsondb');
+var gamedata = {
+	games: []
+};
+jsondb.load(function (err, data) {
+	if(data) gamedata = data;
+});
+
+
 
 alienImages.init({
 	destinationFolder:__dirname + "/public/custom/",
@@ -157,7 +167,7 @@ io.sockets.on("connection",function(socket){
 
 		for (var i=0; i<players.length; i++) {
 			if (!players[i] || !players[i].alive) {
-				log("creating client");
+				log("adding player to player slot");
 				players[i] = new Player(i, socket);
 				socket.player = players[i];
 				socket.player.alive = true;
@@ -358,17 +368,33 @@ function verifyGameState() {
 
 function startGame() {
     pinCode = null;
+
+    var nrOfPlayersInThisGame = 0;
+
     if (startGameCountDown) {
         clearTimeout(startGameCountDown);
         startGameCountDown = null;
     }
-    if (host) host.emit("startGame");
+    if (host) {
+    	log('game started');
+    	host.emit("startGame");
+    }
     for (var i=0; i<players.length; i++) {
         var player=players[i];
         if (player &&  player.alive && player.socket) {
             player.socket.emit("start",{start:true});
+            nrOfPlayersInThisGame++;
         }
     }
+
+    // save data about game:
+    var game = {
+    	starttime: Date.now(),
+    	players: nrOfPlayersInThisGame
+    }
+
+    gamedata.games.push(game);
+    jsondb.save(gamedata);
 }
 
 function sendAliens(socket) {
