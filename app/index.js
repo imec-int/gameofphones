@@ -254,6 +254,10 @@ io.sockets.on("connection",function(socket){
 			io.sockets.in('pincodeRoom').emit('refreshpage');
 		}
 
+		if(host && data == 'forceStartGame'){
+			startGame();
+		}
+
 	});
   	socket.on('up', function(data){
   		if(host!=null && socket.player && socket.player.alive) host.emit('up',{player:socket.player.id});
