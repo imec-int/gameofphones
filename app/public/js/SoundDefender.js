@@ -38,7 +38,7 @@ function SoundDefender(target) {
 
         this.ship = new Sprite(shipImages[id],200,200,100,125);
         //this.ship = new Sprite(shipImages[id],155,75,87,50);
-        this.ship.setCollisionBox(-100+56,-125+30,-100+147,-100+155); // 2-124 2-54  56-147  30-155
+        this.ship.setCollisionBox(-100+56,-125+50,-100+147,-100+125); // 2-124 2-54  56-147  30-155
         this.ship.addAnimation("fly",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
         this.ship.addAnimation("death",[26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,-1],function(){
             this.lives--;
