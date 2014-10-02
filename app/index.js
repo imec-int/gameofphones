@@ -156,6 +156,8 @@ io.sockets.on("connection",function(socket){
 
 	socket.emit('news', { hello: 'world' });
 	socket.on("client",function(data){
+		log('incomming player', {useragent: socket.handshake.headers['user-agent'], ip: socket.handshake.address.address});
+
 		var accepted = false;
 
 		if (!pinCode) {
@@ -379,6 +381,7 @@ function startGame() {
     pinCode = null;
 
     var nrOfPlayersInThisGame = 0;
+    var playerips = [];
 
     if (startGameCountDown) {
         clearTimeout(startGameCountDown);
@@ -393,13 +396,15 @@ function startGame() {
         if (player &&  player.alive && player.socket) {
             player.socket.emit("start",{start:true});
             nrOfPlayersInThisGame++;
+            playerips.push(player.socket.handshake.address.address);
         }
     }
 
     // save data about game:
     var game = {
     	starttime: Date.now(),
-    	players: nrOfPlayersInThisGame
+    	players: nrOfPlayersInThisGame,
+    	playerips: playerips
     }
 
     gamedata.games.push(game);
@@ -428,6 +433,14 @@ function initNewGame() {
 	io.sockets.in('pincodeRoom').emit('updatepin', pinCode);
 
     if(adminClient) adminClient.emit("newGame");
+}
+
+function getRemoteIp (req) {
+	// http://stackoverflow.com/questions/8107856/how-can-i-get-the-users-ip-address-using-node-js
+	return req.headers['x-forwarded-for'] ||
+			req.connection.remoteAddress ||
+			req.socket.remoteAddress ||
+			req.connection.socket.remoteAddress;
 }
 
 var webserverport = process.env.PORT || 3000;
