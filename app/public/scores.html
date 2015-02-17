@@ -109,7 +109,8 @@
     var started=false;
 
     socket.on('connect', function () {
-        socket.emit("scorepanel");
+        // join scorepanel room:
+        socket.emit('room', 'scorepanel');
     });
 
     socket.on("scores",function(data){

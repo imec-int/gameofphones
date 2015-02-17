@@ -149,7 +149,8 @@ var socket = io.connect(window.location.hostname);
 
 
 socket.on('connect', function () {
-	socket.emit("admin", {"hello": true});
+    // join controller room:
+    socket.emit('room', 'controller');
 });
 
 function sendScale(){

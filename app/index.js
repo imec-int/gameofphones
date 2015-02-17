@@ -5,6 +5,7 @@ var validator = require('validator');
 var fs = require("fs");
 var sqlite3 = require("sqlite3").verbose();
 var app = express();
+var _ = require('underscore');
 var alienImages = require("./alienImages");
 
 var log = require('./log');
@@ -41,33 +42,19 @@ io.set('log level', 0);
 
 //var colors=["0000FF","00FF00","00FFFF","FF00FF","FFFF00"];
 var colors=["bear","cat","monkey","penguin"];
-var connections=0;
-var host=null;
-var adminClient=null;
-var adminvars=null;
-var scorepanel=null;
-var pincodepanel=null;
-// var players=[];
 
 var cryptoKey = "key_ken";
 var scoreDBFile = "JIMscores.db";
-var nrOfPlayers = 4;
+
 
 var scoreDB = new sqlite3.Database(scoreDBFile);
 var countDownTime = 30000;
-var startGameCountDown;
+var countDownTimer = null;
 var pinCode;
+var gameBusy = false;
 
-function Player(id, socket) {
-	this.alive = false;
-	this.socket = socket;
-	this.id = id;
-}
-
-var players = new Array(nrOfPlayers);
-for (var i=0; i<nrOfPlayers; i++) {
-	players[i] = new Player(i);
-}
+var maxplayers = 4;
+var currentplayers = [];
 
 scoreDB.serialize(function() {
 	scoreDB.run("create table if not exists scores (name TEXT, email TEXT, score INTEGER)");
@@ -153,269 +140,337 @@ function encryptScore(score) {
 	return cipher.update(''+score, 'utf8', 'hex') + cipher.final('hex');
 }
 
-io.sockets.on("connection",function(socket){
+io.sockets.on("connection",function (socket){
 
-	socket.emit('news', { hello: 'world' });
-	socket.on("client",function(data){
-		log('incomming player', {useragent: socket.handshake.headers['user-agent'], ip: socket.handshake.address.address});
+	socket.on('room', function (roomname) {
+		socket.join(roomname);
 
-		var accepted = false;
+		var ip = socket.handshake.address.address;
 
-		if (!pinCode) {
-			socket.emit("nok", { status: "404", message: "no game found" });
-			socket.disconnect();
-			return;
+		if(roomname == 'mainscreen'){
+			log('main screen connected', {ip: ip});
+			mainscreenConnected(socket);
 		}
 
-		if (pinCode != data.pin) {
-			socket.emit("nok", { status: "400", message: "invalid pin code" }); // i.e. no game found
-			socket.disconnect();
-			return;
+		if(roomname == 'scorepanel'){
+			log('scorepanel connected', {ip: ip});
+			scorepanelConnected(socket);
 		}
 
-		for (var i=0; i<players.length; i++) {
-			if (!players[i] || !players[i].alive) {
-				log("adding player to player slot");
-				players[i] = new Player(i, socket);
-				socket.player = players[i];
-				socket.player.alive = true;
-				socket.emit('ok',{color:colors[i]});
-				if(host!=null){
-					host.emit('live',{player:i});
-				}
-				accepted = true;
-				break;
-			}
+		if(roomname == 'pincodepanel'){
+			log('pincode panel connected', {ip: ip});
+			pincodepanelConnected(socket);
 		}
 
-		if (accepted) {
-			verifyGameState();
-		} else {
-			log('no player slots available');
-			socket.emit("nok", { status: "409", message: "Game already busy." });
-			socket.disconnect();
+		if(roomname == 'controller'){
+			log('controller connected', {ip: ip});
+			controllerConnected(socket);
+		}
+
+		if(roomname == 'player'){
+			log('controller connected', {ip: ip});
+			playerConnected(socket);
 		}
 	});
-	socket.on("host",function(){
+});
 
-        log('main screen connected: '+socket.handshake.address.address);
-		host=socket;
-		if(adminvars!==null){
-			socket.emit('admin',adminvars);
-			adminvars=null;
+function mainscreenConnected (socket) {
+
+	// init game when mainscreen is refreshed:
+	initNewGame();
+
+	// a player is killed:
+  	socket.on('kill',function (data) {
+
+  		var player = _.find(currentplayers, function (player) {
+  			return player.index == data.player;
+  		});
+
+  		if(!player) return log('A non-existing player was killed, strange. playerindex was ' + data.player);
+
+  		// kill player:
+  		player.alive = false;
+
+  		log('player was killed', player);
+
+  		// send kill to smartphone:
+  		io.sockets.in(player.socketioroom).emit('dead', {
+  			score: data.score,
+  			score_encrypted: encryptScore(data.score)
+  		});
+
+  		// check if all players are dead:
+  		console.log('currentplayers', currentplayers);
+  		var everybodysDead = true;
+  		for (var i = currentplayers.length - 1; i >= 0; i--) {
+  			if( currentplayers[i].alive ) everybodysDead = false;
+  		};
+
+  		if(everybodysDead){
+  			// init a new game (dont start it):
+  			log('everybody\'s dead');
+  			initNewGame();
+  		}
+  	});
+
+
+  	socket.on("disconnect",function (){
+  		log('mainscreen disconnected', {ip: socket.handshake.address.address});
+  	});
+
+}
+
+function scorepanelConnected (socket) {
+	sendScores();
+
+	socket.on("getscores",function(){
+	    sendScores();
+	});
+
+	socket.on("disconnect",function (){
+  		log('scorepanel disconnected', {ip: socket.handshake.address.address});
+  	});
+}
+
+function pincodepanelConnected (socket) {
+	io.sockets.in('pincodepanel').emit('updatepin', pinCode);
+
+	socket.on("disconnect",function (){
+		log('pincodepanel disconnected', {ip: socket.handshake.address.address});
+	});
+}
+
+function controllerConnected (socket) {
+	socket.on('admin', function (data) {
+		if(data.loudness){
+			io.sockets.in('mainscreen').emit("admin", data);
 		}
-        sendTopTen();
-		initNewGame();
-	});
-	socket.on("scorepanel",function(){
-		log('scorepanel connected: '+socket.handshake.address.address);
-		scorepanel=socket;
-		sendScores();
-	});
-    socket.on("getscores",function(){
-        sendScores();
-    });
-	socket.on("pincodepanel",function(){
-		log('pincode panel connected: '+socket.handshake.address.address);
 
-		socket.join('pincodeRoom');
-		io.sockets.in('pincodeRoom').emit('updatepin', pinCode);
-	});
-	socket.on("gimmeAliens", function(data) {
-		sendAliens(socket);
-	});
-	socket.on("setAlien", function(data) {
-		if (host) host.emit("setAlien", data);
-	});
-    socket.on("removeAlien",function(data){
-        if(host) host.emit("removeAlien",data);
-    });
-	socket.on("admin", function (data){
-		log('admin panel connected: '+socket.handshake.address.address);
-
-		if (data.hello) {
-			adminClient=socket;
-			return;
-		}
-		if(host===null){
-			if(adminvars===null){
-				adminvars=data;
-			}else{
-				adminvars.channels=data.channels||adminvars.channels;
-				adminvars.scale=data.scale||adminvars.scale;
-				adminvars.loudness=data.loudness||adminvars.loudness;
-			}
-		}else{
-			log('sending admin data to main screen', data);
-			host.emit('admin',data);
+		if(data == 'refreshHostscreen'){
+			io.sockets.in('mainscreen').emit("refreshpage");
 		}
 
-		if(host && data == 'refreshHostscreen'){
-			host.emit('refreshpage');
-		}
-
-		if(scorepanel && data == 'refreshScorescreen'){
-			scorepanel.emit('refreshpage');
+		if(data == 'refreshScorescreen'){
+			io.sockets.in('scorepanel').emit("refreshpage");
 		}
 
 		if(data == 'refreshPincodescreen'){
-			io.sockets.in('pincodeRoom').emit('refreshpage');
+			io.sockets.in('pincodepanel').emit("refreshpage");
 		}
 
-		if(host && data == 'forceStartGame'){
+		if(data == 'forceStartGame'){
 			startGame();
+		}
+	});
+
+	socket.on("gimmeAliens", function (data) {
+		sendAliens(socket);
+	});
+
+	socket.on("setAlien", function (data) {
+		io.sockets.in('mainscreen').emit("setAlien", data);
+	});
+
+    socket.on("removeAlien",function (data){
+        io.sockets.in('mainscreen').emit("removeAlien",data);
+    });
+
+    socket.on("disconnect",function (){
+    	log('controller disconnected', {ip: socket.handshake.address.address});
+    });
+}
+
+function playerConnected (socket) {
+
+	socket.on('enterpincode', function (data) {
+		var playerip = socket.handshake.address.address;
+
+		log('incomming player', {useragent: socket.handshake.headers['user-agent'], ip: playerip});
+
+		// compose a socket.io room name based on the player's ip:
+		var playerroomname = 'playerroom_'+socket.handshake.address.address;
+
+		console.log('currentplayers', currentplayers);
+
+		// check if player already exits:
+		var player = _.find(currentplayers, function (player) {
+			return playerroomname == player.socketioroom;
+		});
+
+		if(player){
+			log('player is known', playerip);
+
+			// add player to his room:
+			socket.join(playerroomname);
+
+			// listen for player events:
+			listenForPlayerEvents(socket, player);
+
+			// send update info to players' smartphone:
+			io.sockets.in(player.sockioroom).emit('ok',{color: colors[player.index]});
+			return;
+		}
+
+
+
+		log('player enters pincode', data.pin, playerip);
+		// new player, check his pincode:
+
+		// if (gameBusy) {
+		// 	return socket.emit("nok", { status: "404", message: "game is busy" });
+		// }
+
+		if (pinCode != data.pin) {
+			log('pincode is wrong');
+			return socket.emit("nok", { status: "400", message: "invalid pin code" }); // i.e. no game found
+		}
+
+		log('pincode is right, checking if player slots are available');
+
+		// check if there are player slots free:
+
+		if(currentplayers.length < maxplayers){
+			// assign the player to a new room:
+			socket.join(playerroomname);
+			log('player slot assinged', {ip: playerip});
+
+			var playerindex = currentplayers.length;
+
+			// create new player object:
+			var player = {
+				alive: true,
+				socketioroom: playerroomname,
+				index: playerindex,
+				ip: playerip
+			}
+
+			log('new player', player);
+
+			// add player to players:
+			currentplayers.push(player);
+
+			// send info to player screen and to host:
+			io.sockets.in(player.sockioroom).emit('ok',{color: colors[player.index]});
+			io.sockets.in('mainscreen').emit('live',{player: player.index});
+
+			// listen for player events:
+			listenForPlayerEvents(socket, player);
+
+			// start countdown:
+			if(currentplayers.length == 1)
+				startGamestartCountdown();
+
+			// if player slots are full, start game:
+			if(currentplayers.length == maxplayers)
+				startGame();
+
+		}else{
+			log('no player slots available');
+			socket.emit("nok", { status: "409", message: "Game already busy." });
 		}
 
 	});
-  	socket.on('up', function(data){
-  		if(host!=null && socket.player && socket.player.alive) host.emit('up',{player:socket.player.id});
-  	});
-  	socket.on('down', function(data){
-		if(host!=null && socket.player && socket.player.alive) host.emit('down',{player:socket.player.id});
-  	});
-  	socket.on('shoot', function(data){
-		if(host!=null && socket.player && socket.player.alive) host.emit('shoot',{player:socket.player.id});
-  	});
-  	socket.on('kill',function(data){
-	    for (var i=0; i<players.length; i++) {
-		    var player=players[i];
-		    if (player && player.id === data.player && player.alive) {
-			    player.alive = false;
-			    if (player.socket) {
-				    player.socket.emit('dead',{score:data.score, score_encrypted: encryptScore(data.score)});
-			    }
-			    player.socket = undefined;
-			    verifyGameState();
-			    break;
-		    }
-	    }
-  	});
-  	socket.on("disconnect",function(data){
+}
 
-  		if(socket.player){
-  			var ip = null;
-  			if(socket && socket.handshake && socket.handshake.address && socket.handshake.address.address) ip = socket.handshake.address.address;
-  			log("player disconnected", {ip: ip})
-  		}
+function listenForPlayerEvents (socket, player) {
+	socket.on('up', function (data){
+		io.sockets.in('mainscreen').emit('up', { player: player.index });
+	});
 
-  	// 	if(socket.player){
-   //          if(host!==null){
-   //              host.emit('lost',{id:socket.player.id});
-   //          }
-  	// 		socket.player.alive = false;
-			// socket.player.socket = undefined;
-  	// 		delete socket.player;
+	socket.on('down', function (data){
+		io.sockets.in('mainscreen').emit('down', { player: player.index });
+	});
 
-  	// 	}
-  		if(socket==host){
-  			host=null;
-  		}/*else{
-  			connections--;
-			verifyGameState();
-  		}*/
-  	});
-});
+	socket.on('shoot', function (data){
+		io.sockets.in('mainscreen').emit('shoot', { player: player.index });
+	});
+
+	socket.on("disconnect",function (){
+		log('player disconnected', {ip: socket.handshake.address.address});
+	});
+}
+
 function sendTopTen(){
-    if(host!==null){
-        var scores=[];
-        scoreDB.each("SELECT name, score FROM scores ORDER BY score DESC LIMIT 10", function(err, row){
-                scores.push(row);
-        },function(){
-            while(scores.length<10){
-                scores.push({name:"Hodor",score:0});
-            }
-            host.emit('scores',scores);
-        });
-    }
+    var scores=[];
+    scoreDB.each("SELECT name, score FROM scores ORDER BY score DESC LIMIT 10", function (err, row){
+        scores.push(row);
+    },function(){
+        while(scores.length<10){
+            scores.push({name:"Hodor",score:0});
+        }
+        io.sockets.in('mainscreen').emit('scores',scores);
+    });
+
 }
 function sendScores(){
-    if(scorepanel!==null){
-        var scores=[];
-        scoreDB.each("SELECT name, score FROM scores ORDER BY score DESC",function(err,row){
-            scores.push(row);
-        },function(){
-            scorepanel.emit('scores',scores);
-        })
-    }
+    var scores=[];
+    scoreDB.each("SELECT name, score FROM scores ORDER BY score DESC",function(err,row){
+        scores.push(row);
+    },function(){
+        io.sockets.in('scorepanel').emit('scores',scores);
+    });
 }
+
 function generatePinCode() {
 	return Math.floor(Math.random()*9000) + 1000;
 }
-var wasAllDead=true;
-function verifyGameState() {
-    if (!host) {
-        pinCode = null;
-        return;
-    }
-	var allAlive = true;
-	var allDead = true;
 
-	for (var i=0; i<players.length; i++) {
-		if (players[i].alive) {
-			allDead = false;
-		} else {
-			allAlive = false;
-		}
+function startGamestartCountdown () {
+	clearGamestartCountdown();
+
+	countDownTimer = setTimeout(startGame, countDownTime);
+	io.sockets.in('mainscreen').emit("countdown",{timer:countDownTime});
+}
+
+function clearGamestartCountdown(){
+	if (countDownTimer) {
+	    clearTimeout(countDownTimer);
+	    countDownTimer = null;
 	}
+}
 
-	if (allDead) {
-        if(!wasAllDead){
-            wasAllDead=allDead;
-            initNewGame();
-        }
-        return;
-	}
+function initNewGame() {
+	log('initializing new game');
 
-    wasAllDead=allDead;
+	// clear players:
+	currentplayers = [];
 
-	if (allAlive) {
-        if (startGameCountDown) {
-            clearTimeout(startGameCountDown);
-            startGameCountDown = null;
-        }
-        startGameCountDown = setTimeout(startGame, 3000);
-	} else {
-        if (!startGameCountDown) {
-            startGameCountDown = setTimeout(startGame, countDownTime);
-            if(host!==null){
-                host.emit("countdown",{timer:countDownTime});
-            }
-        }
-    }
+	clearGamestartCountdown();
+
+	pinCode = generatePinCode();
+	log('new picode', pinCode);
+
+	io.sockets.in('mainscreen').emit("newGame", { pin: pinCode });
+
+	io.sockets.in('pincodepanel').emit('updatepin', pinCode);
+
+	io.sockets.in('controller').emit("newGame");
 }
 
 function startGame() {
-    pinCode = null;
+	gameBusy = true;
 
-    var nrOfPlayersInThisGame = 0;
-    var playerips = [];
+    clearGamestartCountdown();
 
-    if (startGameCountDown) {
-        clearTimeout(startGameCountDown);
-        startGameCountDown = null;
-    }
-    if (host) {
-    	log('game started');
-    	host.emit("startGame");
-    }
-    for (var i=0; i<players.length; i++) {
-        var player=players[i];
-        if (player &&  player.alive && player.socket) {
-            player.socket.emit("start",{start:true});
-            nrOfPlayersInThisGame++;
-            if(player.socket.handshake) playerips.push(player.socket.handshake.address.address);
-        }
+	// instruct mainscreen to start game:
+	io.sockets.in('mainscreen').emit("startGame");
+
+	// instruct each smartphone to start game:
+    for (var i=0; i<currentplayers.length; i++) {
+        io.sockets.in(currentplayers[i].socketioroom).emit("start",{start:true});
     }
 
     // save data about game:
     var game = {
     	starttime: Date.now(),
-    	players: nrOfPlayersInThisGame,
-    	playerips: playerips
+    	players: currentplayers.length,
+    	playerips: _.pluck(currentplayers, 'ip')
     }
-
     gamedata.games.push(game);
     jsondb.save(gamedata);
+
+
+    log('game started');
 }
 
 function sendAliens(socket) {
@@ -423,24 +478,12 @@ function sendAliens(socket) {
 		socket.emit('aliens', files);
 	})
 }
+
 function newAlien(alien){
-    if(adminClient) adminClient.emit('newAlien',alien);
+	io.sockets.in('controller').emit('newAlien', alien);
 }
 
-function initNewGame() {
-    if (startGameCountDown) {
-        clearTimeout(startGameCountDown);
-        startGameCountDown = null;
-    }
 
-	pinCode = generatePinCode();
-
-	if (host) host.emit("newGame", { pin: pinCode });
-
-	io.sockets.in('pincodeRoom').emit('updatepin', pinCode);
-
-    if(adminClient) adminClient.emit("newGame");
-}
 
 function getRemoteIp (req) {
 	// http://stackoverflow.com/questions/8107856/how-can-i-get-the-users-ip-address-using-node-js

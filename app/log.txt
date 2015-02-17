@@ -1,0 +1,984 @@
+Thu Oct 02 2014 14:24:30 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 14:25:08 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36","ip":"127.0.0.1"}
+Thu Oct 02 2014 14:25:08 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 14:25:16 GMT+0200 (CEST): "browser too old"
+{"useragent":"Mozilla/5.0 (Linux; U; Android 2.3.5; nl-nl; GT-S5830 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1","ip":"10.100.11.139"}
+Thu Oct 02 2014 14:25:38 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 14:25:46 GMT+0200 (CEST): "browser too old"
+{"useragent":"Mozilla/5.0 (Linux; U; Android 2.3.5; nl-nl; GT-S5830 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1","ip":"10.100.11.139"}
+Thu Oct 02 2014 14:29:04 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 14:29:04 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 14:29:34 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 14:59:10 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 14:59:12 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:12 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:12 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:12 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:12 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:12 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:12 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:12 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:12 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:12 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:12 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:13 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:13 GMT+0200 (CEST): "sending admin data to main screen"
+"refreshHostscreen"
+Thu Oct 02 2014 14:59:13 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 14:59:42 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 14:59:55 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 14:59:55 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:00:01 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:00:01 GMT+0200 (CEST): "sending admin data to main screen"
+"forceStartGame"
+Thu Oct 02 2014 15:00:01 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:00:55 GMT+0200 (CEST): "score saved"
+{"ip":"10.100.11.83","score":4,"name":"Sam","email":"sam.decrock@gmail.com"}
+Thu Oct 02 2014 15:06:58 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36","ip":"127.0.0.1"}
+Thu Oct 02 2014 15:07:11 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 15:07:11 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:07:35 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:07:35 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:07:41 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:08:38 GMT+0200 (CEST): "score saved"
+{"ip":"10.100.11.83","score":9,"name":"Sam","email":"sam.decrock@gmail.com"}
+Thu Oct 02 2014 15:08:46 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:09:56 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:09:57 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:09:57 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:09:57 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:09:57 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:10:04 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:10:04 GMT+0200 (CEST): "sending admin data to main screen"
+"refreshScorescreen"
+Thu Oct 02 2014 15:10:05 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:10:06 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:10:06 GMT+0200 (CEST): "sending admin data to main screen"
+"refreshHostscreen"
+Thu Oct 02 2014 15:10:06 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:10:15 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:10:15 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:10:17 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:10:17 GMT+0200 (CEST): "sending admin data to main screen"
+"forceStartGame"
+Thu Oct 02 2014 15:10:17 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:11:32 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:11:47 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:11:47 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:11:47 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:11:47 GMT+0200 (CEST): "sending admin data to main screen"
+"forceStartGame"
+Thu Oct 02 2014 15:11:47 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:12:10 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:12:10 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:12:10 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:12:10 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:12:10 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:12:47 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:12:47 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:12:47 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:12:47 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:12:47 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:12:50 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:00 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:13:08 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:13:08 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:13:11 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:11 GMT+0200 (CEST): "sending admin data to main screen"
+"forceStartGame"
+Thu Oct 02 2014 15:13:11 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:13:23 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:13:23 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:23 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:23 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:23 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:30 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:13:30 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:30 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:30 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:30 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:32 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:41 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:13:50 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:13:50 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:13:51 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:51 GMT+0200 (CEST): "sending admin data to main screen"
+"forceStartGame"
+Thu Oct 02 2014 15:13:51 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:13:58 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:13:58 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:58 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:58 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:13:58 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:04 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:14:05 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:05 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:05 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:05 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:08 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:11 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:14:19 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:14:19 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:14:23 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:23 GMT+0200 (CEST): "sending admin data to main screen"
+"forceStartGame"
+Thu Oct 02 2014 15:14:23 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:14:45 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:14:45 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:45 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:45 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:45 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:49 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:14:50 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:50 GMT+0200 (CEST): "sending admin data to main screen"
+"refreshHostscreen"
+Thu Oct 02 2014 15:14:50 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:58 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:14:58 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:14:59 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:14:59 GMT+0200 (CEST): "sending admin data to main screen"
+"forceStartGame"
+Thu Oct 02 2014 15:14:59 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:15:13 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:15:13 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:15:13 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:15:13 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:15:13 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:15:19 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:15:27 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:15:27 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:15:32 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:15:32 GMT+0200 (CEST): "sending admin data to main screen"
+"forceStartGame"
+Thu Oct 02 2014 15:15:32 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:15:34 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:15:38 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:15:46 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:15:46 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:15:57 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:16:02 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:16:02 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:16:02 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:16:02 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:16:07 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:16:14 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:16:14 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:16:18 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:16:18 GMT+0200 (CEST): "sending admin data to main screen"
+"forceStartGame"
+Thu Oct 02 2014 15:16:18 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:17:10 GMT+0200 (CEST): "score saved"
+{"ip":"10.100.11.83","score":22,"name":"Jef","email":"sam.decrock@gmail.com"}
+Thu Oct 02 2014 15:17:17 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:20:11 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:20:11 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:20:11 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:20:11 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:20:11 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:21:48 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:21:48 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:21:48 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:21:48 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:21:48 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:23:30 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:23:37 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:23:37 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:23:42 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:23:42 GMT+0200 (CEST): "sending admin data to main screen"
+"forceStartGame"
+Thu Oct 02 2014 15:23:42 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:24:42 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:24:51 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:25:02 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:25:02 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:25:20 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:25:20 GMT+0200 (CEST): "sending admin data to main screen"
+"forceStartGame"
+Thu Oct 02 2014 15:25:20 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:25:37 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:25:37 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:25:37 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:25:37 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:25:37 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:25:44 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:25:44 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:25:44 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:25:44 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:25:44 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:25:45 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:25:49 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:25:58 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"10.100.11.83"}
+Thu Oct 02 2014 15:25:58 GMT+0200 (CEST): "adding player to player slot"
+Thu Oct 02 2014 15:26:02 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:26:02 GMT+0200 (CEST): "sending admin data to main screen"
+"forceStartGame"
+Thu Oct 02 2014 15:26:02 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 15:28:17 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 15:28:18 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 15:28:18 GMT+0200 (CEST): "scorepanel connected: 127.0.0.1"
+Thu Oct 02 2014 15:28:18 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 15:28:18 GMT+0200 (CEST): "admin panel connected: 127.0.0.1"
+Thu Oct 02 2014 19:29:00 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 19:29:10 GMT+0200 (CEST): "pincode panel connected: 127.0.0.1"
+Thu Oct 02 2014 20:17:41 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:18:46 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:18:51 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 20:19:03 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:19:04 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 20:19:09 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:19:09 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 20:19:15 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:19:15 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 20:19:18 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:19:18 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 20:19:40 GMT+0200 (CEST): "mainscreen disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:19:40 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 20:19:49 GMT+0200 (CEST): "mainscreen disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:19:49 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 20:20:27 GMT+0200 (CEST): "mainscreen disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:20:27 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 20:21:48 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:21:48 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 20:22:34 GMT+0200 (CEST): "controller connected: 127.0.0.1"
+Thu Oct 02 2014 20:22:44 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:22:44 GMT+0200 (CEST): "main screen connected: 127.0.0.1"
+Thu Oct 02 2014 20:22:44 GMT+0200 (CEST): "controller connected: 127.0.0.1"
+Thu Oct 02 2014 20:22:48 GMT+0200 (CEST): "controller disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:22:49 GMT+0200 (CEST): "controller connected: 127.0.0.1"
+Thu Oct 02 2014 20:23:45 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:23:45 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:23:45 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:23:57 GMT+0200 (CEST): "controller disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:23:58 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:24:12 GMT+0200 (CEST): "pincode panel connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:24:48 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:24:48 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:24:48 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:24:48 GMT+0200 (CEST): "new picode"
+9028
+Thu Oct 02 2014 20:24:48 GMT+0200 (CEST): "pincode panel connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:24:48 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:25:04 GMT+0200 (CEST): "pincodepanel disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:25:10 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:25:10 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:25:22 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:25:22 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:27:43 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:27:49 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:27:55 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:27:55 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:27:55 GMT+0200 (CEST): "new picode"
+2046
+Thu Oct 02 2014 20:27:59 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:27:59 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:27:59 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:28:15 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:28:15 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:28:43 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:28:43 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:28:43 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:28:43 GMT+0200 (CEST): "new picode"
+6855
+Thu Oct 02 2014 20:28:43 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:28:43 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:28:44 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:29:12 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:29:12 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:29:12 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:29:12 GMT+0200 (CEST): "new picode"
+2460
+Thu Oct 02 2014 20:29:12 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:29:12 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:29:13 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:29:15 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:29:15 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:29:21 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:29:21 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:33:58 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:33:58 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:33:58 GMT+0200 (CEST): "player enters pincode"
+undefined
+"127.0.0.1"
+Thu Oct 02 2014 20:34:12 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:34:12 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:34:12 GMT+0200 (CEST): "player enters pincode"
+undefined
+"127.0.0.1"
+Thu Oct 02 2014 20:34:22 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:34:22 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:34:22 GMT+0200 (CEST): "player enters pincode"
+undefined
+"127.0.0.1"
+Thu Oct 02 2014 20:35:32 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:35:32 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:35:32 GMT+0200 (CEST): "player enters pincode"
+undefined
+"127.0.0.1"
+Thu Oct 02 2014 20:35:46 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:35:46 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:35:46 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:35:46 GMT+0200 (CEST): "new picode"
+1536
+Thu Oct 02 2014 20:35:46 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:35:46 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:35:46 GMT+0200 (CEST): "player enters pincode"
+"2460"
+"127.0.0.1"
+Thu Oct 02 2014 20:35:47 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:36:36 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:36:37 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:36:37 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:36:37 GMT+0200 (CEST): "new picode"
+5955
+Thu Oct 02 2014 20:36:37 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:36:37 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:36:37 GMT+0200 (CEST): "player enters pincode"
+"2460"
+"127.0.0.1"
+Thu Oct 02 2014 20:36:37 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:36:51 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:36:51 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:36:51 GMT+0200 (CEST): "player enters pincode"
+"5955"
+"127.0.0.1"
+Thu Oct 02 2014 20:36:51 GMT+0200 (CEST): "player slot assinged"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:37:21 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 20:37:49 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:37:49 GMT+0200 (CEST): "new picode"
+7594
+Thu Oct 02 2014 20:38:00 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:38:00 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:38:00 GMT+0200 (CEST): "player enters pincode"
+"7594"
+"172.16.16.19"
+Thu Oct 02 2014 20:38:29 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:38:29 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:38:29 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:38:29 GMT+0200 (CEST): "new picode"
+5032
+Thu Oct 02 2014 20:38:29 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:38:29 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:38:29 GMT+0200 (CEST): "player enters pincode"
+"5955"
+"127.0.0.1"
+Thu Oct 02 2014 20:38:30 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:38:39 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:38:39 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:38:39 GMT+0200 (CEST): "player enters pincode"
+"5032"
+"172.16.16.19"
+Thu Oct 02 2014 20:38:39 GMT+0200 (CEST): "player slot assinged"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:38:49 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 20:39:14 GMT+0200 (CEST): "player disconnected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:39:15 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:39:15 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:39:15 GMT+0200 (CEST): "player enters pincode"
+"5032"
+"172.16.16.19"
+Thu Oct 02 2014 20:39:17 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:39:17 GMT+0200 (CEST): "new picode"
+1434
+Thu Oct 02 2014 20:40:22 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:40:22 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:22 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:22 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:40:22 GMT+0200 (CEST): "new picode"
+9626
+Thu Oct 02 2014 20:40:23 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:23 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:23 GMT+0200 (CEST): "player enters pincode"
+"5955"
+"127.0.0.1"
+Thu Oct 02 2014 20:40:30 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:40:30 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:30 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:30 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:40:30 GMT+0200 (CEST): "new picode"
+9303
+Thu Oct 02 2014 20:40:31 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:31 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:31 GMT+0200 (CEST): "player enters pincode"
+"5955"
+"127.0.0.1"
+Thu Oct 02 2014 20:40:46 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:46 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:46 GMT+0200 (CEST): "player enters pincode"
+"9303"
+"127.0.0.1"
+Thu Oct 02 2014 20:40:46 GMT+0200 (CEST): "player slot assinged"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:49 GMT+0200 (CEST): "player disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:49 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:49 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:49 GMT+0200 (CEST): "player enters pincode"
+"9303"
+"127.0.0.1"
+Thu Oct 02 2014 20:40:49 GMT+0200 (CEST): "player slot assinged"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:56 GMT+0200 (CEST): "player disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:56 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:56 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:40:56 GMT+0200 (CEST): "player enters pincode"
+"9303"
+"127.0.0.1"
+Thu Oct 02 2014 20:40:56 GMT+0200 (CEST): "player slot assinged"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:41:16 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 20:41:21 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:41:22 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:41:22 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:41:22 GMT+0200 (CEST): "new picode"
+2726
+Thu Oct 02 2014 20:41:22 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:41:22 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:41:22 GMT+0200 (CEST): "player enters pincode"
+"9303"
+"127.0.0.1"
+Thu Oct 02 2014 20:41:22 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:29 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:42:29 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:29 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:42:29 GMT+0200 (CEST): "new picode"
+9483
+Thu Oct 02 2014 20:42:29 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:29 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:29 GMT+0200 (CEST): "player enters pincode"
+"9303"
+"127.0.0.1"
+Thu Oct 02 2014 20:42:30 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:35 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:35 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:35 GMT+0200 (CEST): "player enters pincode"
+"9303"
+"127.0.0.1"
+Thu Oct 02 2014 20:42:44 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:42:45 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:45 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:42:45 GMT+0200 (CEST): "new picode"
+8548
+Thu Oct 02 2014 20:42:45 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:45 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:45 GMT+0200 (CEST): "player enters pincode"
+"9303"
+"127.0.0.1"
+Thu Oct 02 2014 20:42:45 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:50 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:50 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:50 GMT+0200 (CEST): "player enters pincode"
+"8548"
+"127.0.0.1"
+Thu Oct 02 2014 20:42:50 GMT+0200 (CEST): "player slot assinged"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:55 GMT+0200 (CEST): "player disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:55 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:55 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:42:55 GMT+0200 (CEST): "player is known"
+"127.0.0.1"
+Thu Oct 02 2014 20:43:20 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 20:43:43 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:43:43 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:43:43 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:43:43 GMT+0200 (CEST): "new picode"
+1649
+Thu Oct 02 2014 20:43:43 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:43:43 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:43:43 GMT+0200 (CEST): "player enters pincode"
+"8548"
+"127.0.0.1"
+Thu Oct 02 2014 20:43:43 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:43:44 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:44:24 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:44:25 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:44:25 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:44:25 GMT+0200 (CEST): "player enters pincode"
+"8548"
+"127.0.0.1"
+Thu Oct 02 2014 20:44:25 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:44:25 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:44:25 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:44:25 GMT+0200 (CEST): "new picode"
+9630
+Thu Oct 02 2014 20:44:25 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:44:27 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:44:28 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:44:28 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:44:28 GMT+0200 (CEST): "player enters pincode"
+"8548"
+"127.0.0.1"
+Thu Oct 02 2014 20:44:28 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:44:28 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:44:28 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:44:28 GMT+0200 (CEST): "new picode"
+8798
+Thu Oct 02 2014 20:44:28 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:44:29 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:44:30 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:44:30 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:44:30 GMT+0200 (CEST): "player enters pincode"
+"8548"
+"127.0.0.1"
+Thu Oct 02 2014 20:44:30 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:44:30 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:44:30 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:44:30 GMT+0200 (CEST): "new picode"
+8161
+Thu Oct 02 2014 20:44:30 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:45:39 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:45:39 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:45:39 GMT+0200 (CEST): "player enters pincode"
+"8161"
+"127.0.0.1"
+Thu Oct 02 2014 20:45:39 GMT+0200 (CEST): "pincode is right, checking if player slots are available"
+Thu Oct 02 2014 20:45:39 GMT+0200 (CEST): "player slot assinged"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:45:45 GMT+0200 (CEST): "player disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:45:46 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:45:46 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:45:46 GMT+0200 (CEST): "player is known"
+"127.0.0.1"
+Thu Oct 02 2014 20:46:04 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:46:04 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:46:04 GMT+0200 (CEST): "player enters pincode"
+"5032"
+"172.16.16.19"
+Thu Oct 02 2014 20:46:04 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:46:09 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 20:46:18 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:46:18 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:46:18 GMT+0200 (CEST): "player enters pincode"
+"5032"
+"172.16.16.19"
+Thu Oct 02 2014 20:46:36 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:46:36 GMT+0200 (CEST): "new picode"
+4945
+Thu Oct 02 2014 20:46:53 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:46:53 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:46:53 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:46:53 GMT+0200 (CEST): "new picode"
+3695
+Thu Oct 02 2014 20:46:53 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:46:53 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:46:53 GMT+0200 (CEST): "player enters pincode"
+"8161"
+"127.0.0.1"
+Thu Oct 02 2014 20:46:53 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:46:54 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:47:05 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:47:05 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:47:05 GMT+0200 (CEST): "player enters pincode"
+"3695"
+"127.0.0.1"
+Thu Oct 02 2014 20:47:05 GMT+0200 (CEST): "pincode is right, checking if player slots are available"
+Thu Oct 02 2014 20:47:05 GMT+0200 (CEST): "player slot assinged"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:47:08 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:08 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:08 GMT+0200 (CEST): "player enters pincode"
+"5032"
+"172.16.16.19"
+Thu Oct 02 2014 20:47:08 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:47:26 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:26 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:26 GMT+0200 (CEST): "player enters pincode"
+"3695"
+"172.16.16.19"
+Thu Oct 02 2014 20:47:26 GMT+0200 (CEST): "pincode is right, checking if player slots are available"
+Thu Oct 02 2014 20:47:26 GMT+0200 (CEST): "player slot assinged"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:35 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 20:47:43 GMT+0200 (CEST): "player disconnected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:43 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:43 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:43 GMT+0200 (CEST): "player is known"
+"172.16.16.19"
+Thu Oct 02 2014 20:47:48 GMT+0200 (CEST): "player disconnected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:48 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:48 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:48 GMT+0200 (CEST): "player is known"
+"172.16.16.19"
+Thu Oct 02 2014 20:47:52 GMT+0200 (CEST): "player disconnected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:53 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:53 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:47:53 GMT+0200 (CEST): "player is known"
+"172.16.16.19"
+Thu Oct 02 2014 20:48:03 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:48:03 GMT+0200 (CEST): "new picode"
+7536
+Thu Oct 02 2014 20:48:03 GMT+0200 (CEST): "player disconnected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:48:09 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:48:09 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:48:09 GMT+0200 (CEST): "player enters pincode"
+"3695"
+"172.16.16.19"
+Thu Oct 02 2014 20:48:09 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:49:39 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:49:39 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:49:39 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:49:39 GMT+0200 (CEST): "new picode"
+6248
+Thu Oct 02 2014 20:49:39 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:49:39 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:49:39 GMT+0200 (CEST): "player enters pincode"
+"3695"
+"127.0.0.1"
+Thu Oct 02 2014 20:49:39 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:49:39 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:49:56 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:49:56 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:49:56 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:49:56 GMT+0200 (CEST): "new picode"
+1631
+Thu Oct 02 2014 20:49:56 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:49:56 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:49:56 GMT+0200 (CEST): "player enters pincode"
+"3695"
+"127.0.0.1"
+Thu Oct 02 2014 20:49:56 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:49:56 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:49:59 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:50:00 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:00 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:00 GMT+0200 (CEST): "player enters pincode"
+"3695"
+"127.0.0.1"
+Thu Oct 02 2014 20:50:00 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:50:00 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:00 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:50:00 GMT+0200 (CEST): "new picode"
+1114
+Thu Oct 02 2014 20:50:00 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:07 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:07 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:07 GMT+0200 (CEST): "player enters pincode"
+"1114"
+"127.0.0.1"
+Thu Oct 02 2014 20:50:07 GMT+0200 (CEST): "pincode is right, checking if player slots are available"
+Thu Oct 02 2014 20:50:07 GMT+0200 (CEST): "player slot assinged"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:37 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 20:50:46 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:50:46 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:46 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:50:46 GMT+0200 (CEST): "new picode"
+5687
+Thu Oct 02 2014 20:50:46 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:46 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:46 GMT+0200 (CEST): "player enters pincode"
+"1114"
+"127.0.0.1"
+Thu Oct 02 2014 20:50:46 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:50:47 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:48 GMT+0200 (CEST): "Express server listening on port 3000"
+Thu Oct 02 2014 20:50:49 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:49 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:49 GMT+0200 (CEST): "player enters pincode"
+"1114"
+"127.0.0.1"
+Thu Oct 02 2014 20:50:49 GMT+0200 (CEST): "pincode is wrong"
+Thu Oct 02 2014 20:50:49 GMT+0200 (CEST): "main screen connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:49 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:50:49 GMT+0200 (CEST): "new picode"
+7330
+Thu Oct 02 2014 20:50:49 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:58 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:58 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:58 GMT+0200 (CEST): "player enters pincode"
+"7330"
+"127.0.0.1"
+Thu Oct 02 2014 20:50:58 GMT+0200 (CEST): "pincode is right, checking if player slots are available"
+Thu Oct 02 2014 20:50:58 GMT+0200 (CEST): "player slot assinged"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:50:58 GMT+0200 (CEST): "new player"
+{"alive":true,"socketioroom":"playerroom_127.0.0.1","index":0,"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:51:17 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:17 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:17 GMT+0200 (CEST): "player enters pincode"
+"7330"
+"172.16.16.19"
+Thu Oct 02 2014 20:51:17 GMT+0200 (CEST): "pincode is right, checking if player slots are available"
+Thu Oct 02 2014 20:51:17 GMT+0200 (CEST): "player slot assinged"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:17 GMT+0200 (CEST): "new player"
+{"alive":true,"socketioroom":"playerroom_172.16.16.19","index":1,"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:28 GMT+0200 (CEST): "game started"
+Thu Oct 02 2014 20:51:33 GMT+0200 (CEST): "player disconnected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:33 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:33 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:33 GMT+0200 (CEST): "player is known"
+"172.16.16.19"
+Thu Oct 02 2014 20:51:36 GMT+0200 (CEST): "player disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:51:36 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:51:36 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:51:36 GMT+0200 (CEST): "player is known"
+"127.0.0.1"
+Thu Oct 02 2014 20:51:40 GMT+0200 (CEST): "player disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:51:40 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:51:40 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:51:40 GMT+0200 (CEST): "player is known"
+"127.0.0.1"
+Thu Oct 02 2014 20:51:42 GMT+0200 (CEST): "player disconnected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:42 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:42 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:42 GMT+0200 (CEST): "player is known"
+"172.16.16.19"
+Thu Oct 02 2014 20:51:51 GMT+0200 (CEST): "player disconnected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:51 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:51 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:51 GMT+0200 (CEST): "player is known"
+"172.16.16.19"
+Thu Oct 02 2014 20:51:53 GMT+0200 (CEST): "player disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:51:53 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:51:53 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)","ip":"127.0.0.1"}
+Thu Oct 02 2014 20:51:53 GMT+0200 (CEST): "player is known"
+"127.0.0.1"
+Thu Oct 02 2014 20:51:55 GMT+0200 (CEST): "player disconnected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:55 GMT+0200 (CEST): "controller connected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:55 GMT+0200 (CEST): "incomming player"
+{"useragent":"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53","ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:55 GMT+0200 (CEST): "player is known"
+"172.16.16.19"
+Thu Oct 02 2014 20:51:56 GMT+0200 (CEST): "player was killed"
+{"alive":false,"socketioroom":"playerroom_172.16.16.19","index":1,"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:51:56 GMT+0200 (CEST): "player was killed"
+{"alive":false,"socketioroom":"playerroom_127.0.0.1","index":0,"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:51:56 GMT+0200 (CEST): "everybody's dead"
+Thu Oct 02 2014 20:51:56 GMT+0200 (CEST): "initializing new game"
+Thu Oct 02 2014 20:51:56 GMT+0200 (CEST): "new picode"
+5840
+Thu Oct 02 2014 20:52:06 GMT+0200 (CEST): "player disconnected"
+{"ip":"172.16.16.19"}
+Thu Oct 02 2014 20:53:55 GMT+0200 (CEST): "mainscreen disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:53:57 GMT+0200 (CEST): "player disconnected"
+{"ip":"127.0.0.1"}
+Thu Oct 02 2014 20:53:57 GMT+0200 (CEST): "controller disconnected"
+{"ip":"127.0.0.1"}
+Tue Oct 07 2014 09:58:40 GMT+0200 (CEST): "Express server listening on port 3000"
+Tue Oct 07 2014 09:58:47 GMT+0200 (CEST): "controller connected"
+{"ip":"127.0.0.1"}
+Tue Oct 07 2014 10:08:05 GMT+0200 (CEST): "controller disconnected"
+{"ip":"127.0.0.1"}

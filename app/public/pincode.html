@@ -34,7 +34,8 @@
     var socket = io.connect("/");
 
     socket.on('connect', function () {
-      socket.emit('pincodepanel');
+        // join pincodepanel room:
+        socket.emit('room', 'pincodepanel');
     });
 
     socket.on('updatepin', function (pin) {

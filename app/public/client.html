@@ -329,25 +329,7 @@ a.button {
         return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 
-    var readyToConnect=false;
-    var connected=false;
-    var started=false;
-    var socket = io.connect("/");
-    socket.on('connect', function () {
-        readyToConnect=true;
-    });
-    socket.on('ok', function(data) {
-        connected=true;
-        tc.start(handleControls,100);
-        document.getElem("#fighterimg").src="players/a-"+data.color+".png";
-        document.getElem(".connecting").style.display="none";
-        document.getElem("body").style.backgroundColor = data.color;
-        navigator.vibrate([200,200,200,200]);
 
-    });
-    socket.on('start',function(data){
-        started=true;
-    });
     function handleWrongPin() {
         var messageBox = document.getElem(".message");
         messageBox.clearElem();
@@ -371,63 +353,69 @@ a.button {
             document.getElem(".message").style.display="none";
         });
     }
-    socket.on('nok', function(data) {
-        socket.disconnect();
-        tc.stop();
-        if (data.status === '400') {
-            handleWrongPin();
-        } else if (data.status === '404') {
-            handleNoGame();
-        }
-    });
-    socket.on('dead', function(data) {
-        connected=false;
-        readyToConnect=false;
-        socket.disconnect();
-        tc.stop();
-        died=true;
-        document.getElem(".theScore").setText(""+data.score);
-        document.getElemAll("form > input").forEach(function(item){item.value="";});
-        document.getElem("#postscore").value=data.score_encrypted;
-        document.getElem("body").style.backgroundColor = 'transparent';
-        document.getElem(".loser").style.display = 'block';
-        document.getElem(".connecting").style.display="block";
-        document.getElem(".controller").style.display = 'none';
-        /*
-        if(localStorage.getItem("JIMuserdata")!==null){
-            //document.getElem("#userdataform").style.display = 'none';
-            var ldata=localStorage.getItem("JIMuserdata");
-            //{score:score,name:name,email:email}
 
-            var jdata=JSON.parse(ldata);
-            document.getElem("#postname").value=jdata.name;
-            document.getElem("#postemail").value=jdata.email;
-            jdata.score=data.score_encrypted;
-            //Window.http.POST({url:'/addscore',data:jdata,success:postSuccess,error:postError});
-        }
-        */
-    });
-    function tryConnect(){
-        if(readyToConnect && !connected /*&& window.matchMedia("(orientation: landscape)").matches*/){
-            socket.emit("client", { pin: getParameterByName("pin") });
-        }
-    }
+
 
     var direction = '';
     var tc=new TouchControls();
+
+
     document.ready(function() {
+
         var joystick=document.getElem(".controller .movement");
         var firebutton=document.getElem(".controller .shoot");
         tc.addElement("joystick",joystick,TouchControls.JOYSTICK);
         tc.addElement("fire",firebutton,TouchControls.BUTTON);
 
-        setInterval(tryConnect,1000);
-        var ratio = 889/366;
-
-
         doOnOrientationChange();
 
+        var socket = io.connect("/");
+        socket.on('connect', function () {
+            // join player room (not really used):
+            socket.emit('room', 'player');
+
+            // send pincode to server:
+            var pin = getParameterByName("pin");
+            console.log(pin);
+            socket.emit("enterpincode", { pin: pin });
+        });
+
+        socket.on('ok', function(data) {
+            tc.start(handleControls,100);
+            document.getElem("#fighterimg").src="players/a-"+data.color+".png";
+            document.getElem(".connecting").style.display="none";
+            document.getElem("body").style.backgroundColor = data.color;
+            navigator.vibrate([200,200,200,200]);
+
+        });
+
+        socket.on('start',function (data){
+            // console.log('game started');
+        });
+
+        socket.on('nok', function(data) {
+            tc.stop();
+            if (data.status === '400') {
+                handleWrongPin();
+            } else if (data.status === '404') {
+                handleNoGame();
+            }
+        });
+
+        socket.on('dead', function(data) {
+            tc.stop();
+            died=true;
+            document.getElem(".theScore").setText(""+data.score);
+            document.getElemAll("form > input").forEach(function(item){item.value="";});
+            document.getElem("#postscore").value=data.score_encrypted;
+            document.getElem("body").style.backgroundColor = 'transparent';
+            document.getElem(".loser").style.display = 'block';
+            document.getElem(".connecting").style.display="block";
+            document.getElem(".controller").style.display = 'none';
+        });
     });
+
+
     var counter=0;
     function handleControls(control){
         counter++;
@@ -437,25 +425,25 @@ a.button {
         }
         var js=control.isElement("joystick");
         var shoot=control.isElement("fire");
-        if(connected && started){
-            if(js && js.y>0){
-                socket.emit('up');
-                document.getElem('.up').addClass('pressed');
-                document.getElem('.down').removeClass('pressed');
-            }else if(js && js.y<0){
-                socket.emit('down');
-                document.getElem('.up').removeClass('pressed');
-                document.getElem('.down').addClass('pressed');
-            }else{
-                document.getElem('.down').removeClass('pressed');
-                document.getElem('.up').removeClass('pressed');
-            }
-            if(shoot){
-                socket.emit("shoot");
-                document.getElem('.shoot').addClass('pressed');
-                // mySound.play();
-            }
+
+        if(js && js.y>0){
+            if(socket) socket.emit('up');
+            document.getElem('.up').addClass('pressed');
+            document.getElem('.down').removeClass('pressed');
+        }else if(js && js.y<0){
+            if(socket) socket.emit('down');
+            document.getElem('.up').removeClass('pressed');
+            document.getElem('.down').addClass('pressed');
+        }else{
+            document.getElem('.down').removeClass('pressed');
+            document.getElem('.up').removeClass('pressed');
         }
+        if(shoot){
+            if(socket) socket.emit("shoot");
+            document.getElem('.shoot').addClass('pressed');
+            // mySound.play();
+        }
+
     }
     window.addEventListener('orientationchange', doOnOrientationChange);
     function doOnOrientationChange(){
@@ -481,7 +469,7 @@ a.button {
         var score=document.getElem("#postscore").value;
         var name=document.getElem("#postname").value;
         var email=document.getElem("#postemail").value;
-        localStorage.setItem("JIMuserdata",JSON.stringify({name:name,email:email}));
+
         Window.http.POST({url:'/addscore',data:{score:score,name:name,email:email},success:postSuccess,error:postError});
     }
 </script>
@@ -526,6 +514,7 @@ a.button {
                 <input name="name" placeholder="Jouw naam" id="postname" style="width:80%"><br>
                 <input name="email" type="email" placeholder="Jouw e-mail adres" id="postemail" style="width:80%"><br>
                 <button onclick="asub()">Stuur</button>
+                <a href="/" id="replay" class="button">Speel Opnieuw</button>
                 <br><br><br>
             </span>
             <br />

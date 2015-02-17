@@ -218,67 +218,61 @@ function SoundDefender(target) {
     // sound defender nodejs backend
     var socket = io.connect(window.location.hostname);
 
-    socket.on('news', function () {
-        socket.emit('host');
-        socket.on('down',function(data){
-            if (players[data.player]) players[data.player].moveDown();
-        });
-        socket.on('up',function(data){
-            if (players[data.player]) players[data.player].moveUp();
-        });
-        socket.on('shoot',function(data){
-            if (players[data.player]) players[data.player].fireShot();
-        });
-        socket.on('live',function(data){
-            console.log("live!: ");
-            createPlayer(data.player);
-        });
-        socket.on('newGame', function(data) {
-            godmode = true;
-            initNewGame();
-        });
-
-        socket.on('refreshpage', function (data) {
-            location.reload();
-        });
-
-        /*socket.on('lost',function(data){
-            for(var i=0;i<players.length;i++){
-                if(players[i] && players[i].id==data.id){
-                    killPlayer(players[i]);
-                    break;
-                }
-            }
-        });*/
-
-        socket.on('setAlien', function(data) {
-            if (!data || !data.image) {
-                customs = []
-            } else {
-                customs.push(data.image);
-            }
-        });
-        socket.on('removeAlien',function(data){
-            if(data && data.image){
-                var index=customs.indexOf(data.image);
-                if(index!==-1){
-                    customs.splice(index,1);
-                }
-            }
-        })
-        socket.on('startGame', startGame);
-         socket.on('admin',function(data){
-             if(data.scale){
-                 scale=data.scale;
-             }
-             if(data.loudness){
-                 loudScale=data.loudness;
-             }
-         });
-        socket.on('countdown',function(data){
-            startCountDown(data.timer);
-        })
+    socket.on('connect', function () {
+        // join mainscreen room:
+        socket.emit('room', 'mainscreen');
     });
+
+    socket.on('down',function(data){
+        if (players[data.player]) players[data.player].moveDown();
+    });
+    socket.on('up',function(data){
+        if (players[data.player]) players[data.player].moveUp();
+    });
+    socket.on('shoot',function(data){
+        if (players[data.player]) players[data.player].fireShot();
+    });
+    socket.on('live',function(data){
+        console.log("live!: ");
+        createPlayer(data.player);
+    });
+    socket.on('newGame', function(data) {
+        godmode = true;
+        initNewGame();
+    });
+
+    socket.on('refreshpage', function (data) {
+        location.reload();
+    });
+
+    socket.on('setAlien', function(data) {
+        if (!data || !data.image) {
+            customs = []
+        } else {
+            customs.push(data.image);
+        }
+    });
+    socket.on('removeAlien',function(data){
+        if(data && data.image){
+            var index=customs.indexOf(data.image);
+            if(index!==-1){
+                customs.splice(index,1);
+            }
+        }
+    })
+    socket.on('startGame', startGame);
+     socket.on('admin',function(data){
+         if(data.scale){
+             scale=data.scale;
+         }
+         if(data.loudness){
+             loudScale=data.loudness;
+         }
+     });
+    socket.on('countdown',function(data){
+        startCountDown(data.timer);
+    })
+
 
     function createPlayer(index) {
         if(players.length<index || players[index]==null){
